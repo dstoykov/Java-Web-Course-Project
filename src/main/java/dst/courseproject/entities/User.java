@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +26,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "author")
+    private Set<Video> videos;
 
     public User() {
     }

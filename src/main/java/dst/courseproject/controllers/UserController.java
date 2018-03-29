@@ -48,7 +48,6 @@ public class UserController {
     public ModelAndView loginConfirm(ModelAndView modelAndView, UserLoginBindingModel loginBindingModel) {
         UserServiceModel userByEmail = this.userService.getUserByEmail(loginBindingModel.getEmail());
         if (userByEmail != null) {
-            modelAndView.addObject("username", userByEmail.getFirstName());
             modelAndView.setViewName("redirect:/");
         }
 
