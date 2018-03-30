@@ -12,7 +12,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/styles/**", "/scripts/**", "/images/**");
+        web.ignoring().antMatchers("/styles/**", "/scripts/**", "/images/**", "/favicon.ico");
     }
 
     @Override

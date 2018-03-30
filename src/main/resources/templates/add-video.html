@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <form th:action="@{'/videos/add'}" th:method="POST">
+            <fieldset>
+                <legend>Add New Video</legend>
+                <div class="form-group row mt-3">
+                    <label for="title">Title</label>
+                    <input class="form-control" id="title" aria-describedby="title" type="text" name="title">
+                </div>
+                <div class="form-group row">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group row">
+                    <label for="categorySelect">Category</label>
+                    <select class="custom-select" id="categorySelect" name="categorySelect">
+                        <option selected="">Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="inputVideoSelect">Select Video</label>
+                    <input class="form-control-file" id="inputVideoSelect" name="inputVideoSelect" aria-describedby="inputVideoSelect" type="file" accept="video/mp4,video/x-m4v,video/*">
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary mr-2">Add Video</button>
+                    <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<footer><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

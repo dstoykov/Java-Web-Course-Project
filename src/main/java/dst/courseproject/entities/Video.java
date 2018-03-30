@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "videos")
@@ -30,6 +31,15 @@ public class Video {
     @ManyToOne
     @JoinColumn(nullable = false, name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "video")
+    private Set<Comment> comments;
+
+    @Column(nullable = false)
+    private long likes;
+
+    @Column(nullable = false)
+    private long dislikes;
 
     public Video() { }
 
@@ -79,5 +89,29 @@ public class Video {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public long getLikes() {
+        return this.likes;
+    }
+
+    public void setLikes(long likes) {
+        this.likes = likes;
+    }
+
+    public long getDislikes() {
+        return this.dislikes;
+    }
+
+    public void setDislikes(long dislikes) {
+        this.dislikes = dislikes;
     }
 }

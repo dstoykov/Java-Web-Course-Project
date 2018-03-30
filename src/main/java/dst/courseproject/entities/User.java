@@ -30,6 +30,9 @@ public class User {
     @OneToMany(mappedBy = "author")
     private Set<Video> videos;
 
+    @OneToMany(mappedBy = "author")
+    private Set<Comment> comments;
+
     public User() {
     }
 
@@ -72,4 +75,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Set<Video> getVideos() {
+        return this.videos;
+    }
+
+    public void setVideos(Set<Video> videos) {
+        this.videos = videos;
+    }
+
+    public Set<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
 }

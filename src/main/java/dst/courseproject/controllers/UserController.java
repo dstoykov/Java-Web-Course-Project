@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping("/register")
     public ModelAndView registerConfirm(ModelAndView modelAndView, RegisterUserBindingModel userBindingModel) {
         if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
-            modelAndView.setViewName("redirect:login");
+            modelAndView.setViewName("redirect:register");
         } else {
             this.userService.createUser(userBindingModel);
             modelAndView.setViewName("redirect:login");
