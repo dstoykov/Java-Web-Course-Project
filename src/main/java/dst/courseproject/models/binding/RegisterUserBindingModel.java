@@ -1,6 +1,7 @@
 package dst.courseproject.models.binding;
 
 public class RegisterUserBindingModel {
+
     private String email;
 
     private String firstName;

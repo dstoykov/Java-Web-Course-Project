@@ -1,13 +1,17 @@
 package dst.courseproject.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -33,7 +37,19 @@ public class User {
     @OneToMany(mappedBy = "author")
     private Set<Comment> comments;
 
+    private boolean isAccountNonExpired;
+
+    private boolean isAccountNonLocked;
+
+    private boolean isCredentialsNonExpired;
+
+    private boolean isEnabled;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    private Set<Role> authorities;
+
     public User() {
+
     }
 
     public String getId() {
@@ -92,4 +108,53 @@ public class User {
         this.comments = comments;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new HashSet<Role>();
+    }
+
+//    public void setAuthorities(Set<Role> authorities) {
+//        this.authorities = authorities;
+//    }
+
+    @Override
+    public String getUsername() {
+        return this.getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }

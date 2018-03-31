@@ -7,6 +7,7 @@ import dst.courseproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +29,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerConfirm(ModelAndView modelAndView, RegisterUserBindingModel userBindingModel) {
+    public ModelAndView registerConfirm(@ModelAttribute RegisterUserBindingModel userBindingModel, ModelAndView modelAndView) {
         if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
             modelAndView.setViewName("redirect:register");
         } else {
-            this.userService.createUser(userBindingModel);
+            this.userService.register(userBindingModel);
             modelAndView.setViewName("redirect:login");
         }
         return modelAndView;
@@ -45,11 +46,8 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ModelAndView loginConfirm(ModelAndView modelAndView, UserLoginBindingModel loginBindingModel) {
-        UserServiceModel userByEmail = this.userService.getUserByEmail(loginBindingModel.getEmail());
-        if (userByEmail != null) {
-            modelAndView.setViewName("redirect:/");
-        }
+    public ModelAndView loginConfirm(ModelAndView modelAndView) {
+        modelAndView.setViewName("redirect:/");
 
         return modelAndView;
     }
