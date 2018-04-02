@@ -17,6 +17,35 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/users/login", "/users/register").permitAll().anyRequest().authenticated().and().csrf().disable().formLogin().loginPage("/users/login").permitAll().usernameParameter("email").passwordParameter("password").successForwardUrl("/");
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/", "/users/login", "/users/register").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .csrf().disable()
+//                .formLogin()
+//                .loginPage("/users/login").permitAll()
+//                .loginProcessingUrl("/users/login")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/error")
+//                .and()
+//                .logout().logoutUrl("/logout")
+//                .logoutSuccessUrl("/login")
+//                .permitAll();
+
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/users/login", "/users/register").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/users/login").permitAll()
+                .loginProcessingUrl("/users/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+                .and()
+                .csrf().disable();
     }
 }

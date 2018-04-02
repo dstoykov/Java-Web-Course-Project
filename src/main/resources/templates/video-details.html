@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title>Login</title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <h2>Video name</h2>
+        <video width="840" height="472" controls>
+            <source src="blob:https://www.youtube.com/70f32da2-f38d-4688-b107-89b7a65ce34f">
+        </video>
+        <div class="row">
+            <div class="col-lg-7">
+                <p>
+                    <strong><a class="font-weight-bold" href="/">Uploader name</a></strong>
+                    <small>Uploaded on 35.35.3535</small>
+                </p>
+                <p class="lead">Video description</p>
+                <p>Category: <a href="/">category</a></p>
+                <br/>
+                <h3 class="text-primary">Comments:</h3>
+                <div class="form-group">
+                    <label for="addComment">Add new comment</label>
+                    <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
+                </div><!--
+        <th:block th:each="comment : ${comments}">
+            <blockquote class="blockquote">
+                <p>
+                    <a>&quot;</a><a th:text="${comment.text}"></a><a>&quot;</a>
+                </p>
+                <b><h5><strong><cite title="Source Title" th:text="${comment.user.fullName}"></cite></strong></h5>
+                </b><a> </a>
+                <small th:text="${comment.date}"></small>
+            </blockquote>
+        </th:block>
+        -->
+            </div>
+            <div class="col-lg-2">
+                <table>
+                    <td>
+                        <p>
+                            <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/like.png}"
+                                    width="20"
+                                    height="20"/></a>
+                            <span th:text="16"></span>
+                        </p>
+                    </td>
+                    <td width="20" height="70"
+                        style="border-collapse: separate; padding-left: 20px;padding-right: 20px; vertical-align: top">
+                        <div class="vertical-line">
+                            <p></p>
+                        </div>
+                    </td>
+                    <td>
+                        <p>
+                            <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"
+                                    width="20"
+                                    height="20"/></a>
+                            <span th:text="1"></span>
+                        </p>
+                    </td>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>
