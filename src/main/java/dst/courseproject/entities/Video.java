@@ -35,11 +35,11 @@ public class Video {
     @OneToMany(mappedBy = "video")
     private Set<Comment> comments;
 
-    @Column(nullable = false)
-    private long likes;
+    @Column(nullable = false, columnDefinition = "BIGINT default 0")
+    private Long likes;
 
-    @Column(nullable = false)
-    private long dislikes;
+    @Column(nullable = false, columnDefinition = "BIGINT default 0")
+    private Long dislikes;
 
     public Video() { }
 
@@ -99,19 +99,19 @@ public class Video {
         this.comments = comments;
     }
 
-    public long getLikes() {
+    public Long getLikes() {
         return this.likes;
     }
 
-    public void setLikes(long likes) {
+    public void setLikes(Long likes) {
         this.likes = likes;
     }
 
-    public long getDislikes() {
+    public Long getDislikes() {
         return this.dislikes;
     }
 
-    public void setDislikes(long dislikes) {
+    public void setDislikes(Long dislikes) {
         this.dislikes = dislikes;
     }
 }

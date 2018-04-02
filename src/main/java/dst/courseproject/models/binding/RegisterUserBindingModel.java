@@ -1,15 +1,30 @@
 package dst.courseproject.models.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class RegisterUserBindingModel {
 
+    @NotEmpty(message = "Field must not be empty. ")
+    @Pattern(regexp = "^[a-z0-9._-]+@[a-z0-9-]+(\\.[a-z]{2,4}){1,3}$", message = "Invalid email format. ")
     private String email;
 
+    @NotEmpty(message = "Field name must not be empty. ")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Incorrect name format. ")
     private String firstName;
 
+    @NotEmpty(message = "Field name must not be empty. ")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Incorrect name format. ")
     private String lastName;
 
+    @NotEmpty(message = "Field name must not be empty. ")
+    @Size(min = 8, max = 20, message = "Password length must be between 8 and 20 symbols. ")
     private String password;
 
+    @NotEmpty(message = "Field name must not be empty. ")
+    @Size(min = 8, max = 20, message = "Password confirmation length must be between 8 and 20 symbols. ")
     private String confirmPassword;
 
     public RegisterUserBindingModel() {
