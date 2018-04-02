@@ -40,12 +40,21 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/", "/users/login", "/users/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .csrf().disable()
                 .formLogin().loginPage("/users/login").permitAll()
                 .loginProcessingUrl("/users/login")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
                 .and()
-                .csrf().disable();
+                .rememberMe()
+                .rememberMeParameter("remember")
+                .rememberMeCookieName("rememberMeCookie")
+                .key("48433e39-e610-4a2c-926c-f86d46f5360a")
+                .tokenValiditySeconds(100)
+                .and()
+                .logout().logoutUrl("/users/logout")
+                .logoutSuccessUrl("/users/login")
+                .permitAll();
     }
 }

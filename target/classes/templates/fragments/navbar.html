@@ -1,7 +1,8 @@
 <th:block th:template="navbar">
     <div class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a th:href="@{/}"><img class="hidden-md hidden-xs mr-5" th:src="@{http://localhost:8000/images/logo.png}" width="70"/></a>
+            <a th:href="@{/}"><img class="hidden-md hidden-xs mr-5" th:src="@{http://localhost:8000/images/logo.png}"
+                                   width="70"/></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -16,10 +17,10 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li sec:authorize="!isAuthenticated()" class="nav-item">
                         <a class="nav-link" th:href="@{/users/login}">Login</a>
                     </li>
-                    <li class="nav-item">
+                    <li sec:authorize="!isAuthenticated()" class="nav-item">
                         <a class="nav-link" th:href="@{/users/register}">Register</a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
@@ -38,7 +39,9 @@
                            aria-haspopup="true" aria-expanded="true">Hello ${author.getFirstName()}</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">My Videos</a>
-                            <a class="dropdown-item" href="#">Logout</a>
+                            <form th:action="@{/logout}" th:method="POST">
+                                <button type="submit" class="nav-link nav-link-black">Logout</button>
+                            </form>
                         </div>
                     </li>
                     </li>

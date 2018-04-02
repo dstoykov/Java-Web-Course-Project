@@ -45,8 +45,9 @@ public class User implements UserDetails {
 
     private boolean isEnabled;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    private Set<Role> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private Set<Role> authorities;
 
     public User() {
 
