@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerConfirm(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerInput", bindingResult);
             redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
