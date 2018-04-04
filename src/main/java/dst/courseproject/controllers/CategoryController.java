@@ -4,7 +4,7 @@ import dst.courseproject.models.binding.AddCategoryBindingModel;
 import dst.courseproject.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,20 +34,23 @@ public class CategoryController {
     }
 
     @GetMapping("/add")
-    public ModelAndView addCategory(ModelAndView modelAndView) {
+    public ModelAndView addCategory(ModelAndView modelAndView, Model model) {
         modelAndView.setViewName("add-category");
+        if (!model.containsAttribute("addCategoryInput")) {
+            model.addAttribute("addCategoryInput", new AddCategoryBindingModel());
+        }
 
         return modelAndView;
     }
 
     @PostMapping("/add")
-    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") AddCategoryBindingModel categoryBindingModel, ModelAndView modelAndView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") AddCategoryBindingModel addCategoryInput, ModelAndView modelAndView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryInput", bindingResult);
-            redirectAttributes.addFlashAttribute("addCategoryInput", categoryBindingModel);
+            redirectAttributes.addFlashAttribute("addCategoryInput", addCategoryInput);
             modelAndView.addObject("redirect:add");
         } else {
-            this.categoryService.addCategory(categoryBindingModel);
+            this.categoryService.addCategory(addCategoryInput);
             modelAndView.setViewName("redirect:all");
         }
 

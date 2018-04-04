@@ -66,6 +66,10 @@
 			<artifactId>java-core</artifactId>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

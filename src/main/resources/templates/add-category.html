@@ -14,7 +14,7 @@
         <form class="form-horizontal justify-content-center" th:action="@{'/categories/add'}" th:method="POST" th:object="${addCategoryInput}">
             <fieldset class="mt-4">
                 <legend>Add New Category</legend>
-                <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
+                <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
                     <label for="name">Category name</label>
                     <input class="form-control" th:field="*{name}" th:value="${addCategoryInput.getName()}" id="name" aria-describedby="name" type="text" name="name">
                     <th:block th:each="error : ${#fields.errors('name')}">
