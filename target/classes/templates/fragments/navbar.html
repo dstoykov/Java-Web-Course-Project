@@ -32,7 +32,7 @@
                         </div>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" href="#">Add Video</a>
+                        <a class="nav-link" th:href="@{/videos/add}">Add Video</a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/" role="button"
