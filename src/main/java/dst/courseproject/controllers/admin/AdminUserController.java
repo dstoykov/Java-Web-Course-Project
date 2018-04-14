@@ -1,6 +1,5 @@
-package dst.courseproject.controllers;
+package dst.courseproject.controllers.admin;
 
-import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
@@ -10,8 +9,6 @@ import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,64 +18,40 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/admin/users")
+public class AdminUserController {
     private final UserService userService;
     private final VideoService videoService;
 
     @Autowired
-    public UserController(UserService userService, VideoService videoService) {
+    public AdminUserController(UserService userService, VideoService videoService) {
         this.userService = userService;
         this.videoService = videoService;
     }
 
-    @GetMapping("/register")
-    @PreAuthorize("!isAuthenticated()")
-    public ModelAndView register(ModelAndView modelAndView, Model model) {
-        modelAndView.setViewName("register");
-        if (!model.containsAttribute("registerInput")) {
-            model.addAttribute("registerInput", new RegisterUserBindingModel());
-        }
-
-        return modelAndView;
-    }
-
-    @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerInput", bindingResult);
-            redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
-            modelAndView.setViewName("redirect:register");
-        } else if (!userBindingModel.getPassword().equals(userBindingModel.getConfirmPassword())) {
-            modelAndView.setViewName("redirect:register");
-        } else {
-            this.userService.register(userBindingModel);
-            modelAndView.setViewName("redirect:login");
-        }
-
-        return modelAndView;
-    }
-
-    @GetMapping("/login")
-    @PreAuthorize("!isAuthenticated()")
-    public ModelAndView login(ModelAndView modelAndView) {
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
-    @GetMapping("/profile")
+    @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView profile(ModelAndView modelAndView) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserViewModel userViewModel = this.userService.getUserModelByEmail(userDetails.getUsername());
+    public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
+        List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
+        modelAndView.setViewName("users-all");
+        modelAndView.addObject("userModels", userViewModels);
 
-        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView) {
+        UserViewModel model = this.userService.getUserViewModelById(id);
+
+        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(model.getVideos());
 
         modelAndView.setViewName("user-profile");
-        modelAndView.addObject("user", userViewModel);
+        modelAndView.addObject("user", model);
         modelAndView.addObject("videos", videoViewModels);
 
         return modelAndView;
@@ -114,12 +87,19 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping("/logout")
-    @PreAuthorize("isAuthenticated()")
-    public ModelAndView logout(@RequestParam(required = false, name = "logout") String logout, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        modelAndView.setViewName("redirect:/login");
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteUser(@PathVariable("id") String id, ModelAndView modelAndView) {
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
+        modelAndView.setViewName("delete-user");
+        modelAndView.addObject("userInput", userServiceModel);
 
-        if(logout != null) redirectAttributes.addFlashAttribute("logout", logout);
+        return modelAndView;
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteUserConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
+        this.userService.deleteUser(id);
+        modelAndView.setViewName("redirect:all");
 
         return modelAndView;
     }

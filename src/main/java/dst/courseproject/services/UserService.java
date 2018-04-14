@@ -7,6 +7,7 @@ import dst.courseproject.models.view.UserViewModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
@@ -16,11 +17,15 @@ public interface UserService extends UserDetailsService {
 
     UserViewModel getUserModelByEmail(String email);
 
-    UserServiceModel getUserModelById(String id);
+    UserServiceModel getUserServiceModelById(String id);
+
+    UserViewModel getUserViewModelById(String id);
 
     UserEditBindingModel getUserById(String id);
 
     void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id);
 
     void deleteUser(String id);
+
+    List<UserViewModel> getListWithViewModels(String email);
 }

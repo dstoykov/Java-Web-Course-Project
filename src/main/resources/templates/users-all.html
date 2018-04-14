@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title>Users</title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <h2 class="text-center">All Users</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Profile</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="userModel, iter : ${userModels}">
+                <tr class="table-active">
+                    <th scope="row" th:text="${iter.index + 1}"></th>
+                    <td th:text="${userModel.getFirstName()}"></td>
+                    <td th:text="${userModel.getLastName()}"></td>
+                    <td th:text="${userModel.getEmail()}"></td>
+                    <td><a class="btn btn-outline-info" th:href="@{/admin/users/{id}(id=${userModel.getId()})}">Profile</a></td>
+                    <td><a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${userModel.getId()})}">Edit</a></td>
+                    <td><a class="btn btn-outline-danger" th:href="@{/admin/users/delete/{id}(id=${userModel.getId()})}">Delete</a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+        <div class="form-group mt-4">
+            <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
+        </div>
+    </div>
+</main>
+<footer class="footer mt-5"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

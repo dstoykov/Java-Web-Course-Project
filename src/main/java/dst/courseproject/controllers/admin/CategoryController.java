@@ -1,4 +1,4 @@
-package dst.courseproject.controllers;
+package dst.courseproject.controllers.admin;
 
 import dst.courseproject.models.binding.AddCategoryBindingModel;
 import dst.courseproject.services.CategoryService;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/categories")
+@RequestMapping("/admin/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 

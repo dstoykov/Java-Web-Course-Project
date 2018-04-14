@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -67,10 +69,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel getUserModelById(String id) {
+    public UserServiceModel getUserServiceModelById(String id) {
         User user = this.userRepository.findByIdEquals(id);
         UserServiceModel userServiceModel = this.mapper.map(user, UserServiceModel.class);
         return userServiceModel;
+    }
+
+    @Override
+    public UserViewModel getUserViewModelById(String id) {
+        User user = this.userRepository.findByIdEquals(id);
+        UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
+        return userViewModel;
     }
 
     @Override
@@ -78,6 +87,18 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findByIdEquals(id);
         UserEditBindingModel userEditBindingModel = this.mapper.map(user, UserEditBindingModel.class);
         return userEditBindingModel;
+    }
+
+    @Override
+    public List<UserViewModel> getListWithViewModels(String email) {
+        List<User> users = this.userRepository.getAllByEmailIsNot(email);
+        List<UserViewModel> userViewModels = new ArrayList<>();
+        for (User user : users) {
+            UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
+            userViewModels.add(userViewModel);
+        }
+
+        return userViewModels;
     }
 
     @Override
