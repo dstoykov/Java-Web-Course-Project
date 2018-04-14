@@ -35,7 +35,7 @@ public class CategoryController {
 
     @GetMapping("/add")
     public ModelAndView addCategory(ModelAndView modelAndView, Model model) {
-        modelAndView.setViewName("add-category");
+        modelAndView.setViewName("category-add");
         if (!model.containsAttribute("addCategoryInput")) {
             model.addAttribute("addCategoryInput", new AddCategoryBindingModel());
         }

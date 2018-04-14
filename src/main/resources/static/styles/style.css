@@ -20,3 +20,7 @@ body {
 .text-footer-hyperlink {
     color: #efefef;
 }
+
+.text-footer-hyperlink:hover {
+    color: #8a8b8c;
+}

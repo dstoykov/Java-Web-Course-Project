@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title>Profile</title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <div>
+            <h1 class="text-center font-weight-bold"
+                th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
+            <h3 class="text-center font-weight-bold" th:text="${user.getEmail()}"></h3>
+            <a class="btn btn-outline-secondary" th:href="@{/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
+        </div>
+        <hr/>
+        <div>
+            <h3 class="text-center" th:text="${user.getFirstName()} + '\'s videos:'"></h3>
+            <div th:if="${#lists.isEmpty(videos)}">
+                <h4 class="text-center font-weight-bold">No videos to show.</h4>
+            </div>
+            <div class="row" th:if="${not #lists.isEmpty(videos)}">
+                <th:block th:each="video : ${videos}">
+                    <div class="col-md-6">
+                        <header>
+                            <h2 th:text="${video.getTitle()}"></h2>
+                        </header>
+                        <p>
+                            <a th:href="@{/videos/{id}(id=${video.getId()})}">
+                                <img th:src="@{http://localhost:8080/images/video-player.png}"
+                                     width="400"/>
+                            </a>
+                        </p>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer mt-5"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

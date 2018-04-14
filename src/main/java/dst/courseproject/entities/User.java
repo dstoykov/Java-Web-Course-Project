@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,6 +49,9 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Role> authorities;
+
+    @Column(name = "deleted_on")
+    private LocalDate deletedOn;
 
     public User() {
 
@@ -114,9 +118,13 @@ public class User implements UserDetails {
         return new HashSet<Role>();
     }
 
-//    public void setAuthorities(Set<Role> authorities) {
-//        this.authorities = authorities;
-//    }
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void addRole(Role role) {
+        this.authorities.add(role);
+    }
 
     @Override
     public String getUsername() {
@@ -157,5 +165,13 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

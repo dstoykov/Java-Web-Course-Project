@@ -62,11 +62,6 @@
 			<version>0.7.5</version>
 		</dependency>
 		<dependency>
-			<groupId>com.pcloud.sdk</groupId>
-			<artifactId>java-core</artifactId>
-			<type>pom</type>
-		</dependency>
-		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>

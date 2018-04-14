@@ -1,54 +1,29 @@
-package dst.courseproject.entities;
+package dst.courseproject.models.service;
 
-import org.hibernate.annotations.GenericGenerator;
+import dst.courseproject.entities.Category;
+import dst.courseproject.entities.Comment;
+import dst.courseproject.entities.User;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "videos")
-public class Video {
-
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false)
-    private String id;
-
-    @Column(nullable = false, unique = true)
+public class VideoServiceModel {
     private String title;
 
-    @Column(nullable = false)
-    private String videoPath;
+    private String url;
 
-    @Column(columnDefinition = "text")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "author_id")
     private User author;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "video")
     private Set<Comment> comments;
 
-    @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long likes;
 
-    @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long dislikes;
 
-    public Video() { }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public VideoServiceModel() {
     }
 
     public String getTitle() {
@@ -59,12 +34,12 @@ public class Video {
         this.title = title;
     }
 
-    public String getVideoPath() {
-        return this.videoPath;
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setVideoPath(String videoPath) {
-        this.videoPath = videoPath;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDescription() {

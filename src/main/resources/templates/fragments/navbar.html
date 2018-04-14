@@ -34,16 +34,13 @@
                     <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a class="nav-link" th:href="@{/videos/add}">Add Video</a>
                     </li>
-                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/" role="button"
-                           aria-haspopup="true" aria-expanded="true">Hello ${author.getFirstName()}</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">My Videos</a>
-                            <form th:action="@{/logout}" th:method="POST">
-                                <button type="submit" class="nav-link nav-link-black">Logout</button>
-                            </form>
-                        </div>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/users/profile}">My Profile</a>
                     </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <form th:action="@{/users/logout}" th:method="POST">
+                            <button type="submit" class="nav-link nav-link-black">Logout</button>
+                        </form>
                     </li>
                 </ul>
             </div>
