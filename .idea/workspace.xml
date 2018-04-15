@@ -2,25 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2de3573-901c-427d-8821-1f13f1921dae" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/EditCategoryBindingModel.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/CategoryServiceModel.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/category-delete.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/category-edit.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/exception/PasswordsMismatchException.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/CategoryController.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/CategoryController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/AddCategoryBindingModel.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/AddCategoryBindingModel.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CategoryService.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CategoryService.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CategoryServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CategoryServiceImpl.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/categories-all.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/categories-all.html" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/category-add.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/category-add.html" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/delete-user.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/user-delete.html" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/edit-user.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/user-edit.html" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/users-all.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/users-all.html" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/UserService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" />
       <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/UserController.class" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/UserController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/services/UserService.class" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/services/UserService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/services/impl/UserServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/services/impl/UserServiceImpl.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -32,36 +22,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="navbar.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="20" column="83" lean-forward="false" selection-start-line="20" selection-start-column="83" selection-end-line="20" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user-delete.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/user-delete.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="38" column="34" lean-forward="true" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -82,7 +51,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/head.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/400.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/401.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/error/403.html" />
@@ -110,9 +78,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/edit-profile.html" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/UserRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/delete-user.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/edit-user.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/register.html" />
@@ -131,8 +96,12 @@
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/CategoryController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/users-all.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/user-delete.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/exception/PasswordsMismatchException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" />
       </list>
     </option>
   </component>
@@ -171,7 +140,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -328,9 +298,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -521,11 +490,12 @@
       <workItem from="1523718445787" duration="2894000" />
       <workItem from="1523726759956" duration="8112000" />
       <workItem from="1523797574180" duration="6477000" />
+      <workItem from="1523816754546" duration="2788000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163701000" />
+    <option name="totallyTimeSpent" value="166489000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -550,7 +520,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42362204" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26793557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26793557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -579,18 +549,11 @@
           <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="39" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.4.RELEASE/spring-web-5.0.4.RELEASE-sources.jar!/org/springframework/web/filter/HttpPutFormContentFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="109" column="0" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.4.RELEASE/spring-web-5.0.4.RELEASE-sources.jar!/org/springframework/web/filter/HiddenHttpMethodFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
@@ -744,23 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="92" column="67" lean-forward="false" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
-          <folding>
-            <element signature="method#getUserByEmail#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#loadUserByUsername#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#getUserModelByEmail#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#getUserServiceModelById#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#getUserViewModelById#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#getUserById#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#editUserData#0;class#UserServiceImpl#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#UserServiceImpl#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/UserViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -809,7 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,7 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,17 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="891">
           <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="81" column="16" lean-forward="true" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -875,7 +808,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="40" column="66" lean-forward="false" selection-start-line="40" selection-start-column="66" selection-end-line="40" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -883,7 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="329">
           <caret line="26" column="75" lean-forward="false" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -891,7 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="12" column="56" lean-forward="true" selection-start-line="12" selection-start-column="56" selection-end-line="12" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -899,7 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="15" column="30" lean-forward="false" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -915,7 +844,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="17" column="43" lean-forward="false" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -957,21 +885,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="74">
           <caret line="21" column="32" lean-forward="false" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/user-delete.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <element signature="method#register#0;class#UserController#0" expanded="false" />
-            <element signature="method#register#1;class#UserController#0" expanded="false" />
-            <element signature="method#login#0;class#UserController#0" expanded="false" />
-            <element signature="method#profile#0;class#UserController#0" expanded="false" />
-            <element signature="method#logout#0;class#UserController#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="295">
+          <caret line="38" column="34" lean-forward="true" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -983,11 +904,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/user-delete.html">
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/exception/PasswordsMismatchException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="38" column="34" lean-forward="true" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+        <state relative-caret-position="85">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="95" column="13" lean-forward="true" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
+          <folding>
+            <element signature="method#comparePasswords#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getUserByEmail#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#register#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#loadUserByUsername#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getUserModelByEmail#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getUserServiceModelById#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getUserViewModelById#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getUserById#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#getListWithViewModels#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#editUserData#0;class#UserServiceImpl#0" expanded="false" />
+            <element signature="method#deleteUser#0;class#UserServiceImpl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="87" column="5" lean-forward="false" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
+          <folding>
+            <element signature="method#register#0;class#UserController#0" expanded="false" />
+            <element signature="method#register#1;class#UserController#0" expanded="false" />
+            <element signature="method#login#0;class#UserController#0" expanded="false" />
+            <element signature="method#profile#0;class#UserController#0" expanded="false" />
+            <element signature="method#editProfile#0;class#UserController#0" expanded="false" />
+            <element signature="method#editProfile#1;class#UserController#0" expanded="false" />
+            <element signature="method#logout#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#allUsers#0;class#AdminUserController#0" expanded="false" />
+            <element signature="method#userProfile#0;class#AdminUserController#0" expanded="false" />
+            <element signature="method#editProfile#0;class#AdminUserController#0" expanded="false" />
+            <element signature="method#editProfile#1;class#AdminUserController#0" expanded="false" />
+            <element signature="method#deleteUser#0;class#AdminUserController#0" expanded="false" />
+            <element signature="method#deleteUserConfirm#0;class#AdminUserController#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

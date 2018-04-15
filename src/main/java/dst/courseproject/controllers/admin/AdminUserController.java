@@ -1,5 +1,6 @@
 package dst.courseproject.controllers.admin;
 
+import dst.courseproject.exception.PasswordsMismatchException;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
@@ -34,7 +35,6 @@ public class AdminUserController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
         List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
         modelAndView.setViewName("users-all");
@@ -44,7 +44,6 @@ public class AdminUserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserViewModel model = this.userService.getUserViewModelById(id);
 
@@ -58,7 +57,6 @@ public class AdminUserController {
     }
 
     @GetMapping("/edit/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
         modelAndView.setViewName("user-edit");
@@ -77,11 +75,13 @@ public class AdminUserController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
             redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
             modelAndView.setViewName("redirect:/users/edit/" + id);
-        } else if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword())) {
-            modelAndView.setViewName("redirect:/users/edit/" + id);
         } else {
-            this.userService.editUserData(userEditBindingModel, id);
-            modelAndView.setViewName("redirect:../profile");
+            try {
+                this.userService.editUserData(userEditBindingModel, id);
+                modelAndView.setViewName("redirect:../profile");
+            } catch (PasswordsMismatchException e) {
+                modelAndView.setViewName("redirect:/users/edit/" + id);
+            }
         }
 
         return modelAndView;

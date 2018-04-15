@@ -1,6 +1,7 @@
 package dst.courseproject.services.impl;
 
 import dst.courseproject.entities.User;
+import dst.courseproject.exception.PasswordsMismatchException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -36,6 +37,14 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
+    private boolean comparePasswords(String password, String confirmPassword) throws PasswordsMismatchException {
+        if (!password.equals(confirmPassword)) {
+            throw new PasswordsMismatchException("Passwords mismatch!");
+        }
+
+        return true;
+    }
+
     @Override
     public UserServiceModel getUserByEmail(String email) {
         UserServiceModel userServiceModel = this.mapper.map(this.userRepository.findByEmail(email), UserServiceModel.class);
@@ -43,9 +52,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegisterUserBindingModel bindingModel) {
+    public void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException {
         User user = this.mapper.map(bindingModel, User.class);
-        user.setPassword(this.encoder.encode(bindingModel.getPassword()));
+        if (comparePasswords(bindingModel.getPassword(), bindingModel.getConfirmPassword())) {
+            user.setPassword(this.encoder.encode(bindingModel.getPassword()));
+        }
         user.addRole(this.roleService.getRoleByAuthority("USER"));
 
         user.setAccountNonExpired(true);
@@ -102,12 +113,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) {
+    public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
         User user = this.userRepository.findByIdEquals(id);
 
         user.setFirstName(userEditBindingModel.getFirstName());
         user.setLastName(userEditBindingModel.getLastName());
-        user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
+        if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
+            user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
+        }
 
         this.userRepository.saveAndFlush(user);
     }
