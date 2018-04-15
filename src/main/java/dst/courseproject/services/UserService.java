@@ -1,6 +1,6 @@
 package dst.courseproject.services;
 
-import dst.courseproject.exception.PasswordsMismatchException;
+import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;

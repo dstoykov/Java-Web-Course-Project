@@ -1,4 +1,4 @@
-package dst.courseproject.exception;
+package dst.courseproject.exceptions;
 
 public class PasswordsMismatchException extends Exception {
     public PasswordsMismatchException(String message) {

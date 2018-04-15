@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -18,7 +20,11 @@ public class Role implements GrantedAuthority {
     @Column(nullable = false)
     private String authority;
 
+    @ManyToMany(targetEntity = User.class, mappedBy = "authorities")
+    private Set<User> users;
+
     public Role() {
+        this.users = new HashSet<>();
     }
 
     public String getId() {
@@ -36,5 +42,13 @@ public class Role implements GrantedAuthority {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public Set<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

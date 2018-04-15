@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,9 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Video> videos;
 
-    public Category() { }
+    public Category() {
+        this.videos = new HashSet<>();
+    }
 
     public String getId() {
         return this.id;

@@ -1,6 +1,6 @@
 package dst.courseproject.controllers;
 
-import dst.courseproject.exception.PasswordsMismatchException;
+import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Set;
 
 @Controller

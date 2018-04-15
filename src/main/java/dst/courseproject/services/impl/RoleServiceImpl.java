@@ -6,7 +6,10 @@ import dst.courseproject.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
@@ -18,5 +21,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleByAuthority(String authority) {
         return this.roleRepository.findByAuthority(authority);
+    }
+
+    @Override
+    public void save(Role role) {
+        this.roleRepository.save(role);
     }
 }

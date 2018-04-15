@@ -54,7 +54,9 @@ public class User implements UserDetails {
     private LocalDate deletedOn;
 
     public User() {
-
+        this.videos = new HashSet<>();
+        this.comments = new HashSet<>();
+        this.authorities = new HashSet<>();
     }
 
     public String getId() {

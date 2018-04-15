@@ -1,6 +1,6 @@
 package dst.courseproject.controllers.admin;
 
-import dst.courseproject.exception.PasswordsMismatchException;
+import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
@@ -9,7 +9,6 @@ import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,7 +58,7 @@ public class AdminUserController {
     @GetMapping("/edit/{id}")
     public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-        modelAndView.setViewName("user-edit");
+        modelAndView.setViewName("admin-user-edit");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
@@ -74,13 +73,13 @@ public class AdminUserController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
             redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
-            modelAndView.setViewName("redirect:/users/edit/" + id);
+            modelAndView.setViewName("redirect:" + id);
         } else {
             try {
                 this.userService.editUserData(userEditBindingModel, id);
-                modelAndView.setViewName("redirect:../profile");
+                modelAndView.setViewName("redirect:../" + id);
             } catch (PasswordsMismatchException e) {
-                modelAndView.setViewName("redirect:/users/edit/" + id);
+                modelAndView.setViewName("redirect:" + id);
             }
         }
 

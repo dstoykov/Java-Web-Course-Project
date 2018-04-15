@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,9 @@ public class Video {
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long dislikes;
 
-    public Video() { }
+    public Video() {
+        this.comments = new HashSet<>();
+    }
 
     public String getId() {
         return this.id;
