@@ -61,7 +61,7 @@ public class AdminUserController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-        modelAndView.setViewName("edit-user");
+        modelAndView.setViewName("user-edit");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
@@ -90,7 +90,7 @@ public class AdminUserController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-        modelAndView.setViewName("delete-user");
+        modelAndView.setViewName("user-delete");
         modelAndView.addObject("userInput", userServiceModel);
 
         return modelAndView;

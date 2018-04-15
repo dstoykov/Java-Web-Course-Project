@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Set;
 
 @Controller
@@ -88,7 +87,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-        modelAndView.setViewName("edit-user");
+        modelAndView.setViewName("user-edit");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);

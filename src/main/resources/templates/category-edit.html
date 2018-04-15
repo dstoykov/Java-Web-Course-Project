@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title>Add Category</title>
+    <title>Edit Category</title>
 </head>
 <body>
 <header>
@@ -11,19 +11,19 @@
 </header>
 <main>
     <div class="container body-content span=8 offset=2">
-        <form class="form-horizontal justify-content-center" th:action="@{'/admin/categories/add'}" th:method="POST" th:object="${addCategoryInput}">
+        <form class="form-horizontal justify-content-center" th:action="@{/admin/categories/edit/{id}(id=${categoryInput.getId()})}" th:method="POST" th:object="${categoryInput}">
             <fieldset class="mt-4">
-                <legend>Add New Category</legend>
+                <legend>Edit Category</legend>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
                     <label for="name">Category name</label>
-                    <input class="form-control" th:field="*{name}" th:value="${addCategoryInput.getName()}" id="name" aria-describedby="name" type="text" name="name">
+                    <input class="form-control" th:field="*{name}" th:value="${categoryInput.getName()}" id="name" aria-describedby="name" type="text" name="name">
                     <th:block th:each="error : ${#fields.errors('name')}">
                         <small class="text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
             </fieldset>
             <div class="form-group mt-5">
-                <button type="submit" class="btn btn-primary mr-2">Add Category</button>
+                <button type="submit" class="btn btn-outline-success mr-2">Edit Category</button>
                 <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/categories/all}">Cancel</a>
             </div>
         </form>

@@ -28,9 +28,9 @@
                     <th scope="row" th:text="${iter.index + 1}"></th>
                     <td></td>
                     <td th:text="${category.getName()}"></td>
-                    <td><a class="btn btn-outline-success" th:href="@{/caterories/edit/{id}(id=${category.getId()})}">Edit</a>
+                    <td><a class="btn btn-outline-success" th:href="@{/admin/categories/edit/{id}(id=${category.getId()})}">Edit</a>
                     </td>
-                    <td><a class="btn btn-outline-danger" th:href="@{/caterories/delete/{id}(id=${category.getId()})}">Delete</a>
+                    <td><a class="btn btn-outline-danger" th:href="@{/admin/categories/delete/{id}(id=${category.getId()})}">Delete</a>
                     </td>
                 </tr>
             </th:block>
@@ -38,7 +38,7 @@
         </table>
 
         <div class="form-group mt-4">
-            <a class="btn btn-outline-info mr-2" th:href="@{/categories/add}">Add Category</a>
+            <a class="btn btn-outline-info mr-2" th:href="@{/admin/categories/add}">Add Category</a>
             <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
         </div>
     </div>
