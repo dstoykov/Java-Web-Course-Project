@@ -1,6 +1,7 @@
 package dst.courseproject.models.view;
 
 import dst.courseproject.entities.Comment;
+import dst.courseproject.entities.Role;
 import dst.courseproject.entities.Video;
 
 import java.time.LocalDate;
@@ -20,6 +21,8 @@ public class UserViewModel {
     private Set<Comment> comments;
 
     private LocalDate deletedOn;
+
+    private Set<Role> authorities;
 
     public UserViewModel() {
     }
@@ -78,5 +81,22 @@ public class UserViewModel {
 
     public void setDeletedOn(LocalDate deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    public Set<Role> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    public boolean hasRole(String roleName) {
+        for (Role role1 : this.getAuthorities()) {
+            if (role1.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

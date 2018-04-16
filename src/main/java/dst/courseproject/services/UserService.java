@@ -34,4 +34,6 @@ public interface UserService extends UserDetailsService {
     List<UserViewModel> getListWithViewModels(String email);
 
     void restoreUser(String id);
+
+    void makeModerator(String id);
 }

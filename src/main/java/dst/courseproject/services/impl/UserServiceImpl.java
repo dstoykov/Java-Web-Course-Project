@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
 
-        Role role = this.roleService.getRoleByAuthority("ROLE_USER");
+        Role role = this.roleService.getRoleByAuthority("USER");
         user.addRole(role);
         this.userRepository.save(user);
         role.getUsers().add(user);
@@ -153,5 +153,16 @@ public class UserServiceImpl implements UserService {
         user.setDeletedOn(null);
 
         this.userRepository.save(user);
+    }
+
+    @Override
+    public void makeModerator(String id) {
+        User user = this.userRepository.getOne(id);
+        Role role = this.roleService.getRoleByAuthority("MODERATOR");
+
+        user.addRole(role);
+        this.userRepository.save(user);
+        role.getUsers().add(user);
+        this.roleService.save(role);
     }
 }

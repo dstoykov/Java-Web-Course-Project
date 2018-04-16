@@ -22,6 +22,7 @@
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +36,8 @@
                     <td><a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${userModel.getId()})}">Edit</a></td>
                     <td th:if="${userModel.getDeletedOn()==null}"><a class="btn btn-outline-danger" th:href="@{/admin/users/delete/{id}(id=${userModel.getId()})}">Delete</a></td>
                     <td th:if="${userModel.getDeletedOn()!=null}"><a class="btn btn-outline-warning" th:href="@{/admin/users/restore/{id}(id=${userModel.getId()})}">Restore</a></td>
+                    <td th:if="${userModel.getDeletedOn()==null}"><a class="btn btn-outline-primary" th:href="@{/admin/users/{id}/moderator(id=${userModel.getId()})}">Make Moderator</a></td>
+                    <td th:if="${userModel.getDeletedOn()!=null}"></td>
                 </tr>
             </th:block>
             </tbody>

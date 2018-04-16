@@ -10,6 +10,7 @@ import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,7 +71,7 @@ public class AdminUserController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editProfile(@PathVariable("id") String id, @Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    public ModelAndView editProfileConfirm(@PathVariable("id") String id, @Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
             redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
@@ -117,6 +118,23 @@ public class AdminUserController {
     public ModelAndView restoreUserConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
         this.userService.restoreUser(id);
         modelAndView.setViewName("redirect:../all");
+
+        return modelAndView;
+    }
+
+    @GetMapping("{id}/moderator")
+    public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView) {
+        UserViewModel userViewModel = this.userService.getUserViewModelById(id);
+        modelAndView.setViewName("user-moderator");
+        modelAndView.addObject("userInput", userViewModel);
+
+        return modelAndView;
+    }
+
+    @PostMapping("{id}/moderator")
+    public ModelAndView makeModeratorConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
+        this.userService.makeModerator(id);
+        modelAndView.setViewName("redirect:../" + id);
 
         return modelAndView;
     }
