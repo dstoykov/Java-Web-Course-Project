@@ -28,12 +28,12 @@
                 <div class="form-group row">
                         <label for="lastName">Last name</label>
                         <input class="form-control" th:field="*{lastName}" th:value="${userInput.getFirstName()}"
-                               id="lastName" placeholder="Last name" type="text" name="lastName">
+                               id="lastName" type="text" name="lastName">
                 </div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-danger mr-2">Delete</button>
-                <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Cancel</a>
+                <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Cancel</a>
             </div>
         </form>
     </div>

@@ -15,7 +15,19 @@
             <h1 class="text-center font-weight-bold"
                 th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
             <h3 class="text-center font-weight-bold" th:text="${user.getEmail()}"></h3>
-            <a class="btn btn-outline-secondary" th:href="@{/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
+            <h5 class="text-center text-danger" th:if="${user.getDeletedOn() != null}"
+                th:text="${'(Deleted on ' + #temporals.format(user.getDeletedOn(), 'dd-MM-yyyy') + ')'}"></h5>
+            <div class="form-group center mt-3 d-flex justify-content-center">
+                <a class="btn btn-outline-success" th:href="@{/users/edit/{id}(id=${user.getId()})}">Edit
+                    profile</a>
+                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit
+                    profile</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
+                   th:href="@{/admin/users/delete/{id}(id=${user.getId()})}">Delete profile</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
+                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
+                <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
+            </div>
         </div>
         <hr/>
         <div>

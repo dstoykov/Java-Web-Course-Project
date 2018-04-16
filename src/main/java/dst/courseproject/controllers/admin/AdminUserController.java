@@ -2,6 +2,7 @@ package dst.courseproject.controllers.admin;
 
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.UserEditBindingModel;
+import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -98,6 +99,23 @@ public class AdminUserController {
     @PostMapping("/delete/{id}")
     public ModelAndView deleteUserConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
         this.userService.deleteUser(id);
+        modelAndView.setViewName("redirect:../all");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/restore/{id}")
+    public ModelAndView restoreUser(@PathVariable("id") String id, ModelAndView modelAndView) {
+        UserRestoreServiceModel userServiceModel = this.userService.getDeletedUserServiceModelById(id);
+        modelAndView.setViewName("user-restore");
+        modelAndView.addObject("userInput", userServiceModel);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/restore/{id}")
+    public ModelAndView restoreUserConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
+        this.userService.restoreUser(id);
         modelAndView.setViewName("redirect:../all");
 
         return modelAndView;

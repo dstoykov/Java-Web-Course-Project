@@ -15,7 +15,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByIdEqualsAndDeletedOnIsNull(String id);
 
-    List<User> getAllByEmailIsNotAndDeletedOnIsNull(String email);
+    User findByIdEqualsAndDeletedOnIsNotNull(String id);
+
+    List<User> getAllByEmailIsNotOrderByDeletedOn(String email);
+
+    User findByIdEquals(String id);
 
     @Override
     @Query("SELECT u FROM User u WHERE u.deletedOn IS NULL")

@@ -1,12 +1,12 @@
-package dst.courseproject.models.view;
+package dst.courseproject.models.service;
 
-import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.Video;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-public class UserViewModel {
+public class UserRestoreServiceModel {
+
     private String id;
 
     private String email;
@@ -15,13 +15,13 @@ public class UserViewModel {
 
     private String lastName;
 
-    private Set<Video> videos;
+    private String password;
 
-    private Set<Comment> comments;
+    private Set<Video> videos;
 
     private LocalDate deletedOn;
 
-    public UserViewModel() {
+    public UserRestoreServiceModel() {
     }
 
     public String getId() {
@@ -56,20 +56,20 @@ public class UserViewModel {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Set<Video> getVideos() {
         return this.videos;
     }
 
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
-    }
-
-    public Set<Comment> getComments() {
-        return this.comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
     }
 
     public LocalDate getDeletedOn() {
@@ -79,4 +79,5 @@ public class UserViewModel {
     public void setDeletedOn(LocalDate deletedOn) {
         this.deletedOn = deletedOn;
     }
+
 }

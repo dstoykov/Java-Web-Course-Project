@@ -5,6 +5,7 @@ import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
+import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.repositories.UserRepository;
@@ -74,8 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserRestoreServiceModel getDeletedUserServiceModelById(String id) {
+        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNotNull(id);
+        UserRestoreServiceModel userRestoreServiceModel = this.mapper.map(user, UserRestoreServiceModel.class);
+        return userRestoreServiceModel;
+    }
+
+    @Override
     public UserViewModel getUserViewModelById(String id) {
-        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
+        User user = this.userRepository.findByIdEquals(id);
         UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
         return userViewModel;
     }
@@ -89,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserViewModel> getListWithViewModels(String email) {
-        List<User> users = this.userRepository.getAllByEmailIsNotAndDeletedOnIsNull(email);
+        List<User> users = this.userRepository.getAllByEmailIsNotOrderByDeletedOn(email);
         List<UserViewModel> userViewModels = new ArrayList<>();
         for (User user : users) {
             UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
@@ -135,6 +143,14 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String id) {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
         user.setDeletedOn(LocalDate.now());
+
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void restoreUser(String id) {
+        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNotNull(id);
+        user.setDeletedOn(null);
 
         this.userRepository.save(user);
     }

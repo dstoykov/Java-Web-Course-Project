@@ -3,6 +3,7 @@ package dst.courseproject.services;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
+import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +21,8 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getUserServiceModelById(String id);
 
+    UserRestoreServiceModel getDeletedUserServiceModelById(String id);
+
     UserViewModel getUserViewModelById(String id);
 
     UserEditBindingModel getUserById(String id);
@@ -29,4 +32,6 @@ public interface UserService extends UserDetailsService {
     void deleteUser(String id);
 
     List<UserViewModel> getListWithViewModels(String email);
+
+    void restoreUser(String id);
 }

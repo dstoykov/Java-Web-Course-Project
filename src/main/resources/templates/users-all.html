@@ -33,7 +33,8 @@
                     <td th:text="${userModel.getEmail()}"></td>
                     <td><a class="btn btn-outline-info" th:href="@{/admin/users/{id}(id=${userModel.getId()})}">Profile</a></td>
                     <td><a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${userModel.getId()})}">Edit</a></td>
-                    <td><a class="btn btn-outline-danger" th:href="@{/admin/users/delete/{id}(id=${userModel.getId()})}">Delete</a></td>
+                    <td th:if="${userModel.getDeletedOn()==null}"><a class="btn btn-outline-danger" th:href="@{/admin/users/delete/{id}(id=${userModel.getId()})}">Delete</a></td>
+                    <td th:if="${userModel.getDeletedOn()!=null}"><a class="btn btn-outline-warning" th:href="@{/admin/users/restore/{id}(id=${userModel.getId()})}">Restore</a></td>
                 </tr>
             </th:block>
             </tbody>
