@@ -98,7 +98,7 @@ public class AdminUserController {
     @PostMapping("/delete/{id}")
     public ModelAndView deleteUserConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
         this.userService.deleteUser(id);
-        modelAndView.setViewName("redirect:all");
+        modelAndView.setViewName("redirect:../all");
 
         return modelAndView;
     }
