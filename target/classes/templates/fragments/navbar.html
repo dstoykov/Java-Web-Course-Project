@@ -15,10 +15,10 @@
                 </form>
                 <ul class="navbar-nav ml-auto">
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/categories/all}">*|  Categories</a>
+                        <a class="nav-link" th:href="@{/admin/categories/all}">*| Categories</a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/users/all}">Users  |*</a>
+                        <a class="nav-link" th:href="@{/admin/users/all}">Users |*</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Home</a>
@@ -37,7 +37,7 @@
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
                         <form th:action="@{/users/logout}" th:method="POST">
-                            <button type="submit" class="nav-link nav-link-black">Logout</button>
+                            <button type="submit" class="btn btn-link nav-link font-weight-bold">Logout</button>
                         </form>
                     </li>
                 </ul>

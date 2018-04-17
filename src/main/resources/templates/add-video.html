@@ -12,6 +12,19 @@
 <main>
     <div class="container">
         <form th:action="@{'/videos/add'}" th:method="POST">
+            <!--<div th:if="${#fields.hasAnyErrors()}">-->
+                <!--<script th:inline="javascript">-->
+                    <!--/*<![CDATA[*/-->
+                    <!--new Noty({-->
+                        <!--text: 'ERROR: Invalid credentials!',-->
+                        <!--type: 'error',-->
+                        <!--theme: 'mint',-->
+                        <!--timeout: 4000,-->
+                        <!--layout: 'topRight'-->
+                    <!--}).show();-->
+                    <!--/*]]>*/-->
+                <!--</script>-->
+            <!--</div>-->
             <fieldset>
                 <legend>Add New Video</legend>
                 <div class="form-group row mt-3">

@@ -12,6 +12,19 @@
 <main>
     <div class="container">
         <form th:action="@{/users/edit/{id}(id=${userInput.getId()})}" th:method="POST" th:object="${userInput}">
+            <div th:if="${#fields.hasAnyErrors()}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    new Noty({
+                        text: 'ERROR: Invalid credentials!',
+                        type: 'error',
+                        theme: 'mint',
+                        timeout: 4000,
+                        layout: 'topRight'
+                    }).show();
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset>
                 <legend>Edit Profile</legend>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">

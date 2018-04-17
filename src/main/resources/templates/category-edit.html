@@ -12,6 +12,19 @@
 <main>
     <div class="container body-content span=8 offset=2">
         <form class="form-horizontal justify-content-center" th:action="@{/admin/categories/edit/{id}(id=${categoryInput.getId()})}" th:method="POST" th:object="${categoryInput}">
+            <div th:if="${#fields.hasAnyErrors()}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    new Noty({
+                        text: 'ERROR: Invalid credentials!',
+                        type: 'error',
+                        theme: 'mint',
+                        timeout: 4000,
+                        layout: 'topRight'
+                    }).show();
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset class="mt-4">
                 <legend>Edit Category</legend>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
