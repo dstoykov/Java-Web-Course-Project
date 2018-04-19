@@ -10,7 +10,6 @@ import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +38,7 @@ public class AdminUserController {
     public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
         List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
         modelAndView.setViewName("users-all");
+        modelAndView.addObject("title", "All Users");
         modelAndView.addObject("userModels", userViewModels);
 
         return modelAndView;
@@ -51,6 +51,7 @@ public class AdminUserController {
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(model.getVideos());
 
         modelAndView.setViewName("user-profile");
+        modelAndView.addObject("title", model.getFirstName() + "'s Profile");
         modelAndView.addObject("user", model);
         modelAndView.addObject("videos", videoViewModels);
 
@@ -61,6 +62,7 @@ public class AdminUserController {
     public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
         modelAndView.setViewName("admin-user-edit");
+        modelAndView.addObject("title", "Edit Profile");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
@@ -92,6 +94,7 @@ public class AdminUserController {
     public ModelAndView deleteUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
         modelAndView.setViewName("user-delete");
+        modelAndView.addObject("title", "Delete Profile");
         modelAndView.addObject("userInput", userServiceModel);
 
         return modelAndView;
@@ -109,6 +112,7 @@ public class AdminUserController {
     public ModelAndView restoreUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserRestoreServiceModel userServiceModel = this.userService.getDeletedUserServiceModelById(id);
         modelAndView.setViewName("user-restore");
+        modelAndView.addObject("title", "Restore Profile");
         modelAndView.addObject("userInput", userServiceModel);
 
         return modelAndView;
@@ -126,6 +130,7 @@ public class AdminUserController {
     public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserViewModel userViewModel = this.userService.getUserViewModelById(id);
         modelAndView.setViewName("user-moderator");
+        modelAndView.addObject("title", "Make Moderator");
         modelAndView.addObject("userInput", userViewModel);
 
         return modelAndView;

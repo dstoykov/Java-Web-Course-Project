@@ -41,6 +41,7 @@ public class UserController {
     @PreAuthorize("!isAuthenticated()")
     public ModelAndView register(ModelAndView modelAndView, Model model) {
         modelAndView.setViewName("register");
+        modelAndView.addObject("title", "Register");
         if (!model.containsAttribute("registerInput")) {
             model.addAttribute("registerInput", new RegisterUserBindingModel());
         }
@@ -59,6 +60,7 @@ public class UserController {
                 this.userService.register(userBindingModel);
                 modelAndView.setViewName("redirect:login");
             } catch (PasswordsMismatchException e) {
+                redirectAttributes.addFlashAttribute("passwordError", e.getMessage());
                 modelAndView.setViewName("redirect:register");
             } catch (UserAlreadyExistsException e) {
                 modelAndView.setViewName("redirect:register");
@@ -72,6 +74,7 @@ public class UserController {
     @PreAuthorize("!isAuthenticated()")
     public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
+        modelAndView.addObject("title", "Login");
 
         return modelAndView;
     }
@@ -85,6 +88,7 @@ public class UserController {
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
 
         modelAndView.setViewName("user-profile");
+        modelAndView.addObject("title", "Your Profile");
         modelAndView.addObject("user", userViewModel);
         modelAndView.addObject("videos", videoViewModels);
 
@@ -96,6 +100,7 @@ public class UserController {
     public ModelAndView editProfile(ModelAndView modelAndView, Model model, ModelMapper mapper, Principal principal) {
         UserServiceModel userServiceModel = this.userService.getUserByEmail(principal.getName());
         modelAndView.setViewName("user-edit");
+        modelAndView.addObject("title", "Edit Profile");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
@@ -122,38 +127,6 @@ public class UserController {
 
         return modelAndView;
     }
-
-//    @GetMapping("/edit/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
-//        UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-//        modelAndView.setViewName("user-edit");
-//
-//        if (!model.containsAttribute("userInput")) {
-//            UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
-//            model.addAttribute("userInput", userEditBindingModel);
-//        }
-//
-//        return modelAndView;
-//    }
-//
-//    @PostMapping("/edit/{id}")
-//    public ModelAndView editProfile(@PathVariable("id") String id, @Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
-//            redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
-//            modelAndView.setViewName("redirect:/users/edit/" + id);
-//        } else {
-//            try {
-//                this.userService.editUserData(userEditBindingModel, id);
-//                modelAndView.setViewName("redirect:../profile");
-//            } catch (PasswordsMismatchException e) {
-//                modelAndView.setViewName("redirect:/users/edit/" + id);
-//            }
-//        }
-//
-//        return modelAndView;
-//    }
 
     @PostMapping("/logout")
     @PreAuthorize("isAuthenticated()")

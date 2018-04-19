@@ -27,6 +27,7 @@ public class CategoryController {
     @GetMapping("/all")
     public ModelAndView allCategories(ModelAndView modelAndView) {
         modelAndView.setViewName("categories-all");
+        modelAndView.addObject("title", "All Categories");
         modelAndView.addObject("categories", this.categoryService.getAllCategories());
 
         return modelAndView;
@@ -35,6 +36,7 @@ public class CategoryController {
     @GetMapping("/add")
     public ModelAndView addCategory(ModelAndView modelAndView, Model model) {
         modelAndView.setViewName("category-add");
+        modelAndView.addObject("title", "Add Category");
         if (!model.containsAttribute("addCategoryInput")) {
             model.addAttribute("addCategoryInput", new AddCategoryBindingModel());
         }
@@ -61,6 +63,7 @@ public class CategoryController {
     public ModelAndView edit(@PathVariable("id") String id, ModelAndView modelAndView, Model model) {
         CategoryServiceModel categoryServiceModel = this.categoryService.getCategoryServiceModel(id);
         modelAndView.setViewName("category-edit");
+        modelAndView.addObject("title", "Edit Category");
 
         if (!model.containsAttribute("categoryInput")) {
             EditCategoryBindingModel editCategoryBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
@@ -88,6 +91,7 @@ public class CategoryController {
     public ModelAndView delete(@PathVariable("id") String id, ModelAndView modelAndView, Model model) {
         CategoryServiceModel categoryServiceModel = this.categoryService.getCategoryServiceModel(id);
         modelAndView.setViewName("category-delete");
+        modelAndView.addObject("title", "Delete Category");
 
         if (!model.containsAttribute("categoryInput")) {
             EditCategoryBindingModel editCategoryBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);

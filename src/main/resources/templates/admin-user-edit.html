@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title>Edit Profile</title>
+    <title th:text="${title}"></title>
 </head>
 <body>
 <header>
@@ -61,7 +61,7 @@
             </fieldset>
             <div class="form-group mt-4">
                 <button type="submit" class="btn btn-outline-success mr-2">Edit</button>
-                <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Cancel</a>
+                <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Cancel</a>
             </div>
         </form>
     </div>

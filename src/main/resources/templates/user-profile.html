@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title>Profile</title>
+    <title th:text="${title}"></title>
 </head>
 <body>
 <header>
@@ -20,13 +20,13 @@
             <h5 class="text-center text-danger" th:if="${user.getDeletedOn() != null}"
                 th:text="${'(Deleted on ' + #temporals.format(user.getDeletedOn(), 'dd-MM-yyyy') + ')'}"></h5>
             <div class="form-group center mt-3 d-flex justify-content-center">
-                <a sec:authorize="!hasAuthority('ROLE_MODERATOR')" class="btn btn-outline-success" th:href="@{/users/profile/edit}">Edit profile</a>
-                <a sec:authorize="hasAuthority('ROLE_MODERATOR')" class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
-                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:if="${user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
+                <a sec:authorize="!hasAuthority('MODERATOR')" class="btn btn-outline-success" th:href="@{/users/profile/edit}">Edit profile</a>
+                <a sec:authorize="hasAuthority('MODERATOR')" class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
                    th:href="@{/admin/users/delete/{id}(id=${user.getId()})}">Delete profile</a>
-                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:if="${user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
-                <a sec:authorize="hasAuthority('ROLE_MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
-                <a sec:authorize="!hasAuthority('ROLE_MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
+                <a sec:authorize="hasAuthority('MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
+                <a sec:authorize="!hasAuthority('MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
             </div>
         </div>
         <hr/>

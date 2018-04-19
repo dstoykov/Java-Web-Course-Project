@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title>Login</title>
+    <title th:text="${title}"></title>
 </head>
 <body>
 <header>
@@ -24,7 +24,7 @@
                     <label for="password">Password</label>
                     <input class="form-control" id="password" placeholder="Password" type="password" name="password">
                 </div>
-                <div class="form-group custom-checkbox"><!--custom-control row -->
+                <div class="form-group custom-checkbox">
                     <label for="remember">Remember me</label>
                     <input type="checkbox" class="form-check-input ml-5" id="remember" name="remember"/>
                 </div>

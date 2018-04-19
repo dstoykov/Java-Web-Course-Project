@@ -24,6 +24,7 @@ public class VideoController {
     @GetMapping("/add")
     public ModelAndView add(ModelAndView modelAndView) {
         modelAndView.setViewName("add-video");
+        modelAndView.addObject("title", "Add Video");
         List<Category> categories = this.categoryService.getAllCategories();
         List<String> categoriesNames = new ArrayList<>();
         for (Category category : categories) {
