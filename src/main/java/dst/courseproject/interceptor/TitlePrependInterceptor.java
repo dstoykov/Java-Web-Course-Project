@@ -13,6 +13,9 @@ public class TitlePrependInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         super.postHandle(request, response, handler, modelAndView);
+        if (modelAndView == null || modelAndView.getModelMap() == null) {
+            return;
+        }
         ModelMap map = modelAndView.getModelMap();
         if (map.containsAttribute("title")) {
             String title = (String) map.get("title");
