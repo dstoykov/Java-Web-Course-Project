@@ -23,7 +23,6 @@ public class RegisterUserBindingModel {
     private String password;
 
     @NotEmpty(message = "Field name must not be empty. ")
-    @Size(min = 8, max = 20, message = "Password confirmation length must be between 8 and 20 symbols. ")
     private String confirmPassword;
 
     public RegisterUserBindingModel() {

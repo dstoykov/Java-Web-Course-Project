@@ -1,6 +1,7 @@
 package dst.courseproject.services;
 
 import dst.courseproject.exceptions.PasswordsMismatchException;
+import dst.courseproject.exceptions.UserAlreadyExistsException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
@@ -15,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getUserByEmail(String email);
 
-    void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException;
+    void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException;
 
     UserViewModel getUserModelByEmail(String email);
 
@@ -28,6 +29,8 @@ public interface UserService extends UserDetailsService {
     UserEditBindingModel getUserById(String id);
 
     void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException;
+
+    void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String name) throws PasswordsMismatchException;
 
     void deleteUser(String id);
 

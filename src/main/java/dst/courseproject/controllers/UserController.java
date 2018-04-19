@@ -1,6 +1,7 @@
 package dst.courseproject.controllers;
 
 import dst.courseproject.exceptions.PasswordsMismatchException;
+import dst.courseproject.exceptions.UserAlreadyExistsException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Set;
 
 @Controller
@@ -47,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerInput", bindingResult);
             redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
@@ -57,6 +59,8 @@ public class UserController {
                 this.userService.register(userBindingModel);
                 modelAndView.setViewName("redirect:login");
             } catch (PasswordsMismatchException e) {
+                modelAndView.setViewName("redirect:register");
+            } catch (UserAlreadyExistsException e) {
                 modelAndView.setViewName("redirect:register");
             }
         }
@@ -68,6 +72,7 @@ public class UserController {
     @PreAuthorize("!isAuthenticated()")
     public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
+
         return modelAndView;
     }
 
@@ -86,10 +91,10 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/profile/edit")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
-        UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
+    public ModelAndView editProfile(ModelAndView modelAndView, Model model, ModelMapper mapper, Principal principal) {
+        UserServiceModel userServiceModel = this.userService.getUserByEmail(principal.getName());
         modelAndView.setViewName("user-edit");
 
         if (!model.containsAttribute("userInput")) {
@@ -100,30 +105,64 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping("/edit/{id}")
-    public ModelAndView editProfile(@PathVariable("id") String id, @Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    @PostMapping("/profile/edit")
+    public ModelAndView editProfile(@Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
             redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
-            modelAndView.setViewName("redirect:/users/edit/" + id);
+            modelAndView.setViewName("redirect:/users/profile/edit");
         } else {
             try {
-                this.userService.editUserData(userEditBindingModel, id);
+                this.userService.editUserDataByEmail(userEditBindingModel, principal.getName());
                 modelAndView.setViewName("redirect:../profile");
             } catch (PasswordsMismatchException e) {
-                modelAndView.setViewName("redirect:/users/edit/" + id);
+                modelAndView.setViewName("redirect:/users/profile/edit");
             }
         }
 
         return modelAndView;
     }
 
+//    @GetMapping("/edit/{id}")
+//    @PreAuthorize("isAuthenticated()")
+//    public ModelAndView editProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model, ModelMapper mapper) {
+//        UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
+//        modelAndView.setViewName("user-edit");
+//
+//        if (!model.containsAttribute("userInput")) {
+//            UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
+//            model.addAttribute("userInput", userEditBindingModel);
+//        }
+//
+//        return modelAndView;
+//    }
+//
+//    @PostMapping("/edit/{id}")
+//    public ModelAndView editProfile(@PathVariable("id") String id, @Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);
+//            redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
+//            modelAndView.setViewName("redirect:/users/edit/" + id);
+//        } else {
+//            try {
+//                this.userService.editUserData(userEditBindingModel, id);
+//                modelAndView.setViewName("redirect:../profile");
+//            } catch (PasswordsMismatchException e) {
+//                modelAndView.setViewName("redirect:/users/edit/" + id);
+//            }
+//        }
+//
+//        return modelAndView;
+//    }
+
     @PostMapping("/logout")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView logout(@RequestParam(required = false, name = "logout") String logout, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         modelAndView.setViewName("redirect:/login");
 
-        if(logout != null) redirectAttributes.addFlashAttribute("logout", logout);
+        if(logout != null) {
+            redirectAttributes.addFlashAttribute("logout", logout);
+        }
 
         return modelAndView;
     }

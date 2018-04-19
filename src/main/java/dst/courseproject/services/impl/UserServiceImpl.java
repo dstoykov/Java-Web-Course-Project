@@ -3,6 +3,7 @@ package dst.courseproject.services.impl;
 import dst.courseproject.entities.Role;
 import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
+import dst.courseproject.exceptions.UserAlreadyExistsException;
 import dst.courseproject.models.binding.RegisterUserBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
@@ -108,7 +109,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException {
+    public void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
+        if (this.userRepository.findByEmailEquals(bindingModel.getEmail()) != null) {
+            throw new UserAlreadyExistsException("User with the sam email already exists!");
+        }
         User user = this.mapper.map(bindingModel, User.class);
         if (comparePasswords(bindingModel.getPassword(), bindingModel.getConfirmPassword())) {
             user.setPassword(this.encoder.encode(bindingModel.getPassword()));
@@ -129,6 +133,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
+
+        if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
+            user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
+        }
+        user.setFirstName(userEditBindingModel.getFirstName());
+        user.setLastName(userEditBindingModel.getLastName());
+
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String email) throws PasswordsMismatchException {
+        User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
 
         if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
             user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));

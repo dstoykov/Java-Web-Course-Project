@@ -11,7 +11,7 @@
 </header>
 <main>
     <div class="container">
-        <form th:action="@{/users/edit/{id}(id=${userInput.getId()})}" th:method="POST" th:object="${userInput}">
+        <form th:action="@{/users/profile/edit}" th:method="POST" th:object="${userInput}">
             <div th:if="${#fields.hasAnyErrors()}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
