@@ -20,4 +20,6 @@ public interface CategoryService {
     void editCategory(@Valid EditCategoryBindingModel editCategoryBindingModel, String id);
 
     void deleteCategory(String id);
+
+    Category findByName(String category);
 }

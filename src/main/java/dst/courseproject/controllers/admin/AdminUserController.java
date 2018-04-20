@@ -68,6 +68,9 @@ public class AdminUserController {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
             model.addAttribute("userInput", userEditBindingModel);
         }
+        if (model.containsAttribute("passwordError")) {
+            modelAndView.addObject("passwordError");
+        }
 
         return modelAndView;
     }
@@ -83,6 +86,7 @@ public class AdminUserController {
                 this.userService.editUserData(userEditBindingModel, id);
                 modelAndView.setViewName("redirect:../" + id);
             } catch (PasswordsMismatchException e) {
+                redirectAttributes.addFlashAttribute("passwordError", "error");
                 modelAndView.setViewName("redirect:" + id);
             }
         }

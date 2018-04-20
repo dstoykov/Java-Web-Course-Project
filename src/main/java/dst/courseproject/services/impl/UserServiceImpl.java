@@ -51,7 +51,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserServiceModel getUserByEmail(String email) {
+    public Long getTotalUsersCount() {
+        return this.userRepository.countUsersByEmailIsNotNull();
+    }
+
+    @Override
+    public Long getTotalActiveUsersCount() {
+        return this.userRepository.countUsersByDeletedOnIsNull();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
+        return user;
+    }
+
+    @Override
+    public UserServiceModel getUserServiceModelByEmail(String email) {
         UserServiceModel userServiceModel = this.mapper.map(this.userRepository.findByEmailAndDeletedOnIsNull(email), UserServiceModel.class);
         return userServiceModel;
     }
@@ -62,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserViewModel getUserModelByEmail(String email) {
+    public UserViewModel getUserViewModelByEmail(String email) {
         User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
         UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
         return userViewModel;
@@ -90,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEditBindingModel getUserById(String id) {
+    public UserEditBindingModel getUserEditBindingModelById(String id) {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
         UserEditBindingModel userEditBindingModel = this.mapper.map(user, UserEditBindingModel.class);
         return userEditBindingModel;

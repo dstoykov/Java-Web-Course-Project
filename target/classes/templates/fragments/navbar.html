@@ -17,12 +17,6 @@
                     <li sec:authorize="hasRole('MODERATOR')" class="nav-item">
                         <a class="nav-link" th:href="@{/admin/categories/all}">*| Categories</a>
                     </li>
-                    <li sec:authorize="hasAuthority('MODERATOR')" class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/categories/all}">*| Categories</a>
-                    </li>
-                    <li sec:authorize="hasAnyRole('MODERATOR')" class="nav-item">
-                        <a class="nav-link" th:href="@{/admin/categories/all}">*| Categories</a>
-                    </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a class="nav-link" th:href="@{/admin/users/all}">Users |*</a>
                     </li>

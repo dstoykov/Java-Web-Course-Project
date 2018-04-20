@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Set;
@@ -45,6 +46,12 @@ public class UserController {
         if (!model.containsAttribute("registerInput")) {
             model.addAttribute("registerInput", new RegisterUserBindingModel());
         }
+        if (model.containsAttribute("passwordError")) {
+            modelAndView.addObject("passwordError");
+        }
+        if (model.containsAttribute("userExistsError")) {
+            modelAndView.addObject("userExistsError");
+        }
 
         return modelAndView;
     }
@@ -59,10 +66,12 @@ public class UserController {
             try {
                 this.userService.register(userBindingModel);
                 modelAndView.setViewName("redirect:login");
+                redirectAttributes.addFlashAttribute("success", "Successfully registered");
             } catch (PasswordsMismatchException e) {
-                redirectAttributes.addFlashAttribute("passwordError", e.getMessage());
+                redirectAttributes.addFlashAttribute("passwordError", "error");
                 modelAndView.setViewName("redirect:register");
             } catch (UserAlreadyExistsException e) {
+                redirectAttributes.addFlashAttribute("userExistsError", "error");
                 modelAndView.setViewName("redirect:register");
             }
         }
@@ -72,9 +81,12 @@ public class UserController {
 
     @GetMapping("/login")
     @PreAuthorize("!isAuthenticated()")
-    public ModelAndView login(ModelAndView modelAndView) {
+    public ModelAndView login(ModelAndView modelAndView, Model model) {
         modelAndView.setViewName("login");
         modelAndView.addObject("title", "Login");
+        if (model.containsAttribute("success")) {
+            modelAndView.addObject("success");
+        }
 
         return modelAndView;
     }
@@ -83,7 +95,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView profile(ModelAndView modelAndView) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserViewModel userViewModel = this.userService.getUserModelByEmail(userDetails.getUsername());
+        UserViewModel userViewModel = this.userService.getUserViewModelByEmail(userDetails.getUsername());
 
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
 
@@ -98,13 +110,16 @@ public class UserController {
     @GetMapping("/profile/edit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfile(ModelAndView modelAndView, Model model, ModelMapper mapper, Principal principal) {
-        UserServiceModel userServiceModel = this.userService.getUserByEmail(principal.getName());
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
         modelAndView.setViewName("user-edit");
         modelAndView.addObject("title", "Edit Profile");
 
         if (!model.containsAttribute("userInput")) {
             UserEditBindingModel userEditBindingModel = mapper.map(userServiceModel, UserEditBindingModel.class);
             model.addAttribute("userInput", userEditBindingModel);
+        }
+        if (model.containsAttribute("passwordError")) {
+            modelAndView.addObject("passwordError");
         }
 
         return modelAndView;
@@ -121,6 +136,7 @@ public class UserController {
                 this.userService.editUserDataByEmail(userEditBindingModel, principal.getName());
                 modelAndView.setViewName("redirect:../profile");
             } catch (PasswordsMismatchException e) {
+                redirectAttributes.addFlashAttribute("passwordError", "error");
                 modelAndView.setViewName("redirect:/users/profile/edit");
             }
         }

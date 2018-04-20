@@ -25,6 +25,19 @@
                     /*]]>*/
                 </script>
             </div>
+            <div th:if="${passwordError}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    new Noty({
+                        text: 'ERROR: Passwords mismatch!',
+                        type: 'error',
+                        theme: 'mint',
+                        timeout: 4000,
+                        layout: 'topRight'
+                    }).show();
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset>
                 <legend>Edit Profile</legend>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">

@@ -11,6 +11,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
+    Long countUsersByEmailIsNotNull();
+
+    Long countUsersByDeletedOnIsNull();
+
     User findByEmailAndDeletedOnIsNull(String email);
 
     User findByIdEqualsAndDeletedOnIsNull(String id);

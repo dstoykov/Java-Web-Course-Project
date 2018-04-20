@@ -13,6 +13,19 @@
     <div class="container">
         <form th:action="@{'/users/login'}" th:method="POST">
             <fieldset>
+                <div th:if="${success}">
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        new Noty({
+                            text: 'You have register successfully.',
+                            type: 'success',
+                            theme: 'mint',
+                            timeout: 4000,
+                            layout: 'topRight'
+                        }).show();
+                        /*]]>*/
+                    </script>
+                </div>
                 <legend>Login</legend>
                 <h5>If you don't have an account - register <a th:href="@{/users/register}">here</a>.</h5>
                 <div class="form-group row mt-3">

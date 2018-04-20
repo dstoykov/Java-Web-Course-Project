@@ -20,7 +20,7 @@ public class Video {
     private String title;
 
     @Column(nullable = false)
-    private String videoPath;
+    private String url;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -44,6 +44,8 @@ public class Video {
 
     public Video() {
         this.comments = new HashSet<>();
+        this.likes = 0L;
+        this.dislikes = 0L;
     }
 
     public String getId() {
@@ -62,12 +64,12 @@ public class Video {
         this.title = title;
     }
 
-    public String getVideoPath() {
-        return this.videoPath;
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setVideoPath(String videoPath) {
-        this.videoPath = videoPath;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDescription() {
