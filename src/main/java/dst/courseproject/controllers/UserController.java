@@ -39,8 +39,10 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    @PreAuthorize("!isAuthenticated()")
-    public ModelAndView register(ModelAndView modelAndView, Model model) {
+    public ModelAndView register(ModelAndView modelAndView, Model model, Principal principal) {
+        if (principal != null) {
+            return new ModelAndView("redirect:/");
+        }
         modelAndView.setViewName("register");
         modelAndView.addObject("title", "Register");
         if (!model.containsAttribute("registerInput")) {
@@ -80,8 +82,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    @PreAuthorize("!isAuthenticated()")
-    public ModelAndView login(ModelAndView modelAndView, Model model) {
+    public ModelAndView login(ModelAndView modelAndView, Model model, Principal principal) {
+        if (principal != null) {
+            return new ModelAndView("redirect:/");
+        }
         modelAndView.setViewName("login");
         modelAndView.addObject("title", "Login");
         if (model.containsAttribute("success")) {
