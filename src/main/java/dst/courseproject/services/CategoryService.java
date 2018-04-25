@@ -4,6 +4,7 @@ import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.AddCategoryBindingModel;
 import dst.courseproject.models.binding.EditCategoryBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
+import dst.courseproject.models.view.CategoryViewModel;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,4 +23,6 @@ public interface CategoryService {
     void deleteCategory(String id);
 
     Category findByName(String category);
+
+    CategoryViewModel getCategoryViewModel(String name);
 }

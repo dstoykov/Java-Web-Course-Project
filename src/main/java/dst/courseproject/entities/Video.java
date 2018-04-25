@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,6 +42,12 @@ public class Video {
 
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long dislikes;
+
+    @Column(nullable = false, columnDefinition = "BIGINT default 0")
+    private Long views;
+
+    @Column(nullable = false)
+    private LocalDate uploadedOn;
 
     public Video() {
         this.comments = new HashSet<>();
@@ -118,5 +125,21 @@ public class Video {
 
     public void setDislikes(Long dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public Long getViews() {
+        return this.views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
+    public LocalDate getUploadedOn() {
+        return this.uploadedOn;
+    }
+
+    public void setUploadedOn(LocalDate uploadedOn) {
+        this.uploadedOn = uploadedOn;
     }
 }

@@ -15,4 +15,6 @@ public interface VideoService {
     void addVideo(@Valid AddVideoBindingModel addVideoBindingModel, Principal principal) throws IOException;
 
     Long getTotalVideosCount();
+
+    VideoViewModel getVideoViewModelForDetailsById(String id);
 }

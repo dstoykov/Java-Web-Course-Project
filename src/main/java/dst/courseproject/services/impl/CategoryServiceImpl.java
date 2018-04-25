@@ -4,6 +4,7 @@ import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.AddCategoryBindingModel;
 import dst.courseproject.models.binding.EditCategoryBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
+import dst.courseproject.models.view.CategoryViewModel;
 import dst.courseproject.repositories.CategoryRepository;
 import dst.courseproject.services.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -68,5 +69,13 @@ public class CategoryServiceImpl implements CategoryService {
     public Category findByName(String categoryName) {
         Category category = this.categoryRepository.findByName(categoryName);
         return category;
+    }
+
+    @Override
+    public CategoryViewModel getCategoryViewModel(String name) {
+        Category category = this.categoryRepository.findByName(name);
+        CategoryViewModel viewModel = this.modelMapper.map(category, CategoryViewModel.class);
+
+        return viewModel;
     }
 }

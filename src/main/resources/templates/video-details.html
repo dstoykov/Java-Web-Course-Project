@@ -11,18 +11,18 @@
 </header>
 <main>
     <div class="container">
-        <h2>Video name</h2>
+        <h2 th:text="${videoName}"></h2>
         <video width="840" height="472" controls>
             <source src="blob:https://www.youtube.com/70f32da2-f38d-4688-b107-89b7a65ce34f">
         </video>
         <div class="row">
             <div class="col-lg-7">
                 <p>
-                    <strong><a class="font-weight-bold" href="/">Uploader name</a></strong>
-                    <small>Uploaded on 35.35.3535</small>
+                    <strong><a class="font-weight-bold" href="/" th:text="${uploaderName}"></a></strong>
+                    <small th:text="${'Uploaded on ' + uploadDate}"></small>
                 </p>
-                <p class="lead">Video description</p>
-                <p>Category: <a href="/">category</a></p>
+                <p class="lead" th:text="${description}"></p>
+                <p>Category: <a th:href="@{/category/${name}(name=category)}" th:text="${category}"></a></p>
                 <br/>
                 <h3 class="text-primary">Comments:</h3>
                 <div class="form-group">
@@ -41,13 +41,16 @@
         <!--</th:block>-->
             </div>
             <div class="col-lg-2">
+                <div class="justify-content-center">
+                    <h4 class="text-center font-weight-normal" th:text="${views + ' views'}"></h4>
+                </div>
                 <table>
                     <td>
                         <p>
                             <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/like.png}"
                                     width="20"
                                     height="20"/></a>
-                            <span th:text="16"></span>
+                            <span th:text="${likes}"></span>
                         </p>
                     </td>
                     <td width="20" height="70"
@@ -61,7 +64,7 @@
                             <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"
                                     width="20"
                                     height="20"/></a>
-                            <span th:text="1"></span>
+                            <span th:text="${dislikes}"></span>
                         </p>
                     </td>
                 </table>

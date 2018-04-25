@@ -3,17 +3,14 @@ package dst.courseproject.controllers;
 import dst.courseproject.cloud.CloudVideoUploader;
 import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.AddVideoBindingModel;
-import dst.courseproject.models.binding.RegisterUserBindingModel;
+import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.CategoryService;
 import dst.courseproject.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,7 +36,7 @@ public class VideoController {
 
     @GetMapping("/add")
     public ModelAndView add(ModelAndView modelAndView, Model model) {
-        modelAndView.setViewName("add-video");
+        modelAndView.setViewName("video-add");
         if (!model.containsAttribute("videoInput")) {
             model.addAttribute("videoInput", new AddVideoBindingModel());
         }
@@ -66,6 +63,25 @@ public class VideoController {
             this.videoService.addVideo(addVideoBindingModel, principal);
             modelAndView.setViewName("redirect:../../");
         }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView videoDetails(@PathVariable String id, ModelAndView modelAndView, Model model) {
+        VideoViewModel videoViewModel = this.videoService.getVideoViewModelForDetailsById(id);
+
+        modelAndView.setViewName("video-details");
+        modelAndView.addObject("videoName", videoViewModel.getTitle());
+        modelAndView.addObject("source", videoViewModel.getUrl());
+        modelAndView.addObject("uploaderName", videoViewModel.getAuthor().getFirstName() + " " + videoViewModel.getAuthor().getLastName());
+        modelAndView.addObject("uploadDate", videoViewModel.getUploadedOn());
+        modelAndView.addObject("description", videoViewModel.getDescription());
+        modelAndView.addObject("category", videoViewModel.getCategory().getName());
+        modelAndView.addObject("comments", videoViewModel.getComments());
+        modelAndView.addObject("views", videoViewModel.getViews());
+        modelAndView.addObject("likes", videoViewModel.getLikes());
+        modelAndView.addObject("dislikes", videoViewModel.getDislikes());
 
         return modelAndView;
     }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <div>
+            <h1 class="text-center font-weight-bold"
+                th:text="${category.getName()}"></h1>
+            </div>
+        </div>
+        <hr/>
+        <div>
+            <div th:if="${#lists.isEmpty(category.getVideos())}">
+                <h4 class="text-center font-weight-bold">No videos to show.</h4>
+            </div>
+            <div class="row" th:if="${not #lists.isEmpty(category.getVideos())}">
+                <th:block th:each="video : ${category.getVideos()}">
+                    <div class="col-md-6">
+                        <header>
+                            <h2 th:text="${video.getTitle()}"></h2>
+                        </header>
+                        <p>
+                            <a th:href="@{/videos/{id}(id=${video.getId()})}">
+                                <img th:src="@{http://localhost:8080/images/video-player.png}"
+                                     width="400"/>
+                            </a>
+                        </p>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

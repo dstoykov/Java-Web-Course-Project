@@ -72,4 +72,20 @@ public class VideoServiceImpl implements VideoService {
 
         this.videoRepository.save(video);
     }
+
+    @Override
+    public VideoViewModel getVideoViewModelForDetailsById(String id) {
+        Video video = this.increaseVideoViewsByOneAndSave(id);
+        VideoViewModel videoViewModel = this.modelMapper.map(video, VideoViewModel.class);
+
+        return videoViewModel;
+    }
+
+    private Video increaseVideoViewsByOneAndSave(String id) {
+        Video video = this.videoRepository.getOne(id);
+        video.setViews(video.getViews() + 1);
+        this.videoRepository.save(video);
+
+        return video;
+    }
 }

@@ -4,6 +4,7 @@ import dst.courseproject.entities.Category;
 import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.User;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 public class VideoViewModel {
@@ -24,6 +25,10 @@ public class VideoViewModel {
     private Long likes;
 
     private Long dislikes;
+
+    private Long views;
+
+    private LocalDate uploadedOn;
 
     public VideoViewModel() {
     }
@@ -98,5 +103,21 @@ public class VideoViewModel {
 
     public void setDislikes(Long dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public Long getViews() {
+        return this.views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
+    public LocalDate getUploadedOn() {
+        return this.uploadedOn;
+    }
+
+    public void setUploadedOn(LocalDate uploadedOn) {
+        this.uploadedOn = uploadedOn;
     }
 }
