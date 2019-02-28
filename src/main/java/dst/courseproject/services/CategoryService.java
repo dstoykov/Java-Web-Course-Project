@@ -1,8 +1,8 @@
 package dst.courseproject.services;
 
 import dst.courseproject.entities.Category;
-import dst.courseproject.models.binding.AddCategoryBindingModel;
-import dst.courseproject.models.binding.EditCategoryBindingModel;
+import dst.courseproject.models.binding.CategoryAddBindingModel;
+import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.models.view.CategoryViewModel;
 
@@ -12,13 +12,13 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getAllCategories();
 
-    void addCategory(@Valid AddCategoryBindingModel categoryBindingModel);
+    void addCategory(@Valid CategoryAddBindingModel categoryBindingModel);
 
     CategoryServiceModel getCategoryServiceModel(String id);
 
-    EditCategoryBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel);
+    CategoryEditBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel);
 
-    void editCategory(@Valid EditCategoryBindingModel editCategoryBindingModel, String id);
+    void editCategory(@Valid CategoryEditBindingModel categoryEditBindingModel, String id);
 
     void deleteCategory(String id);
 

@@ -1,5 +1,6 @@
 package dst.courseproject.models.service;
 
+import dst.courseproject.entities.Role;
 import dst.courseproject.entities.Video;
 
 import java.util.Set;
@@ -16,6 +17,8 @@ public class UserServiceModel {
     private String password;
 
     private Set<Video> videos;
+
+    private Set<Role> authorities;
 
     public UserServiceModel() {
     }
@@ -66,5 +69,13 @@ public class UserServiceModel {
 
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
+    }
+
+    public Set<Role> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 }

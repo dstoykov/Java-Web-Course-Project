@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title th:text="${title}"></title>
+    <title>My Profile</title>
 </head>
 <body>
 <header>
@@ -15,23 +15,16 @@
             <h1 class="text-center font-weight-bold"
                 th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
             <h3 class="text-center font-weight-bold" th:text="${user.getEmail()}"></h3>
-            <h5 class="text-center text-info" th:if="${user.hasRole('ROLE_MODERATOR')}">MODERATOR</h5>
-            <h5 class="text-center text-info font-weight-bold" th:if="${user.hasRole('ROLE_ADMIN')}">ADMIN</h5>
-            <h5 class="text-center text-danger" th:if="${user.getDeletedOn() != null}"
-                th:text="${'(Deleted on ' + #temporals.format(user.getDeletedOn(), 'dd-MM-yyyy') + ')'}"></h5>
+            <h5 class="text-center text-info font-weight-bold" th:if="${isAdmin}">ADMIN</h5>
+            <h5 class="text-center text-info" th:if="${isModerator && !isAdmin}">MODERATOR</h5>
             <div class="form-group center mt-3 d-flex justify-content-center">
-                <a sec:authorize="!hasRole('MODERATOR')" class="btn btn-outline-success" th:href="@{/users/profile/edit}">Edit profile</a>
-                <a sec:authorize="hasRole('MODERATOR')" class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
-                <a sec:authorize="hasRole('ADMIN')" th:if="${user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
-                   th:href="@{/admin/users/delete/{id}(id=${user.getId()})}">Delete profile</a>
-                <a sec:authorize="hasRole('ADMIN')" th:if="${user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
-                <a sec:authorize="hasRole('MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
-                <a sec:authorize="!hasRole('MODERATOR')" class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
+                <a class="btn btn-outline-success" th:href="@{/users/profile/edit}">Edit profile</a>
+                <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Back</a>
             </div>
         </div>
         <hr/>
         <div>
-            <h3 class="text-center" th:text="${user.getFirstName()} + '\'s videos:'"></h3>
+            <h3 class="text-center">Your videos:</h3>
             <div th:if="${#lists.isEmpty(videos)}">
                 <h4 class="text-center font-weight-bold">No videos to show.</h4>
             </div>

@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class RegisterUserBindingModel {
+public class UserRegisterBindingModel {
 
     @NotEmpty(message = "Field must not be empty. ")
     @Pattern(regexp = "^[a-z0-9._-]+@[a-z0-9-]+(\\.[a-z]{2,4}){1,3}$", message = "Invalid email format. ")
@@ -25,7 +25,7 @@ public class RegisterUserBindingModel {
     @NotEmpty(message = "Field name must not be empty. ")
     private String confirmPassword;
 
-    public RegisterUserBindingModel() {
+    public UserRegisterBindingModel() {
     }
 
     public String getEmail() {

@@ -1,8 +1,8 @@
 package dst.courseproject.services.impl;
 
 import dst.courseproject.entities.Category;
-import dst.courseproject.models.binding.AddCategoryBindingModel;
-import dst.courseproject.models.binding.EditCategoryBindingModel;
+import dst.courseproject.models.binding.CategoryAddBindingModel;
+import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.models.view.CategoryViewModel;
 import dst.courseproject.repositories.CategoryRepository;
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void addCategory(@Valid AddCategoryBindingModel categoryBindingModel) {
+    public void addCategory(@Valid CategoryAddBindingModel categoryBindingModel) {
         Category category = this.modelMapper.map(categoryBindingModel, Category.class);
         this.categoryRepository.save(category);
     }
@@ -47,14 +47,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public EditCategoryBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel) {
-        return this.modelMapper.map(categoryServiceModel, EditCategoryBindingModel.class);
+    public CategoryEditBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel) {
+        return this.modelMapper.map(categoryServiceModel, CategoryEditBindingModel.class);
     }
 
     @Override
-    public void editCategory(@Valid EditCategoryBindingModel editCategoryBindingModel, String id) {
+    public void editCategory(@Valid CategoryEditBindingModel categoryEditBindingModel, String id) {
         Category category = this.categoryRepository.getOne(id);
-        category.setName(editCategoryBindingModel.getName());
+        category.setName(categoryEditBindingModel.getName());
 
         this.categoryRepository.save(category);
     }

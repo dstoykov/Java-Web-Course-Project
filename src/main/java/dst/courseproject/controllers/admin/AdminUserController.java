@@ -8,9 +8,11 @@ import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import dst.courseproject.util.Users;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,11 +50,20 @@ public class AdminUserController {
     @GetMapping("/{id}")
     public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserViewModel model = this.userService.getUserViewModelById(id);
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserViewModel loggedUser = this.userService.getUserViewModelByEmail(principal.getUsername());
+
+        Boolean isModeratorUser = Users.hasRole("MODERATOR", model.getAuthorities());
+        Boolean isAdminUser = Users.hasRole("ADMIN", model.getAuthorities());
+        Boolean isAdminPrincipal = Users.hasRole("ADMIN", principal.getAuthorities());
 
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(model.getVideos());
 
-        modelAndView.setViewName("user-profile");
+        modelAndView.setViewName("admin-user-profile");
         modelAndView.addObject("title", model.getFirstName() + "'s Profile");
+        modelAndView.addObject("isAdminUser", isAdminUser);
+        modelAndView.addObject("isModeratorUser", isModeratorUser);
+        modelAndView.addObject("isAdminPrincipal", isAdminPrincipal);
         modelAndView.addObject("user", model);
         modelAndView.addObject("videos", videoViewModels);
 
@@ -131,7 +142,7 @@ public class AdminUserController {
         return modelAndView;
     }
 
-    @GetMapping("{id}/moderator")
+    @GetMapping("/moderator/{id}")
     public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserViewModel userViewModel = this.userService.getUserViewModelById(id);
         modelAndView.setViewName("user-moderator");
@@ -141,7 +152,7 @@ public class AdminUserController {
         return modelAndView;
     }
 
-    @PostMapping("{id}/moderator")
+    @PostMapping("/moderator/{id}")
     public ModelAndView makeModeratorConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
         this.userService.makeModerator(id);
         modelAndView.setViewName("redirect:../" + id);

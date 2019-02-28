@@ -1,12 +1,12 @@
 package dst.courseproject.models.service;
 
+import dst.courseproject.entities.Role;
 import dst.courseproject.entities.Video;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 public class UserRestoreServiceModel {
-
     private String id;
 
     private String email;
@@ -18,6 +18,8 @@ public class UserRestoreServiceModel {
     private String password;
 
     private Set<Video> videos;
+
+    private Set<Role> authorities;
 
     private LocalDate deletedOn;
 
@@ -70,6 +72,14 @@ public class UserRestoreServiceModel {
 
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
+    }
+
+    public Set<Role> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
     public LocalDate getDeletedOn() {

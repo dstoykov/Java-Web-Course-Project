@@ -2,7 +2,7 @@ package dst.courseproject.controllers;
 
 import dst.courseproject.cloud.CloudVideoUploader;
 import dst.courseproject.entities.Category;
-import dst.courseproject.models.binding.AddVideoBindingModel;
+import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.CategoryService;
 import dst.courseproject.services.VideoService;
@@ -38,7 +38,7 @@ public class VideoController {
     public ModelAndView add(ModelAndView modelAndView, Model model) {
         modelAndView.setViewName("video-add");
         if (!model.containsAttribute("videoInput")) {
-            model.addAttribute("videoInput", new AddVideoBindingModel());
+            model.addAttribute("videoInput", new VideoAddBindingModel());
         }
 
         modelAndView.addObject("title", "Add Video");
@@ -53,14 +53,14 @@ public class VideoController {
     }
 
     @PostMapping("/add")
-    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") AddVideoBindingModel addVideoBindingModel, ModelAndView modelAndView, Model model, RedirectAttributes redirectAttributes, BindingResult bindingResult, Principal principal) throws IOException {
+    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, ModelAndView modelAndView, Model model, RedirectAttributes redirectAttributes, BindingResult bindingResult, Principal principal) throws IOException {
         if (bindingResult.hasErrors()) {
-            System.out.println(addVideoBindingModel);
+            System.out.println(videoAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
-            redirectAttributes.addFlashAttribute("videoInput", addVideoBindingModel);
+            redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
             modelAndView.setViewName("redirect:add");
         } else {
-            this.videoService.addVideo(addVideoBindingModel, principal);
+            this.videoService.addVideo(videoAddBindingModel, principal);
             modelAndView.setViewName("redirect:../../");
         }
 

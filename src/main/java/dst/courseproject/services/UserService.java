@@ -3,7 +3,7 @@ package dst.courseproject.services;
 import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
-import dst.courseproject.models.binding.RegisterUserBindingModel;
+import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -11,7 +11,6 @@ import dst.courseproject.models.view.UserViewModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -20,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getUserServiceModelByEmail(String email);
 
-    void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException;
+    void register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException;
 
     UserViewModel getUserViewModelByEmail(String email);
 

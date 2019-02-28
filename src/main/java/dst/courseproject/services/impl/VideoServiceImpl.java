@@ -4,7 +4,7 @@ import dst.courseproject.cloud.CloudVideoUploader;
 import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
-import dst.courseproject.models.binding.AddVideoBindingModel;
+import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.repositories.VideoRepository;
 import dst.courseproject.services.CategoryService;
@@ -13,7 +13,6 @@ import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -58,17 +57,17 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void addVideo(@Valid AddVideoBindingModel addVideoBindingModel, Principal principal) throws IOException {
+    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException {
         Video video = new Video();
-        Category category = this.categoryService.findByName(addVideoBindingModel.getCategory());
+        Category category = this.categoryService.findByName(videoAddBindingModel.getCategory());
         User user = this.userService.getUserByEmail(principal.getName());
 
-        video.setTitle(addVideoBindingModel.getTitle());
-        video.setDescription(addVideoBindingModel.getDescription());
+        video.setTitle(videoAddBindingModel.getTitle());
+        video.setDescription(videoAddBindingModel.getDescription());
         video.setAuthor(user);
         video.setCategory(category);
 
-        this.cloudVideoUploader.uploadFile(addVideoBindingModel.getVideoFile());
+        this.cloudVideoUploader.uploadFile(videoAddBindingModel.getVideoFile());
 
         this.videoRepository.save(video);
     }

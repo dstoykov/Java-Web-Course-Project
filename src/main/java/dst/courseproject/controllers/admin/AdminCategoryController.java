@@ -1,7 +1,7 @@
 package dst.courseproject.controllers.admin;
 
-import dst.courseproject.models.binding.AddCategoryBindingModel;
-import dst.courseproject.models.binding.EditCategoryBindingModel;
+import dst.courseproject.models.binding.CategoryAddBindingModel;
+import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +38,14 @@ public class AdminCategoryController {
         modelAndView.setViewName("admin-category-add");
         modelAndView.addObject("title", "Add Category");
         if (!model.containsAttribute("addCategoryInput")) {
-            model.addAttribute("addCategoryInput", new AddCategoryBindingModel());
+            model.addAttribute("addCategoryInput", new CategoryAddBindingModel());
         }
 
         return modelAndView;
     }
 
     @PostMapping("/add")
-    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") AddCategoryBindingModel addCategoryInput, ModelAndView modelAndView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") CategoryAddBindingModel addCategoryInput, ModelAndView modelAndView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         System.out.println();
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryInput", bindingResult);
@@ -66,21 +66,21 @@ public class AdminCategoryController {
         modelAndView.addObject("title", "Edit Category");
 
         if (!model.containsAttribute("categoryInput")) {
-            EditCategoryBindingModel editCategoryBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
-            model.addAttribute("categoryInput", editCategoryBindingModel);
+            CategoryEditBindingModel categoryEditBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
+            model.addAttribute("categoryInput", categoryEditBindingModel);
         }
 
         return modelAndView;
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id, @Valid @ModelAttribute(name = "categoryInput") EditCategoryBindingModel editCategoryBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    public ModelAndView edit(@PathVariable("id") String id, @Valid @ModelAttribute(name = "categoryInput") CategoryEditBindingModel categoryEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.categoryInput", bindingResult);
-            redirectAttributes.addFlashAttribute("categoryInput", editCategoryBindingModel);
+            redirectAttributes.addFlashAttribute("categoryInput", categoryEditBindingModel);
             modelAndView.setViewName("redirect:/admin/categories/edit/" + id);
         } else {
-            this.categoryService.editCategory(editCategoryBindingModel, id);
+            this.categoryService.editCategory(categoryEditBindingModel, id);
             modelAndView.setViewName("redirect:../all");
         }
 
@@ -94,8 +94,8 @@ public class AdminCategoryController {
         modelAndView.addObject("title", "Delete Category");
 
         if (!model.containsAttribute("categoryInput")) {
-            EditCategoryBindingModel editCategoryBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
-            model.addAttribute("categoryInput", editCategoryBindingModel);
+            CategoryEditBindingModel categoryEditBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
+            model.addAttribute("categoryInput", categoryEditBindingModel);
         }
 
         return modelAndView;

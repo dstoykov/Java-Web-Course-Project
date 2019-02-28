@@ -2,13 +2,14 @@ package dst.courseproject.controllers;
 
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
-import dst.courseproject.models.binding.RegisterUserBindingModel;
+import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import dst.courseproject.util.Users;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class UserController {
         modelAndView.setViewName("register");
         modelAndView.addObject("title", "Register");
         if (!model.containsAttribute("registerInput")) {
-            model.addAttribute("registerInput", new RegisterUserBindingModel());
+            model.addAttribute("registerInput", new UserRegisterBindingModel());
         }
         if (model.containsAttribute("passwordError")) {
             modelAndView.addObject("passwordError");
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") RegisterUserBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Model model) {
+    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") UserRegisterBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerInput", bindingResult);
             redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
@@ -100,12 +100,15 @@ public class UserController {
     public ModelAndView profile(ModelAndView modelAndView) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserViewModel userViewModel = this.userService.getUserViewModelByEmail(userDetails.getUsername());
+        Boolean isAdmin = Users.hasRole("ADMIN", userViewModel.getAuthorities());
+        Boolean isModerator = Users.hasRole("MODERATOR", userViewModel.getAuthorities());
 
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
 
         modelAndView.setViewName("user-profile");
-        modelAndView.addObject("title", "Your Profile");
         modelAndView.addObject("user", userViewModel);
+        modelAndView.addObject("isAdmin", isAdmin);
+        modelAndView.addObject("isModerator", isModerator);
         modelAndView.addObject("videos", videoViewModels);
 
         return modelAndView;
@@ -130,6 +133,7 @@ public class UserController {
     }
 
     @PostMapping("/profile/edit")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView editProfile(@Valid @ModelAttribute(name = "userInput") UserEditBindingModel userEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userInput", bindingResult);

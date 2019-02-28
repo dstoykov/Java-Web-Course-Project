@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class AddVideoBindingModel {
+public class VideoAddBindingModel {
 
     @NotEmpty(message = "Title must not be empty")
     @Pattern(regexp = "^[a-zA-Z0-9.,!? ]+$", message = "Title can only have capital and small letters, number and punctuation['!', '?', '.', ','].")
@@ -22,7 +22,7 @@ public class AddVideoBindingModel {
 //    @NotEmpty(message = "You must select video file for uploading.")
     private MultipartFile videoFile;
 
-    public AddVideoBindingModel() {
+    public VideoAddBindingModel() {
     }
 
     public String getTitle() {

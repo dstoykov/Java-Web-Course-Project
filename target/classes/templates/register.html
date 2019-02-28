@@ -53,7 +53,7 @@
             </div>
             <fieldset>
                 <legend>Register</legend>
-                <h5>If you already have an account - login <a href="/users/login">here</a>.</h5>
+                <h5>You already have an account - login <a href="/users/login">here</a>.</h5>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
                     <label for="email">Email address</label>
                     <input class="form-control" th:field="*{email}" th:value="${registerInput.getEmail()}" id="email"

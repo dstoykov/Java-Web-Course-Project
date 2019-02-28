@@ -4,7 +4,7 @@ import dst.courseproject.entities.Role;
 import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
-import dst.courseproject.models.binding.RegisterUserBindingModel;
+import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegisterUserBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
+    public void register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
         if (this.userRepository.findByEmailEquals(bindingModel.getEmail()) != null) {
             throw new UserAlreadyExistsException("User with the sam email already exists!");
         }

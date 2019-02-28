@@ -90,13 +90,4 @@ public class UserViewModel {
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
     }
-
-    public boolean hasRole(String roleName) {
-        for (Role role1 : this.getAuthorities()) {
-            if (role1.getAuthority().equals(roleName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

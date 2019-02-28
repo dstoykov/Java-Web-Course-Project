@@ -117,7 +117,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new HashSet<Role>();
+        return this.authorities;
     }
 
     public void setAuthorities(Set<Role> authorities) {
