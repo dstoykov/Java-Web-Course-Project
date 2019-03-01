@@ -11,9 +11,9 @@
 </header>
 <main>
     <div class="container">
-        <form th:action="@{/admin/users/{id}/moderator(id=${userInput.getId()})}" th:method="POST">
+        <form th:action="@{/admin/users/moderator-revoke/{id}(id=${userInput.getId()})}" th:method="POST">
             <fieldset disabled="disabled">
-                <legend>Are you sure you want mo make this user moderator?</legend>
+                <legend>Are you sure you want to revoke this user's moderator authority?</legend>
                 <div class="form-group row">
                     <label for="email">Email</label>
                     <input class="form-control" th:value="${userInput.getEmail()}" id="email"
@@ -31,7 +31,7 @@
                 </div>
             </fieldset>
             <div class="form-group mt-4">
-                <button type="submit" class="btn btn-outline-primary mr-2">Make Moderator</button>
+                <button type="submit" class="btn btn-outline-primary mr-2">Revoke Authority</button>
                 <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/{id}(id=${userInput.getId()})}">Cancel</a>
             </div>
         </form>

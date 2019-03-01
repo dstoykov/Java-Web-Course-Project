@@ -128,6 +128,10 @@ public class User implements UserDetails {
         this.authorities.add(role);
     }
 
+    public void removeRole(Role role) {
+        this.authorities.remove(role);
+    }
+
     @Override
     public String getUsername() {
         return this.getEmail();

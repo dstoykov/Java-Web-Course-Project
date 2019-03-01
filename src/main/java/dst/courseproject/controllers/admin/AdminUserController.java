@@ -1,6 +1,8 @@
 package dst.courseproject.controllers.admin;
 
 import dst.courseproject.exceptions.PasswordsMismatchException;
+import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
+import dst.courseproject.exceptions.UserIsNotModeratorException;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -8,7 +10,7 @@ import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
-import dst.courseproject.util.UsersUtils;
+import dst.courseproject.util.UserUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,27 +41,34 @@ public class AdminUserController {
     public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
         List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
         modelAndView.setViewName("admin-users-all");
-        modelAndView.addObject("title", "All UsersUtils");
+        modelAndView.addObject("title", "All UserUtils");
         modelAndView.addObject("userModels", userViewModels);
 
         return modelAndView;
     }
 
     @GetMapping("/{id}")
-    public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView) {
-        UserViewModel model = this.userService.getUserViewModelById(id);
+    public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model) {
+        UserViewModel viewModel = this.userService.getUserViewModelById(id);
 
-        Boolean isModeratorUser = UsersUtils.hasRole("MODERATOR", model.getAuthorities());
-        Boolean isAdminUser = UsersUtils.hasRole("ADMIN", model.getAuthorities());
+        Boolean isModeratorUser = UserUtils.hasRole("MODERATOR", viewModel.getAuthorities());
+        Boolean isAdminUser = UserUtils.hasRole("ADMIN", viewModel.getAuthorities());
 
-        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(model.getVideos());
+        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(viewModel.getVideos());
 
         modelAndView.setViewName("admin-user-profile");
-        modelAndView.addObject("title", model.getFirstName() + "'s Profile");
+        modelAndView.addObject("title", viewModel.getFirstName() + "'s Profile");
         modelAndView.addObject("isAdminUser", isAdminUser);
         modelAndView.addObject("isModeratorUser", isModeratorUser);
-        modelAndView.addObject("user", model);
+        modelAndView.addObject("user", viewModel);
         modelAndView.addObject("videos", videoViewModels);
+
+        if (model.containsAttribute("moderatorAlreadyError")) {
+            modelAndView.addObject("moderatorAlreadyError");
+        }
+        if (model.containsAttribute("notModeratorError")) {
+            modelAndView.addObject("notModeratorError");
+        }
 
         return modelAndView;
     }
@@ -103,7 +112,7 @@ public class AdminUserController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
-        modelAndView.setViewName("user-delete");
+        modelAndView.setViewName("admin-user-delete");
         modelAndView.addObject("title", "Delete Profile");
         modelAndView.addObject("userInput", userServiceModel);
 
@@ -121,7 +130,7 @@ public class AdminUserController {
     @GetMapping("/restore/{id}")
     public ModelAndView restoreUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserRestoreServiceModel userServiceModel = this.userService.getDeletedUserServiceModelById(id);
-        modelAndView.setViewName("user-restore");
+        modelAndView.setViewName("admin-user-restore");
         modelAndView.addObject("title", "Restore Profile");
         modelAndView.addObject("userInput", userServiceModel);
 
@@ -137,19 +146,56 @@ public class AdminUserController {
     }
 
     @GetMapping("/moderator/{id}")
-    public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView) {
-        UserViewModel userViewModel = this.userService.getUserViewModelById(id);
-        modelAndView.setViewName("user-moderator");
-        modelAndView.addObject("title", "Make Moderator");
-        modelAndView.addObject("userInput", userViewModel);
-
+    public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        if (this.userService.isUserModerator(id)) {
+            redirectAttributes.addFlashAttribute("moderatorAlreadyError", "error");
+            modelAndView.setViewName("redirect:../" + id);
+        } else {
+            UserViewModel userViewModel = this.userService.getUserViewModelById(id);
+            modelAndView.setViewName("admin-user-moderator");
+            modelAndView.addObject("title", "Make Moderator");
+            modelAndView.addObject("userInput", userViewModel);
+        }
         return modelAndView;
     }
 
     @PostMapping("/moderator/{id}")
-    public ModelAndView makeModeratorConfirm(@PathVariable("id") String id, ModelAndView modelAndView) {
-        this.userService.makeModerator(id);
-        modelAndView.setViewName("redirect:../" + id);
+    public ModelAndView makeModeratorConfirm(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        try {
+            this.userService.makeModerator(id);
+        } catch (UserIsModeratorAlreadyException e) {
+            redirectAttributes.addFlashAttribute("moderatorAlreadyError", "error");
+        } finally {
+            modelAndView.setViewName("redirect:../" + id);
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/moderator-revoke/{id}")
+    public ModelAndView revokeAuthority(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        if (!this.userService.isUserModerator(id)) {
+            redirectAttributes.addFlashAttribute("notModeratorError", "error");
+            modelAndView.setViewName("redirect:../" + id);
+        } else {
+            UserViewModel userViewModel = this.userService.getUserViewModelById(id);
+            modelAndView.setViewName("admin-user-revoke-authority");
+            modelAndView.addObject("title", "Revoke Moderator Authority");
+            modelAndView.addObject("userInput", userViewModel);
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/moderator-revoke/{id}")
+    public ModelAndView revokeAuthorityConfirm(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirect) {
+        try {
+            this.userService.revokeModeratorAuthority(id);
+        } catch (UserIsNotModeratorException e) {
+            redirect.addFlashAttribute("notModeratorError", "error");
+        } finally {
+            modelAndView.setViewName("redirect:../" + id);
+        }
 
         return modelAndView;
     }

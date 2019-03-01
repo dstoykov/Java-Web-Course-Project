@@ -4,6 +4,8 @@ import dst.courseproject.entities.Role;
 import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
+import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
+import dst.courseproject.exceptions.UserIsNotModeratorException;
 import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
@@ -12,6 +14,7 @@ import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.repositories.UserRepository;
 import dst.courseproject.services.RoleService;
 import dst.courseproject.services.UserService;
+import dst.courseproject.util.UserUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +51,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return true;
+    }
+
+    private void finishEditing(@Valid UserEditBindingModel userEditBindingModel, User user) throws PasswordsMismatchException {
+        if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
+            user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
+        }
+        user.setFirstName(userEditBindingModel.getFirstName());
+        user.setLastName(userEditBindingModel.getLastName());
+
+        this.userRepository.save(user);
     }
 
     @Override
@@ -150,26 +163,14 @@ public class UserServiceImpl implements UserService {
     public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
 
-        if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
-            user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
-        }
-        user.setFirstName(userEditBindingModel.getFirstName());
-        user.setLastName(userEditBindingModel.getLastName());
-
-        this.userRepository.save(user);
+        finishEditing(userEditBindingModel, user);
     }
 
     @Override
     public void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String email) throws PasswordsMismatchException {
         User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
 
-        if (comparePasswords(userEditBindingModel.getPassword(), userEditBindingModel.getConfirmPassword())) {
-            user.setPassword(this.encoder.encode(userEditBindingModel.getPassword()));
-        }
-        user.setFirstName(userEditBindingModel.getFirstName());
-        user.setLastName(userEditBindingModel.getLastName());
-
-        this.userRepository.save(user);
+        finishEditing(userEditBindingModel, user);
     }
 
     @Override
@@ -189,13 +190,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void makeModerator(String id) {
+    public void makeModerator(String id) throws UserIsModeratorAlreadyException {
         User user = this.userRepository.getOne(id);
         Role role = this.roleService.getRoleByAuthority("MODERATOR");
+
+        if (user.getAuthorities().contains(role)) {
+            throw new UserIsModeratorAlreadyException("User moderator already!");
+        }
 
         user.addRole(role);
         this.userRepository.save(user);
         role.getUsers().add(user);
         this.roleService.save(role);
+    }
+
+    @Override
+    public void revokeModeratorAuthority(String id) throws UserIsNotModeratorException {
+        User user = this.userRepository.getOne(id);
+        Role role = this.roleService.getRoleByAuthority("MODERATOR");
+
+        if (!user.getAuthorities().contains(role)) {
+            throw new UserIsNotModeratorException("User is not moderator!");
+        }
+
+        user.removeRole(role);
+        this.userRepository.save(user);
+        role.getUsers().remove(user);
+        this.roleService.save(role);
+    }
+
+    @Override
+    public boolean isUserModerator(String id) {
+        User user = this.userRepository.getOne(id);
+        return UserUtils.hasRole("MODERATOR", user.getAuthorities());
     }
 }

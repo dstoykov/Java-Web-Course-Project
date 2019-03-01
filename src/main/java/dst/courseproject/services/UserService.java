@@ -3,6 +3,8 @@ package dst.courseproject.services;
 import dst.courseproject.entities.User;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
+import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
+import dst.courseproject.exceptions.UserIsNotModeratorException;
 import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserRestoreServiceModel;
@@ -41,9 +43,13 @@ public interface UserService extends UserDetailsService {
 
     void restoreUser(String id);
 
-    void makeModerator(String id);
+    void makeModerator(String id) throws UserIsModeratorAlreadyException;
+
+    void revokeModeratorAuthority(String id) throws UserIsNotModeratorException;
 
     Long getTotalUsersCount();
 
     Long getTotalActiveUsersCount();
+
+    boolean isUserModerator(String id);
 }

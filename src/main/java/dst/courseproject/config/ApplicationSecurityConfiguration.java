@@ -11,11 +11,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private static final String STYLES = "/styles/**";
+    private static final String SCRIPTS = "/scripts/**";
+    private static final String IMAGES = "/images/**";
+    private static final String FAVICON = "/favicon.ico";
+
     private static final String ROOT = "/";
     private static final String LOGIN = "/users/login";
     private static final String REGISTER = "/users/register";
     private static final String LOGOUT = "/users/logout";
     private static final String ADMIN_ALL_USERS = "/admin/users/all";
+    private static final String ADMIN_USER_PROFILE = "/admin/users/{id}";
     private static final String ADMIN_EDIT_USER = "/admin/users/edit/**";
     private static final String ADMIN_ALL_CATEGORIES = "/admin/categories/all";
     private static final String ADMIN_ADD_CATEGORY = "/admin/categories/add/**";
@@ -23,6 +29,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private static final String ADMIN_DELETE_USER = "/admin/users/delete/**";
     private static final String ADMIN_RESTORE_USER = "/admin/users/restore/**";
     private static final String ADMIN_CREATE_MODERATOR = "/admin/users/moderator/**";
+    private static final String ADMIN_REVOKE_AUTHORITY = "/admin/users/moderator-revoke/**";
     private static final String ADMIN_DELETE_CATEGORY = "/admin/categories/delete/**";
     private static final String ADMIN_AUTHORITY = "hasAuthority('ADMIN')";
     private static final String MODERATOR_AUTHORITY = "hasAuthority('MODERATOR')";
@@ -35,7 +42,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/styles/**", "/scripts/**", "/images/**", "/favicon.ico");
+        web.ignoring().antMatchers(STYLES, SCRIPTS, IMAGES, FAVICON);
     }
 
     @Override
@@ -43,9 +50,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .authorizeRequests()
                 .antMatchers(ROOT, LOGIN, REGISTER).permitAll()
-                .antMatchers(ADMIN_ALL_USERS, ADMIN_EDIT_USER, ADMIN_ALL_CATEGORIES, ADMIN_ADD_CATEGORY, ADMIN_EDIT_CATEGORY)
+                .antMatchers(ADMIN_ALL_USERS, ADMIN_USER_PROFILE, ADMIN_EDIT_USER, ADMIN_ALL_CATEGORIES, ADMIN_ADD_CATEGORY, ADMIN_EDIT_CATEGORY)
                             .access(MODERATOR_AUTHORITY)
-                .antMatchers(ADMIN_DELETE_USER, ADMIN_RESTORE_USER, ADMIN_CREATE_MODERATOR, ADMIN_DELETE_CATEGORY)
+                .antMatchers(ADMIN_DELETE_USER, ADMIN_RESTORE_USER, ADMIN_CREATE_MODERATOR, ADMIN_REVOKE_AUTHORITY, ADMIN_DELETE_CATEGORY)
                             .access(ADMIN_AUTHORITY)
                 .anyRequest().authenticated()
                 .and()
