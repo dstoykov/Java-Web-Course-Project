@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="fragments/head"></th:block>
     <title th:text="${title}"></title>
@@ -19,7 +19,7 @@
                 <th scope="col"></th>
                 <th scope="col">Category</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
+                <th sec:authorize="hasAuthority('ADMIN')" scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                     <td th:text="${category.getName()}"></td>
                     <td><a class="btn btn-outline-success" th:href="@{/admin/categories/edit/{id}(id=${category.getId()})}">Edit</a>
                     </td>
-                    <td><a class="btn btn-outline-danger" th:href="@{/admin/categories/delete/{id}(id=${category.getId()})}">Delete</a>
+                    <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-outline-danger" th:href="@{/admin/categories/delete/{id}(id=${category.getId()})}">Delete</a>
                     </td>
                 </tr>
             </th:block>

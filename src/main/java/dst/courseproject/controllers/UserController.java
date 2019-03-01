@@ -9,7 +9,7 @@ import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
-import dst.courseproject.util.Users;
+import dst.courseproject.util.UsersUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -100,8 +100,8 @@ public class UserController {
     public ModelAndView profile(ModelAndView modelAndView) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserViewModel userViewModel = this.userService.getUserViewModelByEmail(userDetails.getUsername());
-        Boolean isAdmin = Users.hasRole("ADMIN", userViewModel.getAuthorities());
-        Boolean isModerator = Users.hasRole("MODERATOR", userViewModel.getAuthorities());
+        Boolean isAdmin = UsersUtils.hasRole("ADMIN", userViewModel.getAuthorities());
+        Boolean isModerator = UsersUtils.hasRole("MODERATOR", userViewModel.getAuthorities());
 
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
 

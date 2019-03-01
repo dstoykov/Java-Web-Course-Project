@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="fragments/head"></th:block>
     <title th:text="${title}"></title>
@@ -21,9 +21,9 @@
                     th:text="${'(Deleted on ' + #temporals.format(user.getDeletedOn(), 'dd-MM-yyyy') + ')'}"></h5>
                 <div class="form-group center mt-3 d-flex justify-content-center">
                     <a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit profile</a>
-                    <a th:if="${isAdminPrincipal && user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
+                    <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() == null}" class="btn btn-outline-danger ml-3"
                        th:href="@{/admin/users/delete/{id}(id=${user.getId()})}">Delete profile</a>
-                    <a th:if="${isAdminPrincipal && user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() != null}" class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore profile</a>
                     <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
             </div>
             <hr/>

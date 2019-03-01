@@ -8,11 +8,9 @@ import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
-import dst.courseproject.util.Users;
+import dst.courseproject.util.UsersUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,8 +38,8 @@ public class AdminUserController {
     @GetMapping("/all")
     public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
         List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
-        modelAndView.setViewName("users-all");
-        modelAndView.addObject("title", "All Users");
+        modelAndView.setViewName("admin-users-all");
+        modelAndView.addObject("title", "All UsersUtils");
         modelAndView.addObject("userModels", userViewModels);
 
         return modelAndView;
@@ -50,12 +48,9 @@ public class AdminUserController {
     @GetMapping("/{id}")
     public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserViewModel model = this.userService.getUserViewModelById(id);
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserViewModel loggedUser = this.userService.getUserViewModelByEmail(principal.getUsername());
 
-        Boolean isModeratorUser = Users.hasRole("MODERATOR", model.getAuthorities());
-        Boolean isAdminUser = Users.hasRole("ADMIN", model.getAuthorities());
-        Boolean isAdminPrincipal = Users.hasRole("ADMIN", principal.getAuthorities());
+        Boolean isModeratorUser = UsersUtils.hasRole("MODERATOR", model.getAuthorities());
+        Boolean isAdminUser = UsersUtils.hasRole("ADMIN", model.getAuthorities());
 
         Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(model.getVideos());
 
@@ -63,7 +58,6 @@ public class AdminUserController {
         modelAndView.addObject("title", model.getFirstName() + "'s Profile");
         modelAndView.addObject("isAdminUser", isAdminUser);
         modelAndView.addObject("isModeratorUser", isModeratorUser);
-        modelAndView.addObject("isAdminPrincipal", isAdminPrincipal);
         modelAndView.addObject("user", model);
         modelAndView.addObject("videos", videoViewModels);
 

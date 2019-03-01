@@ -17,8 +17,8 @@ public class DailyUsersAndVideosCountInformationTask {
         this.videoService = videoService;
     }
 
-//    @Scheduled(fixedRate = 10000)
-    @Scheduled(cron = "22 22 22 * * *")
+    @Scheduled(fixedRate = 10000)
+//    @Scheduled(cron = "22 22 22 * * *")
     public void write() {
         System.out.printf("Total users - %d, active users - %d.%n", this.userService.getTotalUsersCount(), this.userService.getTotalActiveUsersCount());
         System.out.printf("Total videos - %d.%n", this.videoService.getTotalVideosCount());
