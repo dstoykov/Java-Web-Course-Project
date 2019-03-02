@@ -27,3 +27,8 @@ body {
 .text-footer-hyperlink:hover {
     color: #8a8b8c;
 }
+.form-group.row {
+    margin-left: -15px;
+    margin-right: 15px;
+    padding: 0;
+}

@@ -1,5 +1,6 @@
 package dst.courseproject.controllers;
 
+import dst.courseproject.exceptions.InvalidReCaptchaException;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
 import dst.courseproject.models.binding.UserRegisterBindingModel;
@@ -7,6 +8,7 @@ import dst.courseproject.models.binding.UserEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
+import dst.courseproject.recaptcha.ReCaptchaService;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
 import dst.courseproject.util.UserUtils;
@@ -31,11 +33,13 @@ import java.util.Set;
 public class UserController {
     private final UserService userService;
     private final VideoService videoService;
+    private final ReCaptchaService reCaptchaService;
 
     @Autowired
-    public UserController(UserService userService, VideoService videoService) {
+    public UserController(UserService userService, VideoService videoService, ReCaptchaService reCaptchaService) {
         this.userService = userService;
         this.videoService = videoService;
+        this.reCaptchaService = reCaptchaService;
     }
 
     @GetMapping("/register")
@@ -54,26 +58,35 @@ public class UserController {
         if (model.containsAttribute("userExistsError")) {
             modelAndView.addObject("userExistsError");
         }
+        if (model.containsAttribute("invalidCaptchaError")) {
+            modelAndView.addObject("invalidCaptchaError");
+        }
 
         return modelAndView;
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") UserRegisterBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Model model) {
+    public ModelAndView register(@Valid @ModelAttribute(name = "registerInput") UserRegisterBindingModel userBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, @RequestParam("g-recaptcha-response") String gCaptchaResponse) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerInput", bindingResult);
             redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
             modelAndView.setViewName("redirect:register");
         } else {
             try {
+                this.reCaptchaService.captcha(gCaptchaResponse);
                 this.userService.register(userBindingModel);
                 modelAndView.setViewName("redirect:login");
                 redirectAttributes.addFlashAttribute("success", "Successfully registered");
             } catch (PasswordsMismatchException e) {
                 redirectAttributes.addFlashAttribute("passwordError", "error");
+                redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
                 modelAndView.setViewName("redirect:register");
             } catch (UserAlreadyExistsException e) {
                 redirectAttributes.addFlashAttribute("userExistsError", "error");
+                modelAndView.setViewName("redirect:register");
+            } catch (InvalidReCaptchaException e) {
+                redirectAttributes.addFlashAttribute("invalidCaptchaError", "error");
+                redirectAttributes.addFlashAttribute("registerInput", userBindingModel);
                 modelAndView.setViewName("redirect:register");
             }
         }
