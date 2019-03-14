@@ -45,7 +45,7 @@ public class AdminCategoryController {
     }
 
     @PostMapping("/add")
-    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") CategoryAddBindingModel addCategoryInput, ModelAndView modelAndView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") CategoryAddBindingModel addCategoryInput, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         System.out.println();
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryInput", bindingResult);

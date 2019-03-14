@@ -3,23 +3,24 @@ package dst.courseproject.models.binding;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class VideoAddBindingModel {
 
-    @NotEmpty(message = "Title must not be empty")
-    @Pattern(regexp = "^[a-zA-Z0-9.,!? ]+$", message = "Title can only have capital and small letters, number and punctuation['!', '?', '.', ','].")
+    @NotEmpty(message = "Title must not be empty. ")
+    @Pattern(regexp = "^[a-zA-Z0-9.,!? ]+$", message = "Title can only have capital and small letters, number and punctuation[ '!', '?', '.', ','].")
     @Size(max = 50, message = "Title must not be longer than 50 symbols.")
     private String title;
 
     @NotEmpty(message = "Description must not be empty.")
     private String description;
 
-    @NotEmpty(message = "Category must not be empty.")
+    @NotEmpty(message = "You must choose a category.")
     private String category;
 
-//    @NotEmpty(message = "You must select video file for uploading.")
+    @NotNull(message = "You must select video file for uploading.")
     private MultipartFile videoFile;
 
     public VideoAddBindingModel() {

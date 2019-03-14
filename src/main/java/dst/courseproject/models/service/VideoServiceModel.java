@@ -10,9 +10,9 @@ import java.util.Set;
 public class VideoServiceModel {
     private String title;
 
-    private String url;
-
     private String description;
+
+    private String videoIdentifier;
 
     private User author;
 
@@ -39,20 +39,20 @@ public class VideoServiceModel {
         this.title = title;
     }
 
-    public String getUrl() {
-        return this.url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getDescription() {
         return this.description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getVideoIdentifier() {
+        return this.videoIdentifier;
+    }
+
+    public void setVideoIdentifier(String videoIdentifier) {
+        this.videoIdentifier = videoIdentifier;
     }
 
     public User getAuthor() {

@@ -20,10 +20,10 @@ public class Video {
     @Column(nullable = false, unique = true)
     private String title;
 
-    @Column(nullable = false)
-    private String url;
+    @Column(nullable = false, unique = true)
+    private String videoIdentifier;
 
-    @Column(columnDefinition = "text")
+    @Column(nullable = false, columnDefinition = "text")
     private String description;
 
     @ManyToOne
@@ -53,6 +53,8 @@ public class Video {
         this.comments = new HashSet<>();
         this.likes = 0L;
         this.dislikes = 0L;
+        this.views = 0L;
+        this.uploadedOn = LocalDate.now();
     }
 
     public String getId() {
@@ -71,12 +73,12 @@ public class Video {
         this.title = title;
     }
 
-    public String getUrl() {
-        return this.url;
+    public String getVideoIdentifier() {
+        return this.videoIdentifier;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setVideoIdentifier(String videoIdentifier) {
+        this.videoIdentifier = videoIdentifier;
     }
 
     public String getDescription() {

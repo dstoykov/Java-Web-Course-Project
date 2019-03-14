@@ -1,6 +1,6 @@
 package dst.courseproject.controllers;
 
-import dst.courseproject.cloud.CloudVideoUploader;
+import com.dropbox.core.DbxException;
 import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -25,13 +25,11 @@ import java.util.List;
 public class VideoController {
     private final VideoService videoService;
     private final CategoryService categoryService;
-    private final CloudVideoUploader videoUploader;
 
     @Autowired
-    public VideoController(VideoService videoService, CategoryService categoryService, CloudVideoUploader videoUploader) {
+    public VideoController(VideoService videoService, CategoryService categoryService) {
         this.videoService = videoService;
         this.categoryService = categoryService;
-        this.videoUploader = videoUploader;
     }
 
     @GetMapping("/add")
@@ -53,15 +51,19 @@ public class VideoController {
     }
 
     @PostMapping("/add")
-    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, ModelAndView modelAndView, Model model, RedirectAttributes redirectAttributes, BindingResult bindingResult, Principal principal) throws IOException {
+    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) throws IOException {
         if (bindingResult.hasErrors()) {
             System.out.println(videoAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
             modelAndView.setViewName("redirect:add");
         } else {
-            this.videoService.addVideo(videoAddBindingModel, principal);
-            modelAndView.setViewName("redirect:../../");
+            try {
+                this.videoService.addVideo(videoAddBindingModel, principal);
+            } catch (DbxException e) {
+                e.printStackTrace();
+            }
+            modelAndView.setViewName("redirect:../");
         }
 
         return modelAndView;

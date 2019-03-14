@@ -70,7 +70,8 @@
                 <h5>You already have an account - login <a href="/users/login">here</a>.</h5>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
                     <label for="email">Email address</label>
-                    <input class="form-control" th:field="*{email}" th:value="${registerInput.getEmail()}" id="email"
+                    <input required class="form-control" th:field="*{email}" th:value="${registerInput.getEmail()}"
+                           id="email"
                            aria-describedby="email"
                            placeholder="Enter email" type="email" name="email">
                     <th:block th:each="error : ${#fields.errors('email')}">
@@ -79,7 +80,8 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
                     <label for="firstName">First name</label>
-                    <input class="form-control" th:field="*{firstName}" th:value="${registerInput.getFirstName()}"
+                    <input required class="form-control" th:field="*{firstName}"
+                           th:value="${registerInput.getFirstName()}"
                            id="firstName"
                            placeholder="First name" type="text" name="firstName">
                     <th:block th:each="error : ${#fields.errors('firstName')}">
@@ -88,7 +90,8 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('lastName')} ? 'has-danger'">
                     <label for="lastName">Last name</label>
-                    <input class="form-control" th:field="*{lastName}" th:value="${registerInput.getFirstName()}"
+                    <input required class="form-control" th:field="*{lastName}"
+                           th:value="${registerInput.getFirstName()}"
                            id="lastName"
                            placeholder="Last name" type="text" name="lastName">
                     <th:block th:each="error : ${#fields.errors('lastName')}">
@@ -97,7 +100,7 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('password')} ? 'has-danger'">
                     <label for="password">Password</label>
-                    <input class="form-control" th:field="*{password}" id="password" placeholder="Password"
+                    <input required class="form-control" th:field="*{password}" id="password" placeholder="Password"
                            type="password" name="password">
                     <th:block th:each="error : ${#fields.errors('password')}">
                         <small class="text-danger" th:text="${error}"></small>
@@ -105,7 +108,7 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-danger'">
                     <label for="confirmPassword">Confirm password</label>
-                    <input class="form-control" th:field="*{confirmPassword}" id="confirmPassword"
+                    <input required class="form-control" th:field="*{confirmPassword}" id="confirmPassword"
                            placeholder="Confirm password" type="password"
                            name="confirmPassword">
                     <th:block th:each="error : ${#fields.errors('confirmPassword')}">
@@ -114,9 +117,10 @@
                 </div>
                 <div class="form-group row">
                     <div class="form-group col">
-                    <div class="g-recaptcha" data-sitekey="6LfRCJUUAAAAAL8QzTszejimqqh5jNydPPpA8FUZ"></div>
-                    <small th:if="${invalidCaptchaError}" class="text-danger">Please verify that you are not a robot.</small>
-                </div></div>
+                        <div class="g-recaptcha" data-sitekey="6LfRCJUUAAAAAL8QzTszejimqqh5jNydPPpA8FUZ"></div>
+                        <small th:if="${invalidCaptchaError}" class="text-danger">Please verify that you are not a robot.</small>
+                    </div>
+                </div>
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary mr-2">Register</button>
                     <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Cancel</a>

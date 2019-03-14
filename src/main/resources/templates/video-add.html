@@ -11,41 +11,59 @@
 </header>
 <main>
     <div class="container">
-        <form th:action="@{'/videos/add'}" th:method="POST" th:object="${videoInput}">
-            <!--<div th:if="${#fields.hasAnyErrors()}">-->
-                <!--<script th:inline="javascript">-->
-                    <!--/*<![CDATA[*/-->
-                    <!--new Noty({-->
-                        <!--text: 'ERROR: Invalid credentials!',-->
-                        <!--type: 'error',-->
-                        <!--theme: 'mint',-->
-                        <!--timeout: 4000,-->
-                        <!--layout: 'topRight'-->
-                    <!--}).show();-->
-                    <!--/*]]>*/-->
-                <!--</script>-->
-            <!--</div>-->
+        <form enctype="multipart/form-data" th:action="@{'/videos/add'}" th:method="POST" th:object="${videoInput}">
+            <div th:if="${#fields.hasAnyErrors()}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    new Noty({
+                        text: 'ERROR: Invalid credentials!',
+                        type: 'error',
+                        theme: 'mint',
+                        timeout: 4000,
+                        layout: 'topRight'
+                    }).show();
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset>
                 <legend>Add New Video</legend>
                 <div class="form-group row mt-3" th:classappend="${#fields.hasErrors('title')} ? 'has-danger'">
                     <label for="title">Title</label>
-                    <input class="form-control" id="title" aria-describedby="title" type="text" name="title">
+                    <input required class="form-control" id="title" aria-describedby="title" type="text" name="title"
+                           th:value="*{title}">
+                    <th:block th:each="error : ${#fields.errors('title')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('description')} ? 'has-danger'">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    <textarea required class="form-control" id="description" name="description" rows="3"
+                              th:text="*{description}"></textarea>
+                    <th:block th:each="error : ${#fields.errors('description')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('category')} ? 'has-danger'">
                     <label for="category">Category</label>
-                    <select class="custom-select" id="category" name="category">
+                    <select required class="custom-select" id="category" name="category">
+                        <option disabled selected>Choose Category...</option>
                         <th:block th:each="category : ${categories}">
-                            <option th:value="${category}" th:text="${category}" th:selected="${categories != null && categories.contains(category)}"></option>
+                            <option th:value="${category}" th:text="${category}"
+                                    th:selected="${category.equals(videoInput.category)}"></option>
                         </th:block>
                     </select>
+                    <th:block th:each="error : ${#fields.errors('category')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('videoFile')} ? 'has-danger'">
                     <label for="videoFile">Select Video</label>
-                    <input class="form-control-file" id="videoFile" name="videoFile" aria-describedby="videoFile" type="file" accept="video/mp4,video/x-m4v,video/*">
+                    <p class="text-info">&nbsp;(Max size - 100MB)</p>
+                    <input required class="form-control-file" id="videoFile" name="videoFile"
+                           aria-describedby="videoFile" type="file" accept="video/mp4,video/x-m4v,video/*">
+                    <th:block th:each="error : ${#fields.errors('videoFile')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
                 </div>
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary mr-2">Add Video</button>

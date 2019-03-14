@@ -1,6 +1,7 @@
 package dst.courseproject.services.impl;
 
-import dst.courseproject.cloud.CloudVideoUploader;
+import com.dropbox.core.DbxException;
+import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
@@ -10,17 +11,20 @@ import dst.courseproject.repositories.VideoRepository;
 import dst.courseproject.services.CategoryService;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Service
 @Transactional
@@ -29,15 +33,15 @@ public class VideoServiceImpl implements VideoService {
     private final CategoryService categoryService;
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final CloudVideoUploader cloudVideoUploader;
+    private final DropboxService dropboxService;
 
     @Autowired
-    public VideoServiceImpl(VideoRepository videoRepository, CategoryService categoryService, UserService userService, ModelMapper modelMapper, CloudVideoUploader cloudVideoUploader) {
+    public VideoServiceImpl(VideoRepository videoRepository, CategoryService categoryService, UserService userService, ModelMapper modelMapper, DropboxService dropboxService) {
         this.videoRepository = videoRepository;
         this.categoryService = categoryService;
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.cloudVideoUploader = cloudVideoUploader;
+        this.dropboxService = dropboxService;
     }
 
     @Override
@@ -57,17 +61,21 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException {
+    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException {
+        String identifier = RandomStringUtils.randomAlphanumeric(11);
+
         Video video = new Video();
         Category category = this.categoryService.findByName(videoAddBindingModel.getCategory());
         User user = this.userService.getUserByEmail(principal.getName());
 
         video.setTitle(videoAddBindingModel.getTitle());
         video.setDescription(videoAddBindingModel.getDescription());
+        video.setVideoIdentifier(identifier);
         video.setAuthor(user);
         video.setCategory(category);
 
-        this.cloudVideoUploader.uploadFile(videoAddBindingModel.getVideoFile());
+        File file = this.convert(videoAddBindingModel.getVideoFile(), identifier);
+        this.dropboxService.uploadFile(file, file.getName());
 
         this.videoRepository.save(video);
     }
@@ -86,5 +94,15 @@ public class VideoServiceImpl implements VideoService {
         this.videoRepository.save(video);
 
         return video;
+    }
+
+    private File convert(MultipartFile multipartFile, String fileName) throws IOException {
+        File file = new File(fileName);
+        file.createNewFile();
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+
+        return file;
     }
 }

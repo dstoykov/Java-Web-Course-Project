@@ -1,5 +1,6 @@
 package dst.courseproject.services;
 
+import com.dropbox.core.DbxException;
 import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -12,7 +13,7 @@ import java.util.Set;
 public interface VideoService {
     Set<VideoViewModel> mapVideoToModel(Set<Video> videoList);
 
-    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException;
+    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException;
 
     Long getTotalVideosCount();
 
