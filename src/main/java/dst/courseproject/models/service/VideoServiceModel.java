@@ -22,7 +22,7 @@ public class VideoServiceModel {
 
     private Long likes;
 
-    private Long dislikes;
+    private Boolean isLiked;
 
     private Long views;
 
@@ -87,12 +87,12 @@ public class VideoServiceModel {
         this.likes = likes;
     }
 
-    public Long getDislikes() {
-        return this.dislikes;
+    public Boolean getIsLiked() {
+        return this.isLiked;
     }
 
-    public void setDislikes(Long dislikes) {
-        this.dislikes = dislikes;
+    public void setIsLiked(Boolean isLiked) {
+        this.isLiked = isLiked;
     }
 
     public Long getViews() {

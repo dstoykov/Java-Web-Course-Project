@@ -11,63 +11,109 @@
 </header>
 <main>
     <div class="container">
-        <h2 th:text="${videoName}"></h2>
-        <video width="840" height="472" controls>
-            <source src="blob:https://www.youtube.com/70f32da2-f38d-4688-b107-89b7a65ce34f">
-        </video>
         <div class="row">
-            <div class="col-lg-7">
-                <p>
-                    <strong><a class="font-weight-bold" href="/" th:text="${uploaderName}"></a></strong>
-                    <small th:text="${'Uploaded on ' + uploadDate}"></small>
-                </p>
-                <p class="lead" th:text="${description}"></p>
-                <p>Category: <a th:href="@{/category/${name}(name=category)}" th:text="${category}"></a></p>
-                <br/>
-                <h3 class="text-primary">Comments:</h3>
-                <div class="form-group">
-                    <label for="addComment">Add new comment</label>
-                    <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
+            <div class="col-lg-10">
+                <h2 th:text="${videoName}"></h2>
+                <video width="840" height="472" controls>
+                    <source src="https://www.dropbox.com/scl/fi/25ivlcp9tza3dxeuawz2q/Zrb5S1prSZZ.mp4?dl=0"
+                            type="video/mp4"/>
+                </video>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <p>
+                                <strong><a class="font-weight-bold" href="/" th:text="${uploaderName}"></a></strong>
+                                <small th:text="${'Uploaded on ' + uploadDate}"></small>
+                            </p>
+                            <p>Category: <a th:href="@{/category/{name}(name=${category})}" th:text="${category}"></a>
+                            </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row justify-content-end">
+                                <div class="justify-content-center">
+                                    <h4 class="text-center font-weight-normal" th:text="${views + ' views'}"></h4>
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-2">
+                                    <a><img class="hidden-md hidden-xs"
+                                            th:src="@{http://localhost:8000/images/like.png}"
+                                            width="20"
+                                            height="20"/></a>
+                                    <span th:text="${likes}"></span>
+                                </div>
+                                <!--<div class="col-sm-2">-->
+                                <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"-->
+                                <!--width="20"-->
+                                <!--height="20"/></a>-->
+                                <!--<span th:text="${isLiked}"></span>-->
+                                <!--</div>-->
+                            </div>
+                            <!--<table>-->
+                            <!--<td>-->
+                            <!--<p>-->
+                            <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/like.png}"-->
+                            <!--width="20"-->
+                            <!--height="20"/></a>-->
+                            <!--<span th:text="${likes}"></span>-->
+                            <!--</p>-->
+                            <!--</td>-->
+                            <!--<td width="20" height="70"-->
+                            <!--style="border-collapse: separate; padding-left: 20px;padding-right: 20px; vertical-align: top">-->
+                            <!--<div class="vertical-line">-->
+                            <!--<p></p>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<p>-->
+                            <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"-->
+                            <!--width="20"-->
+                            <!--height="20"/></a>-->
+                            <!--<span th:text="${isLiked}"></span>-->
+                            <!--</p>-->
+                            <!--</td>-->
+                            <!--</table>-->
+                        </div>
+                    </div>
+                    <hr width="92%" align="left"/>
                 </div>
-        <!--<th:block th:each="comment : ${comments}">-->
-            <!--<blockquote class="blockquote">-->
-                <!--<p>-->
-                    <!--<a>&quot;</a><a th:text="${comment.text}"></a><a>&quot;</a>-->
-                <!--</p>-->
-                <!--<b><h5><strong><cite title="Source Title" th:text="${comment.user.fullName}"></cite></strong></h5>-->
-                <!--</b><a> </a>-->
-                <!--<small th:text="${comment.date}"></small>-->
-            <!--</blockquote>-->
-        <!--</th:block>-->
+                <div class="row">
+                    <div class="col-lg-9">
+                        <p class="lead" th:text="${description}"></p>
+                        <br/>
+                        <h3 class="text-primary">Comments:</h3>
+                        <div class="form-group">
+                            <label for="addComment">Add new comment</label>
+                            <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
+                        </div>
+                        <!--<th:block th:each="comment : ${comments}">-->
+                        <!--<blockquote class="blockquote">-->
+                        <!--<p>-->
+                        <!--<a>&quot;</a><a th:text="${comment.text}"></a><a>&quot;</a>-->
+                        <!--</p>-->
+                        <!--<b><h5><strong><cite title="Source Title" th:text="${comment.user.fullName}"></cite></strong></h5>-->
+                        <!--</b><a> </a>-->
+                        <!--<small th:text="${comment.date}"></small>-->
+                        <!--</blockquote>-->
+                        <!--</th:block>-->
+                    </div>
+                </div>
             </div>
             <div class="col-lg-2">
-                <div class="justify-content-center">
-                    <h4 class="text-center font-weight-normal" th:text="${views + ' views'}"></h4>
-                </div>
-                <table>
-                    <td>
+                <th:block th:each="video : ${videosFromSameUser}">
+                    <div class="row">
                         <p>
-                            <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/like.png}"
-                                    width="20"
-                                    height="20"/></a>
-                            <span th:text="${likes}"></span>
+                            <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                                <img class="img-responsive" th:src="@{http://localhost:8000/images/video-player.png}"
+                                     width="200"/>
+                            </a>
                         </p>
-                    </td>
-                    <td width="20" height="70"
-                        style="border-collapse: separate; padding-left: 20px;padding-right: 20px; vertical-align: top">
-                        <div class="vertical-line">
-                            <p></p>
-                        </div>
-                    </td>
-                    <td>
-                        <p>
-                            <a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"
-                                    width="20"
-                                    height="20"/></a>
-                            <span th:text="${dislikes}"></span>
-                        </p>
-                    </td>
-                </table>
+                        <footer>
+                            <h6 th:text="${video.title}"></h6>
+                        </footer>
+                        <hr/>
+                    </div>
+                </th:block>
             </div>
         </div>
     </div>

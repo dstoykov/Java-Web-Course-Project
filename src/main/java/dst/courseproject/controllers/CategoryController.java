@@ -1,4 +1,4 @@
-package dst.courseproject.controllers.admin;
+package dst.courseproject.controllers;
 
 import dst.courseproject.models.view.CategoryViewModel;
 import dst.courseproject.services.CategoryService;
@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
+
     @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;

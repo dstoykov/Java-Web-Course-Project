@@ -24,6 +24,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -47,6 +49,17 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public Long getTotalVideosCount() {
         return this.videoRepository.countAllByIdIsNotNull();
+    }
+
+    @Override
+    public Set<VideoViewModel> getAllVideosAsViewModels() {
+        Set<Video> videos = this.videoRepository.getAllByIdNotNull();
+        Set<VideoViewModel> videoViewModels = new HashSet<>();
+        for (Video video : videos) {
+            videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
+        }
+
+        return videoViewModels;
     }
 
     @Override
@@ -74,6 +87,8 @@ public class VideoServiceImpl implements VideoService {
         video.setAuthor(user);
         video.setCategory(category);
 
+        System.out.println(videoAddBindingModel.getVideoFile().getSize());
+
         File file = this.convert(videoAddBindingModel.getVideoFile(), identifier);
         this.dropboxService.uploadFile(file, file.getName());
 
@@ -81,24 +96,63 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public VideoViewModel getVideoViewModelForDetailsById(String id) {
-        Video video = this.increaseVideoViewsByOneAndSave(id);
+    public VideoViewModel getVideoViewModelForDetailsByIdentifier(String identifier) {
+        Video video = this.increaseVideoViewsByOneAndSave(identifier);
         VideoViewModel videoViewModel = this.modelMapper.map(video, VideoViewModel.class);
 
         return videoViewModel;
     }
 
-    private Video increaseVideoViewsByOneAndSave(String id) {
-        Video video = this.videoRepository.getOne(id);
+    @Override
+    public void likeVideo(String identifier) {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
+        if (!video.getIsLiked()) {
+            video.setLikes(video.getLikes() + 1);
+            video.setIsLiked(true);
+            this.videoRepository.save(video);
+        }
+    }
+
+    @Override
+    public void dislikeVideo(String identifier) {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
+        if (video.getIsLiked()) {
+            video.setLikes(video.getLikes() - 1);
+            video.setIsLiked(false);
+            this.videoRepository.save(video);
+        }
+    }
+
+    @Override
+    public Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(User author, String videoIdentifier) {
+        List<Video> videos = this.videoRepository.getAllByAuthorOrderByViewsDesc(author);
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        int limit = 10;
+        for (int i = 0; i < videos.size(); i++) {
+            Video current = videos.get(i);
+            if (current.getVideoIdentifier().equals(videoIdentifier)) {
+                limit++;
+                continue;
+            }
+            if (i == limit) {
+                break;
+            }
+            videoViewModels.add(this.modelMapper.map(current, VideoViewModel.class));
+        }
+
+        return videoViewModels;
+    }
+
+    private Video increaseVideoViewsByOneAndSave(String identifier) {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
         video.setViews(video.getViews() + 1);
         this.videoRepository.save(video);
 
         return video;
     }
 
-    private File convert(MultipartFile multipartFile, String fileName) throws IOException {
-        File file = new File(fileName);
-        file.createNewFile();
+    private File convert(MultipartFile multipartFile, String potentialFileName) throws IOException {
+        File file = new File(potentialFileName);
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(multipartFile.getBytes());
         fos.close();

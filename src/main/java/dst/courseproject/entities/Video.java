@@ -1,6 +1,7 @@
 package dst.courseproject.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -40,8 +41,8 @@ public class Video {
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long likes;
 
-    @Column(nullable = false, columnDefinition = "BIGINT default 0")
-    private Long dislikes;
+    @Column(nullable = false)
+    private Boolean isLiked;
 
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long views;
@@ -52,7 +53,7 @@ public class Video {
     public Video() {
         this.comments = new HashSet<>();
         this.likes = 0L;
-        this.dislikes = 0L;
+        this.isLiked = false;
         this.views = 0L;
         this.uploadedOn = LocalDate.now();
     }
@@ -121,12 +122,12 @@ public class Video {
         this.likes = likes;
     }
 
-    public Long getDislikes() {
-        return this.dislikes;
+    public Boolean getIsLiked() {
+        return this.isLiked;
     }
 
-    public void setDislikes(Long dislikes) {
-        this.dislikes = dislikes;
+    public void setIsLiked(Boolean liked) {
+        isLiked = liked;
     }
 
     public Long getViews() {

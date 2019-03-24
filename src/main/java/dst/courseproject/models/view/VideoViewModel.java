@@ -8,11 +8,9 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public class VideoViewModel {
-    private String id;
-
     private String title;
 
-    private String url;
+    private String videoIdentifier;
 
     private String description;
 
@@ -24,21 +22,13 @@ public class VideoViewModel {
 
     private Long likes;
 
-    private Long dislikes;
+    private Boolean isLiked;
 
     private Long views;
 
     private LocalDate uploadedOn;
 
     public VideoViewModel() {
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -49,12 +39,12 @@ public class VideoViewModel {
         this.title = title;
     }
 
-    public String getUrl() {
-        return this.url;
+    public String getVideoIdentifier() {
+        return this.videoIdentifier;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setVideoIdentifier(String videoIdentifier) {
+        this.videoIdentifier = videoIdentifier;
     }
 
     public String getDescription() {
@@ -97,12 +87,12 @@ public class VideoViewModel {
         this.likes = likes;
     }
 
-    public Long getDislikes() {
-        return this.dislikes;
+    public Boolean getIsLiked() {
+        return this.isLiked;
     }
 
-    public void setDislikes(Long dislikes) {
-        this.dislikes = dislikes;
+    public void setIsLiked(Boolean isLiked) {
+        this.isLiked = isLiked;
     }
 
     public Long getViews() {
