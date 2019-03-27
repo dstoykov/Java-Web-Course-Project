@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -27,9 +28,11 @@ public class Comment {
     private User author;
 
     @Column(nullable = false)
-    private LocalDate dateOfPublishing;
+    private LocalDateTime dateOfPublishing;
 
-    public Comment() { }
+    public Comment() {
+        this.dateOfPublishing = LocalDateTime.now();
+    }
 
     public String getId() {
         return this.id;
@@ -63,11 +66,11 @@ public class Comment {
         this.author = author;
     }
 
-    public LocalDate getDateOfPublishing() {
+    public LocalDateTime getDateOfPublishing() {
         return this.dateOfPublishing;
     }
 
-    public void setDateOfPublishing(LocalDate dateOfPublishing) {
+    public void setDateOfPublishing(LocalDateTime dateOfPublishing) {
         this.dateOfPublishing = dateOfPublishing;
     }
 }

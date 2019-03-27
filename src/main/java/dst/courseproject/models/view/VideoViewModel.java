@@ -5,6 +5,7 @@ import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class VideoViewModel {
@@ -26,7 +27,7 @@ public class VideoViewModel {
 
     private Long views;
 
-    private LocalDate uploadedOn;
+    private LocalDateTime uploadedOn;
 
     public VideoViewModel() {
     }
@@ -103,11 +104,11 @@ public class VideoViewModel {
         this.views = views;
     }
 
-    public LocalDate getUploadedOn() {
+    public LocalDateTime getUploadedOn() {
         return this.uploadedOn;
     }
 
-    public void setUploadedOn(LocalDate uploadedOn) {
+    public void setUploadedOn(LocalDateTime uploadedOn) {
         this.uploadedOn = uploadedOn;
     }
 }

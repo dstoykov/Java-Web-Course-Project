@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,14 +49,14 @@ public class Video {
     private Long views;
 
     @Column(nullable = false)
-    private LocalDate uploadedOn;
+    private LocalDateTime uploadedOn;
 
     public Video() {
         this.comments = new HashSet<>();
         this.likes = 0L;
         this.isLiked = false;
         this.views = 0L;
-        this.uploadedOn = LocalDate.now();
+        this.uploadedOn = LocalDateTime.now();
     }
 
     public String getId() {
@@ -122,11 +123,11 @@ public class Video {
         this.likes = likes;
     }
 
-    public Boolean getIsLiked() {
+    public Boolean getLiked() {
         return this.isLiked;
     }
 
-    public void setIsLiked(Boolean liked) {
+    public void setLiked(Boolean liked) {
         isLiked = liked;
     }
 
@@ -138,11 +139,11 @@ public class Video {
         this.views = views;
     }
 
-    public LocalDate getUploadedOn() {
+    public LocalDateTime getUploadedOn() {
         return this.uploadedOn;
     }
 
-    public void setUploadedOn(LocalDate uploadedOn) {
+    public void setUploadedOn(LocalDateTime uploadedOn) {
         this.uploadedOn = uploadedOn;
     }
 }

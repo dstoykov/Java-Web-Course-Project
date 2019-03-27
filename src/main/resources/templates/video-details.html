@@ -6,14 +6,44 @@
     <title th:text="${title}"></title>
 </head>
 <body>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    function addComment() {
+        const comment = $('#addComment').val();
+        if (comment === null || comment.trim() === '') {
+            return;
+        }
+
+        const videoIdentifier = [[${video.getVideoIdentifier()}]];
+        const url = '/comments/add?video=' + videoIdentifier;
+        const data = {
+            content: comment
+        };
+        const http = (() => {
+            const post = (url, data) => fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).catch((err) => alert(err));
+        return {post};
+    })();
+        http.post(url, data);
+        $('#addComment').val('');
+    }
+
+    /*]]>*/
+</script>
 <header>
     <th:block th:replace="fragments/navbar"></th:block>
 </header>
 <main>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <div class="col-lg-10">
-                <h2 th:text="${videoName}"></h2>
+                <h2 th:text="${video.title}"></h2>
                 <video width="840" height="472" controls>
                     <source src="https://www.dropbox.com/scl/fi/25ivlcp9tza3dxeuawz2q/Zrb5S1prSZZ.mp4?dl=0"
                             type="video/mp4"/>
@@ -22,16 +52,18 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <p>
-                                <strong><a class="font-weight-bold" href="/" th:text="${uploaderName}"></a></strong>
-                                <small th:text="${'Uploaded on ' + uploadDate}"></small>
+                                <strong><a class="font-weight-bold" href="/"
+                                           th:text="${video.author.firstName + ' ' + video.author.lastName}"></a></strong>
+                                <small th:text="${'Uploaded on ' + video.uploadedOn}"></small>
                             </p>
-                            <p>Category: <a th:href="@{/category/{name}(name=${category})}" th:text="${category}"></a>
+                            <p>Category: <a th:href="@{/category/{name}(name=${video.category.name})}"
+                                            th:text="${video.category.name}"></a>
                             </p>
                         </div>
                         <div class="col-lg-6">
                             <div class="row justify-content-end">
                                 <div class="justify-content-center">
-                                    <h4 class="text-center font-weight-normal" th:text="${views + ' views'}"></h4>
+                                    <h4 class="text-center font-weight-normal" th:text="${video.views + ' views'}"></h4>
                                 </div>
                             </div>
                             <div class="row justify-content-end">
@@ -40,7 +72,7 @@
                                             th:src="@{http://localhost:8000/images/like.png}"
                                             width="20"
                                             height="20"/></a>
-                                    <span th:text="${likes}"></span>
+                                    <span th:text="${video.likes}"></span>
                                 </div>
                                 <!--<div class="col-sm-2">-->
                                 <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"-->
@@ -79,13 +111,16 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-9">
-                        <p class="lead" th:text="${description}"></p>
+                        <p class="lead" th:text="${video.description}"></p>
                         <br/>
                         <h3 class="text-primary">Comments:</h3>
                         <div class="form-group">
                             <label for="addComment">Add new comment</label>
                             <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
                         </div>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="addBtn"
+                                th:onclick="'javascript:addComment()'">Add
+                        </button>
                         <!--<th:block th:each="comment : ${comments}">-->
                         <!--<blockquote class="blockquote">-->
                         <!--<p>-->
@@ -103,7 +138,8 @@
                 <th:block th:each="video : ${videosFromSameUser}">
                     <div class="row">
                         <p>
-                            <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                            <a class="thumbnail"
+                               th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
                                 <img class="img-responsive" th:src="@{http://localhost:8000/images/video-player.png}"
                                      width="200"/>
                             </a>

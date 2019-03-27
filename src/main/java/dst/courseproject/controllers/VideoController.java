@@ -80,16 +80,9 @@ public class VideoController {
 //        this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
 
         modelAndView.setViewName("video-details");
-        modelAndView.addObject("videoName", videoViewModel.getTitle());
-        modelAndView.addObject("source", videoViewModel.getVideoIdentifier());
-        modelAndView.addObject("uploaderName", videoViewModel.getAuthor().getFirstName() + " " + videoViewModel.getAuthor().getLastName());
-        modelAndView.addObject("uploadDate", videoViewModel.getUploadedOn());
-        modelAndView.addObject("description", videoViewModel.getDescription());
-        modelAndView.addObject("category", videoViewModel.getCategory().getName());
-        modelAndView.addObject("comments", videoViewModel.getComments());
-        modelAndView.addObject("views", videoViewModel.getViews());
-        modelAndView.addObject("likes", videoViewModel.getLikes());
+        modelAndView.addObject("video", videoViewModel);
         modelAndView.addObject("videosFromSameUser", videosFromSameUser);
+        modelAndView.addObject("videoName", videoViewModel.getTitle());
 
         return modelAndView;
     }

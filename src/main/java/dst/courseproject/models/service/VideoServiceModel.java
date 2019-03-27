@@ -5,9 +5,12 @@ import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class VideoServiceModel {
+    private String id;
+
     private String title;
 
     private String description;
@@ -26,9 +29,17 @@ public class VideoServiceModel {
 
     private Long views;
 
-    private LocalDate uploadedOn;
+    private LocalDateTime uploadedOn;
 
     public VideoServiceModel() {
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -87,11 +98,11 @@ public class VideoServiceModel {
         this.likes = likes;
     }
 
-    public Boolean getIsLiked() {
+    public Boolean getLiked() {
         return this.isLiked;
     }
 
-    public void setIsLiked(Boolean isLiked) {
+    public void setLiked(Boolean isLiked) {
         this.isLiked = isLiked;
     }
 
@@ -103,11 +114,11 @@ public class VideoServiceModel {
         this.views = views;
     }
 
-    public LocalDate getUploadedOn() {
+    public LocalDateTime getUploadedOn() {
         return this.uploadedOn;
     }
 
-    public void setUploadedOn(LocalDate uploadedOn) {
+    public void setUploadedOn(LocalDateTime uploadedOn) {
         this.uploadedOn = uploadedOn;
     }
 }

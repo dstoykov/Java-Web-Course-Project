@@ -6,6 +6,7 @@ import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.repositories.VideoRepository;
 import dst.courseproject.services.CategoryService;
@@ -98,17 +99,15 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public VideoViewModel getVideoViewModelForDetailsByIdentifier(String identifier) {
         Video video = this.increaseVideoViewsByOneAndSave(identifier);
-        VideoViewModel videoViewModel = this.modelMapper.map(video, VideoViewModel.class);
-
-        return videoViewModel;
+        return this.modelMapper.map(video, VideoViewModel.class);
     }
 
     @Override
     public void likeVideo(String identifier) {
         Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
-        if (!video.getIsLiked()) {
+        if (!video.getLiked()) {
             video.setLikes(video.getLikes() + 1);
-            video.setIsLiked(true);
+            video.setLiked(true);
             this.videoRepository.save(video);
         }
     }
@@ -116,9 +115,9 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public void dislikeVideo(String identifier) {
         Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
-        if (video.getIsLiked()) {
+        if (video.getLiked()) {
             video.setLikes(video.getLikes() - 1);
-            video.setIsLiked(false);
+            video.setLiked(false);
             this.videoRepository.save(video);
         }
     }
@@ -141,6 +140,12 @@ public class VideoServiceImpl implements VideoService {
         }
 
         return videoViewModels;
+    }
+
+    @Override
+    public VideoServiceModel getVideoServiceModelByIdentifier(String identifier) {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     private Video increaseVideoViewsByOneAndSave(String identifier) {
