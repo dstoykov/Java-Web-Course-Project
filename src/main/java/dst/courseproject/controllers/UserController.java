@@ -116,13 +116,13 @@ public class UserController {
         Boolean isAdmin = UserUtils.hasRole("ADMIN", userViewModel.getAuthorities());
         Boolean isModerator = UserUtils.hasRole("MODERATOR", userViewModel.getAuthorities());
 
-        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
+//        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
 
         modelAndView.setViewName("user-profile");
         modelAndView.addObject("user", userViewModel);
         modelAndView.addObject("isAdmin", isAdmin);
         modelAndView.addObject("isModerator", isModerator);
-        modelAndView.addObject("videos", videoViewModels);
+        modelAndView.addObject("videos", userViewModel.getVideos());
 
         return modelAndView;
     }

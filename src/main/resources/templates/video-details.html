@@ -8,8 +8,21 @@
 <body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    function addComment() {
-        const comment = $('#addComment').val();
+    const http = (() => {
+        const post = (url, data) => fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return {post};
+    })();
+
+    const addComment = () => {
+        const commentTextarea = $('#addComment');
+        const comment = commentTextarea.val();
         if (comment === null || comment.trim() === '') {
             return;
         }
@@ -19,19 +32,12 @@
         const data = {
             content: comment
         };
-        const http = (() => {
-            const post = (url, data) => fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).catch((err) => alert(err));
-        return {post};
-    })();
         http.post(url, data);
-        $('#addComment').val('');
+        commentTextarea.val('');
+    };
+
+    function loadComments() {
+
     }
 
     /*]]>*/
@@ -81,30 +87,6 @@
                                 <!--<span th:text="${isLiked}"></span>-->
                                 <!--</div>-->
                             </div>
-                            <!--<table>-->
-                            <!--<td>-->
-                            <!--<p>-->
-                            <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/like.png}"-->
-                            <!--width="20"-->
-                            <!--height="20"/></a>-->
-                            <!--<span th:text="${likes}"></span>-->
-                            <!--</p>-->
-                            <!--</td>-->
-                            <!--<td width="20" height="70"-->
-                            <!--style="border-collapse: separate; padding-left: 20px;padding-right: 20px; vertical-align: top">-->
-                            <!--<div class="vertical-line">-->
-                            <!--<p></p>-->
-                            <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                            <!--<p>-->
-                            <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"-->
-                            <!--width="20"-->
-                            <!--height="20"/></a>-->
-                            <!--<span th:text="${isLiked}"></span>-->
-                            <!--</p>-->
-                            <!--</td>-->
-                            <!--</table>-->
                         </div>
                     </div>
                     <hr width="92%" align="left"/>
@@ -118,19 +100,26 @@
                             <label for="addComment">Add new comment</label>
                             <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="addBtn"
-                                th:onclick="'javascript:addComment()'">Add
-                        </button>
-                        <!--<th:block th:each="comment : ${comments}">-->
-                        <!--<blockquote class="blockquote">-->
-                        <!--<p>-->
-                        <!--<a>&quot;</a><a th:text="${comment.text}"></a><a>&quot;</a>-->
-                        <!--</p>-->
-                        <!--<b><h5><strong><cite title="Source Title" th:text="${comment.user.fullName}"></cite></strong></h5>-->
-                        <!--</b><a> </a>-->
-                        <!--<small th:text="${comment.date}"></small>-->
-                        <!--</blockquote>-->
-                        <!--</th:block>-->
+                        <div align="right">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" id="addBtn"
+                                    th:onclick="'javascript:addComment()'">Add
+                            </button>
+                        </div>
+                        <hr/>
+                        <th:block th:each="comment : ${comments}">
+                            <blockquote class="blockquote">
+                                <div align="right">
+                                    <p>
+                                        <a>&quot;</a><a th:text="${comment.content}"></a><a>&quot;</a>
+                                    </p>
+                                    <small>
+                                        <i th:text="${comment.author.firstName + ' ' + comment.author.lastName + ' - '}"></i>
+                                    </small>
+                                    <small th:text="${#temporals.format(comment.dateOfPublishing, 'dd-MM-yyyy HH:mm')}"></small>
+                                </div>
+                            </blockquote>
+                            <hr/>
+                        </th:block>
                     </div>
                 </div>
             </div>

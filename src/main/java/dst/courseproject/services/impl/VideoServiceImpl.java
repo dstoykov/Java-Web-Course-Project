@@ -6,6 +6,7 @@ import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.repositories.VideoRepository;
@@ -123,8 +124,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(User author, String videoIdentifier) {
-        List<Video> videos = this.videoRepository.getAllByAuthorOrderByViewsDesc(author);
+    public Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier) {
+        List<Video> videos = this.videoRepository.getAllByAuthorOrderByViewsDesc(this.modelMapper.map(author, User.class));
         Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
         int limit = 10;
         for (int i = 0; i < videos.size(); i++) {

@@ -54,14 +54,14 @@ public class AdminUserController {
         Boolean isModeratorUser = UserUtils.hasRole("MODERATOR", viewModel.getAuthorities());
         Boolean isAdminUser = UserUtils.hasRole("ADMIN", viewModel.getAuthorities());
 
-        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(viewModel.getVideos());
+//        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(viewModel.getVideos());
 
         modelAndView.setViewName("admin-user-profile");
         modelAndView.addObject("title", viewModel.getFirstName() + "'s Profile");
         modelAndView.addObject("isAdminUser", isAdminUser);
         modelAndView.addObject("isModeratorUser", isModeratorUser);
         modelAndView.addObject("user", viewModel);
-        modelAndView.addObject("videos", videoViewModels);
+        modelAndView.addObject("videos", viewModel.getVideos());
 
         if (model.containsAttribute("moderatorAlreadyError")) {
             modelAndView.addObject("moderatorAlreadyError");

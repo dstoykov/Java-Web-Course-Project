@@ -16,9 +16,9 @@ public class UserViewModel {
 
     private String lastName;
 
-    private Set<Video> videos;
+    private Set<VideoViewModel> videos;
 
-    private Set<Comment> comments;
+    private Set<CommentViewModel> comments;
 
     private LocalDate deletedOn;
 
@@ -59,19 +59,19 @@ public class UserViewModel {
         this.lastName = lastName;
     }
 
-    public Set<Video> getVideos() {
+    public Set<VideoViewModel> getVideos() {
         return this.videos;
     }
 
-    public void setVideos(Set<Video> videos) {
+    public void setVideos(Set<VideoViewModel> videos) {
         this.videos = videos;
     }
 
-    public Set<Comment> getComments() {
+    public Set<CommentViewModel> getComments() {
         return this.comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(Set<CommentViewModel> comments) {
         this.comments = comments;
     }
 

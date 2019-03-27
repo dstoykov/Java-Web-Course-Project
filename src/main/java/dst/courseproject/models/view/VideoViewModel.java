@@ -9,17 +9,19 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class VideoViewModel {
+    private String id;
+
     private String title;
 
     private String videoIdentifier;
 
     private String description;
 
-    private User author;
+    private UserViewModel author;
 
     private Category category;
 
-    private Set<Comment> comments;
+    private Set<CommentViewModel> comments;
 
     private Long likes;
 
@@ -30,6 +32,14 @@ public class VideoViewModel {
     private LocalDateTime uploadedOn;
 
     public VideoViewModel() {
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -56,11 +66,11 @@ public class VideoViewModel {
         this.description = description;
     }
 
-    public User getAuthor() {
+    public UserViewModel getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserViewModel author) {
         this.author = author;
     }
 
@@ -72,11 +82,11 @@ public class VideoViewModel {
         this.category = category;
     }
 
-    public Set<Comment> getComments() {
+    public Set<CommentViewModel> getComments() {
         return this.comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(Set<CommentViewModel> comments) {
         this.comments = comments;
     }
 
@@ -88,11 +98,11 @@ public class VideoViewModel {
         this.likes = likes;
     }
 
-    public Boolean getIsLiked() {
+    public Boolean getLiked() {
         return this.isLiked;
     }
 
-    public void setIsLiked(Boolean isLiked) {
+    public void setLiked(Boolean isLiked) {
         this.isLiked = isLiked;
     }
 

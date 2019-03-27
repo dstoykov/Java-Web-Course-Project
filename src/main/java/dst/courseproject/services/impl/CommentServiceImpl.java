@@ -6,6 +6,7 @@ import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.CommentAddBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
+import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.repositories.CommentRepository;
 import dst.courseproject.services.CommentService;
 import dst.courseproject.services.UserService;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -43,5 +46,17 @@ public class CommentServiceImpl implements CommentService {
         comment.setAuthor(this.modelMapper.map(userServiceModel, User.class));
 
         this.commentRepository.save(comment);
+    }
+
+    @Override
+    public Set<CommentViewModel> getCommentViewModelsByVideo(String videoIdentifier) {
+        VideoServiceModel videoServiceModel = this.videoService.getVideoServiceModelByIdentifier(videoIdentifier);
+        Set<Comment> comments = this.commentRepository.getAllByVideoEqualsOrderByDateOfPublishingDesc(this.modelMapper.map(videoServiceModel, Video.class));
+        Set<CommentViewModel> commentViewModels = new LinkedHashSet<>();
+        for (Comment comment : comments) {
+            commentViewModels.add(this.modelMapper.map(comment, CommentViewModel.class));
+        }
+
+        return commentViewModels;
     }
 }

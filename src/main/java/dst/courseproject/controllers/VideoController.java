@@ -4,9 +4,13 @@ import com.dropbox.core.DbxException;
 import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.service.UserServiceModel;
+import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.CategoryService;
+import dst.courseproject.services.CommentService;
 import dst.courseproject.services.VideoService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +31,17 @@ import java.util.Set;
 public class VideoController {
     private final VideoService videoService;
     private final CategoryService categoryService;
+    private final CommentService commentService;
     private final DropboxService dropboxService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public VideoController(VideoService videoService, CategoryService categoryService, DropboxService dropboxService) {
+    public VideoController(VideoService videoService, CategoryService categoryService, CommentService commentService, DropboxService dropboxService, ModelMapper modelMapper) {
         this.videoService = videoService;
         this.categoryService = categoryService;
+        this.commentService = commentService;
         this.dropboxService = dropboxService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/add")
@@ -76,13 +84,15 @@ public class VideoController {
     @GetMapping("/{identifier}")
     public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView) {
         VideoViewModel videoViewModel = this.videoService.getVideoViewModelForDetailsByIdentifier(identifier);
-        Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(videoViewModel.getAuthor(), videoViewModel.getVideoIdentifier());
+        Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
+        Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
 //        this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);
         modelAndView.addObject("videosFromSameUser", videosFromSameUser);
         modelAndView.addObject("videoName", videoViewModel.getTitle());
+        modelAndView.addObject("comments", comments);
 
         return modelAndView;
     }

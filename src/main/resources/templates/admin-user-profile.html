@@ -71,7 +71,7 @@
                                 <h2 th:text="${video.getTitle()}"></h2>
                             </header>
                             <p>
-                                <a th:href="@{/videos/{id}(id=${video.getId()})}">
+                                <a th:href="@{/videos/{id}(id=${video.id})}">
                                     <img th:src="@{http://localhost:8080/images/video-player.png}"
                                          width="400"/>
                                 </a>

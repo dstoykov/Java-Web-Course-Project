@@ -1,38 +1,18 @@
-package dst.courseproject.entities;
+package dst.courseproject.models.view;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
+import dst.courseproject.entities.User;
+import dst.courseproject.entities.Video;
 
-import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "comments")
-public class Comment {
-
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false)
+public class CommentViewModel {
     private String id;
-
-    @Column(nullable = false)
     private String content;
-
-    @ManyToOne
-    @JoinColumn(name="video_id", nullable = false)
     private Video video;
-
-    @ManyToOne
-    @JoinColumn(name="author_id", nullable = false)
     private User author;
-
-    @Column(nullable = false)
     private LocalDateTime dateOfPublishing;
 
-    public Comment() {
-        this.dateOfPublishing = LocalDateTime.now();
+    public CommentViewModel() {
     }
 
     public String getId() {

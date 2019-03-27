@@ -4,6 +4,7 @@ import com.dropbox.core.DbxException;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
 
@@ -27,7 +28,7 @@ public interface VideoService {
 
     void dislikeVideo(String identifier);
 
-    Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(User author, String videoIdentifier);
+    Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier);
 
     VideoServiceModel getVideoServiceModelByIdentifier(String identifier);
 }
