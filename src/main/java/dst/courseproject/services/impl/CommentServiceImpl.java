@@ -11,12 +11,15 @@ import dst.courseproject.repositories.CommentRepository;
 import dst.courseproject.services.CommentService;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import dst.courseproject.util.UserUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -50,11 +53,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Set<CommentViewModel> getCommentViewModelsByVideo(String videoIdentifier) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
         VideoServiceModel videoServiceModel = this.videoService.getVideoServiceModelByIdentifier(videoIdentifier);
         Set<Comment> comments = this.commentRepository.getAllByVideoEqualsOrderByDateOfPublishingDesc(this.modelMapper.map(videoServiceModel, Video.class));
         Set<CommentViewModel> commentViewModels = new LinkedHashSet<>();
         for (Comment comment : comments) {
-            commentViewModels.add(this.modelMapper.map(comment, CommentViewModel.class));
+            CommentViewModel commentViewModel = this.modelMapper.map(comment, CommentViewModel.class);
+            commentViewModel.setAuthor(UserUtils.getUserFullName(this.modelMapper.map(comment.getAuthor(), UserServiceModel.class)));
+            commentViewModel.setDateOfPublishing(comment.getDateOfPublishing().format(formatter));
+            commentViewModels.add(commentViewModel);
         }
 
         return commentViewModels;

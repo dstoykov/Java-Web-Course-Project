@@ -5,6 +5,9 @@ html {
 body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
+.wrap {
+    word-wrap: break-word;
+}
 .footer {
     position: absolute;
     bottom: 0;
@@ -31,4 +34,7 @@ body {
     margin-left: -15px;
     margin-right: 15px;
     padding: 0;
+}
+.hr-hidden {
+    display: inline-block;
 }

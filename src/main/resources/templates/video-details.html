@@ -3,43 +3,37 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <title th:text="${title}"></title>
+    <script th:src="@{/scripts/httpRequest.js}"></script>
+    <script th:src="@{/scripts/escapeSpecialSymbols.js}"></script>
+    <script th:src="@{/scripts/insertComments.js}"></script>
+    <title th:text="${video.getTitle()}"></title>
 </head>
 <body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    const http = (() => {
-        const post = (url, data) => fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        return {post};
-    })();
+    const videoIdentifier = [[${video.getVideoIdentifier()}]];
+    const getUrl = '/comments/get?video=' + videoIdentifier;
+    const postUrl = '/comments/add?video=' + videoIdentifier;
+
+    const loadComments = () => {
+        http.get(getUrl);
+    };
 
     const addComment = () => {
         const commentTextarea = $('#addComment');
-        const comment = commentTextarea.val();
-        if (comment === null || comment.trim() === '') {
+        const comment = commentTextarea.val().trim();
+        if (comment === null || comment === '') {
             return;
         }
-
-        const videoIdentifier = [[${video.getVideoIdentifier()}]];
-        const url = '/comments/add?video=' + videoIdentifier;
         const data = {
             content: comment
         };
-        http.post(url, data);
+
+        http.post(postUrl, data);
         commentTextarea.val('');
     };
 
-    function loadComments() {
-
-    }
-
+    $(document).ready(loadComments());
     /*]]>*/
 </script>
 <header>
@@ -105,23 +99,30 @@
                                     th:onclick="'javascript:addComment()'">Add
                             </button>
                         </div>
-                        <hr/>
-                        <th:block th:each="comment : ${comments}">
-                            <blockquote class="blockquote">
-                                <div align="right">
-                                    <p>
-                                        <a>&quot;</a><a th:text="${comment.content}"></a><a>&quot;</a>
-                                    </p>
-                                    <small>
-                                        <i th:text="${comment.author.firstName + ' ' + comment.author.lastName + ' - '}"></i>
-                                    </small>
-                                    <small th:text="${#temporals.format(comment.dateOfPublishing, 'dd-MM-yyyy HH:mm')}"></small>
-                                </div>
-                            </blockquote>
-                            <hr/>
-                        </th:block>
+<!--                        <th:block th:each="comment : ${comments}">-->
+                            <div id="commentSection">
+<!--                                <hr/>-->
+<!--                                <div id="getCommentsDiv" class="row">-->
+<!--                                    <div class="col-sm-1">-->
+<!--                                        <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+<!--                                    </div>-->
+<!--                                    <div class="blockquote col-sm-11 wrap">-->
+<!--                                        <div align="right">-->
+<!--                                            <p class="wrap">-->
+<!--                                                <a>&quot;</a><a th:text="${comment.content}"></a><a>&quot;</a>-->
+<!--                                            </p>-->
+<!--                                            <small>-->
+<!--                                                <i th:text="${comment.author}"></i>-->
+<!--                                            </small>-->
+<!--                                            <small th:text="${#temporals.format(comment.dateOfPublishing, 'HH:mm dd.MM.yyyy')}"></small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+<!--                        </th:block>-->
                     </div>
                 </div>
+                <hr class="hr-hidden"/>
             </div>
             <div class="col-lg-2">
                 <th:block th:each="video : ${videosFromSameUser}">

@@ -1,5 +1,6 @@
 package dst.courseproject.util;
 
+import dst.courseproject.models.service.UserServiceModel;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -12,5 +13,9 @@ public final class UserUtils {
             }
         }
         return false;
+    }
+
+    public static String getUserFullName(UserServiceModel userServiceModel) {
+        return userServiceModel.getFirstName() + " " + userServiceModel.getLastName();
     }
 }

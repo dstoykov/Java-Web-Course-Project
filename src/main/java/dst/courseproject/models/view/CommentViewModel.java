@@ -1,16 +1,12 @@
 package dst.courseproject.models.view;
 
-import dst.courseproject.entities.User;
-import dst.courseproject.entities.Video;
-
 import java.time.LocalDateTime;
 
 public class CommentViewModel {
     private String id;
     private String content;
-    private Video video;
-    private User author;
-    private LocalDateTime dateOfPublishing;
+    private String author;
+    private String dateOfPublishing;
 
     public CommentViewModel() {
     }
@@ -31,27 +27,19 @@ public class CommentViewModel {
         this.content = content;
     }
 
-    public Video getVideo() {
-        return this.video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
-    }
-
-    public User getAuthor() {
+    public String getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public LocalDateTime getDateOfPublishing() {
+    public String getDateOfPublishing() {
         return this.dateOfPublishing;
     }
 
-    public void setDateOfPublishing(LocalDateTime dateOfPublishing) {
+    public void setDateOfPublishing(String dateOfPublishing) {
         this.dateOfPublishing = dateOfPublishing;
     }
 }

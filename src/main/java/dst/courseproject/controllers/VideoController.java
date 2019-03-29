@@ -9,7 +9,9 @@ import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.CategoryService;
 import dst.courseproject.services.CommentService;
+import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import dst.courseproject.util.UserUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,14 +34,16 @@ public class VideoController {
     private final VideoService videoService;
     private final CategoryService categoryService;
     private final CommentService commentService;
+    private final UserService userService;
     private final DropboxService dropboxService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public VideoController(VideoService videoService, CategoryService categoryService, CommentService commentService, DropboxService dropboxService, ModelMapper modelMapper) {
+    public VideoController(VideoService videoService, CategoryService categoryService, CommentService commentService, UserService userService, DropboxService dropboxService, ModelMapper modelMapper) {
         this.videoService = videoService;
         this.categoryService = categoryService;
         this.commentService = commentService;
+        this.userService = userService;
         this.dropboxService = dropboxService;
         this.modelMapper = modelMapper;
     }
@@ -82,17 +86,21 @@ public class VideoController {
     }
 
     @GetMapping("/{identifier}")
-    public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView) {
+    public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) {
         VideoViewModel videoViewModel = this.videoService.getVideoViewModelForDetailsByIdentifier(identifier);
         Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
+        String principalName = UserUtils.getUserFullName((this.userService.getUserServiceModelByEmail(principal.getName())));
+        Boolean isModerator = UserUtils.hasRole("MODERATOR", videoViewModel.getAuthor().getAuthorities());
+
 //        this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);
         modelAndView.addObject("videosFromSameUser", videosFromSameUser);
-        modelAndView.addObject("videoName", videoViewModel.getTitle());
         modelAndView.addObject("comments", comments);
+        modelAndView.addObject("principalName", principalName);
+        modelAndView.addObject("isModerator", isModerator);
 
         return modelAndView;
     }

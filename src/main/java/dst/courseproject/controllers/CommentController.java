@@ -1,13 +1,13 @@
 package dst.courseproject.controllers;
 
 import dst.courseproject.models.binding.CommentAddBindingModel;
+import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/comments")
@@ -19,15 +19,15 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/comments-get")
-    public ResponseEntity<Object> getAllComments() {
-        return null;
+    @GetMapping("/get")
+    @ResponseBody
+    public Set<CommentViewModel> getAllComments(@RequestParam("video") String videoIdentifier) {
+        return this.commentService.getCommentViewModelsByVideo(videoIdentifier);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CommentAddBindingModel> addComment(@RequestBody CommentAddBindingModel bindingModel, @RequestParam("video") String videoIdentifier, Principal principal) {
+    public void addComment(@RequestBody CommentAddBindingModel bindingModel, @RequestParam("video") String videoIdentifier, Principal principal) {
         this.commentService.save(bindingModel, videoIdentifier, principal.getName());
-        return new ResponseEntity<>(bindingModel, HttpStatus.OK);
     }
 
 }
