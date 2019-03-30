@@ -5,7 +5,7 @@
     <th:block th:replace="fragments/head"></th:block>
     <script th:src="@{/scripts/httpRequest.js}"></script>
     <script th:src="@{/scripts/escapeSpecialSymbols.js}"></script>
-    <script th:src="@{/scripts/insertComments.js}"></script>
+    <script th:src="@{/scripts/addCommentsToPage.js}"></script>
     <title th:text="${video.getTitle()}"></title>
 </head>
 <body>
@@ -14,9 +14,12 @@
     const videoIdentifier = [[${video.getVideoIdentifier()}]];
     const getUrl = '/comments/get?video=' + videoIdentifier;
     const postUrl = '/comments/add?video=' + videoIdentifier;
+    const removeUrl = '/comments/remove?comment=';
 
     const loadComments = () => {
-        http.get(getUrl);
+        const principal = [[${principalName}]];
+        const isModerator = [[${isModerator}]];
+        http.get(getUrl, principal, isModerator);
     };
 
     const addComment = () => {
@@ -34,6 +37,8 @@
     };
 
     $(document).ready(loadComments());
+
+    $(document.body).on('click', '#removeBtn', (btn) => http.post(removeUrl + btn.target['name']));
     /*]]>*/
 </script>
 <header>

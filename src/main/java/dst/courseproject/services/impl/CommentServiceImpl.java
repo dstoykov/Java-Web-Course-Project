@@ -4,6 +4,7 @@ import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
 import dst.courseproject.models.binding.CommentAddBindingModel;
+import dst.courseproject.models.service.CommentServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.CommentViewModel;
@@ -65,5 +66,15 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return commentViewModels;
+    }
+
+    @Override
+    public void remove(String commentId) {
+        this.commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public CommentServiceModel getCommentServiceModelById(String id) {
+        return this.modelMapper.map(this.commentRepository.findById(id), CommentServiceModel.class);
     }
 }

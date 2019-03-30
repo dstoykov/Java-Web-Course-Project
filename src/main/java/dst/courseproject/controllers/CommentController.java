@@ -1,8 +1,12 @@
 package dst.courseproject.controllers;
 
 import dst.courseproject.models.binding.CommentAddBindingModel;
+import dst.courseproject.models.service.CommentServiceModel;
+import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.services.CommentService;
+import dst.courseproject.services.UserService;
+import dst.courseproject.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +17,12 @@ import java.util.Set;
 @RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final UserService userService;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, UserService userService) {
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping("/get")
@@ -30,4 +36,12 @@ public class CommentController {
         this.commentService.save(bindingModel, videoIdentifier, principal.getName());
     }
 
+    @PostMapping("/remove")
+    public void removeComment(@RequestParam("comment") String commentId, Principal principal) {
+        CommentServiceModel commentServiceModel = this.commentService.getCommentServiceModelById(commentId);
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
+        if (UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities()) || UserUtils.getUserFullName(userServiceModel).equals(UserUtils.getUserFullName(commentServiceModel.getAuthor()))) {
+            this.commentService.remove(commentId);
+        }
+    }
 }

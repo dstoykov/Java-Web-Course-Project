@@ -1,8 +1,8 @@
 const http = (() => {
-    const get = (url) => fetch(url, {method: 'GET'})
+    const get = (url, principal, isModerator) => fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(data => {
-            addCommentsToPage(data)
+            addCommentsToPage(data, principal, isModerator)
         })
         .catch(error => console.log(error));
 

@@ -90,8 +90,9 @@ public class VideoController {
         VideoViewModel videoViewModel = this.videoService.getVideoViewModelForDetailsByIdentifier(identifier);
         Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
-        String principalName = UserUtils.getUserFullName((this.userService.getUserServiceModelByEmail(principal.getName())));
-        Boolean isModerator = UserUtils.hasRole("MODERATOR", videoViewModel.getAuthor().getAuthorities());
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
+        String principalName = UserUtils.getUserFullName(userServiceModel);
+        Boolean isModerator = UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities());
 
 //        this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
 
