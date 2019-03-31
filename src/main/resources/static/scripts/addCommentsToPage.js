@@ -1,5 +1,6 @@
 function addCommentsToPage(comments, principal, isModerator) {
-    let commentsDiv = $('#commentSection');
+    let commentsDiv = $('<div>');
+    console.log(comments);
     for (comment of comments) {
         commentsDiv.append($('<hr/>'));
         let removeDiv = $('<div class="row">');
@@ -10,7 +11,7 @@ function addCommentsToPage(comments, principal, isModerator) {
         removeDiv.append(smallCol);
         commentsDiv.append(removeDiv);
         let commentDiv = $('<div class="blockquote col-sm-11 wrap">');
-        let rightDiv = $('<div align="right">');
+        let rightDiv = $('<div class="align-right">');
         let wrappedP = $('<p class="wrap">');
         wrappedP.append($(`<a>&quot;</a><a>${escapeHtml(comment.content)}</a><a>&quot;</a>`));
         let smallAuthor = $('<small>');
@@ -22,4 +23,5 @@ function addCommentsToPage(comments, principal, isModerator) {
         removeDiv.append(commentDiv);
         commentsDiv.append(removeDiv);
     }
+    $('#commentSection').html(commentsDiv);
 }

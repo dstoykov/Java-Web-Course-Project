@@ -1,7 +1,5 @@
 package dst.courseproject.models.view;
 
-import java.time.LocalDateTime;
-
 public class CommentViewModel {
     private String id;
     private String content;

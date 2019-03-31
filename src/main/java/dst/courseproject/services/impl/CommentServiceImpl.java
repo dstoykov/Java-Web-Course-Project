@@ -75,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentServiceModel getCommentServiceModelById(String id) {
-        return this.modelMapper.map(this.commentRepository.findById(id), CommentServiceModel.class);
+        Comment comment = this.commentRepository.getOne(id);
+        return this.modelMapper.map(comment, CommentServiceModel.class);
     }
 }

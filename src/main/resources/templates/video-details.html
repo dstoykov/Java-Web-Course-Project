@@ -6,20 +6,18 @@
     <script th:src="@{/scripts/httpRequest.js}"></script>
     <script th:src="@{/scripts/escapeSpecialSymbols.js}"></script>
     <script th:src="@{/scripts/addCommentsToPage.js}"></script>
+    <script th:src="@{/scripts/links.js}"></script>
     <title th:text="${video.getTitle()}"></title>
 </head>
 <body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     const videoIdentifier = [[${video.getVideoIdentifier()}]];
-    const getUrl = '/comments/get?video=' + videoIdentifier;
-    const postUrl = '/comments/add?video=' + videoIdentifier;
-    const removeUrl = '/comments/remove?comment=';
 
     const loadComments = () => {
         const principal = [[${principalName}]];
         const isModerator = [[${isModerator}]];
-        http.get(getUrl, principal, isModerator);
+        http.get(getUrl(videoIdentifier), principal, isModerator);
     };
 
     const addComment = () => {
@@ -32,13 +30,18 @@
             content: comment
         };
 
-        http.post(postUrl, data);
+        http.post(postUrl(videoIdentifier), data);
         commentTextarea.val('');
+
+        setTimeout(() => loadComments(), 500);
     };
 
     $(document).ready(loadComments());
 
-    $(document.body).on('click', '#removeBtn', (btn) => http.post(removeUrl + btn.target['name']));
+    $(document.body).on('click', '#removeBtn', (btn) => {
+        http.post(removeUrl + btn.target['name']);
+        setTimeout(() => loadComments(), 500);
+    });
     /*]]>*/
 </script>
 <header>
@@ -88,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr width="92%" align="left"/>
+                    <hr class="align-left width"/>
                 </div>
                 <div class="row">
                     <div class="col-lg-9">
@@ -99,13 +102,14 @@
                             <label for="addComment">Add new comment</label>
                             <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
                         </div>
-                        <div align="right">
+                        <div class="align-right">
                             <button type="button" class="btn btn-outline-secondary btn-sm" id="addBtn"
                                     th:onclick="'javascript:addComment()'">Add
                             </button>
                         </div>
+                        <div id="commentSection">
 <!--                        <th:block th:each="comment : ${comments}">-->
-                            <div id="commentSection">
+<!--                            <div id="commentSection">-->
 <!--                                <hr/>-->
 <!--                                <div id="getCommentsDiv" class="row">-->
 <!--                                    <div class="col-sm-1">-->
@@ -123,8 +127,9 @@
 <!--                                        </div>-->
 <!--                                    </div>-->
 <!--                                </div>-->
-                            </div>
+<!--                            </div>-->
 <!--                        </th:block>-->
+                        </div>
                     </div>
                 </div>
                 <hr class="hr-hidden"/>
