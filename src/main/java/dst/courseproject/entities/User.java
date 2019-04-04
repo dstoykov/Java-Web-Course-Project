@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -53,10 +51,15 @@ public class User implements UserDetails {
     @Column(name = "deleted_on")
     private LocalDate deletedOn;
 
+    @ManyToMany(targetEntity = Video.class, mappedBy = "usersLiked")
+    @MapKey(name = "id")
+    private Map<String, Video> likedVideos;
+
     public User() {
         this.videos = new HashSet<>();
         this.comments = new HashSet<>();
         this.authorities = new HashSet<>();
+        this.likedVideos = new HashMap<>();
     }
 
     public String getId() {
@@ -179,5 +182,13 @@ public class User implements UserDetails {
 
     public void setDeletedOn(LocalDate deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    public Map<String, Video> getLikedVideos() {
+        return this.likedVideos;
+    }
+
+    public void setLikedVideos(Map<String, Video> likedVideos) {
+        this.likedVideos = likedVideos;
     }
 }

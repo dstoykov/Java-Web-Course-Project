@@ -5,6 +5,8 @@ import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
+import dst.courseproject.exceptions.VideoAlreadyLiked;
+import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
@@ -104,23 +106,35 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void likeVideo(String identifier) {
-        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
-        if (!video.getLiked()) {
-            video.setLikes(video.getLikes() + 1);
-            video.setLiked(true);
-            this.videoRepository.save(video);
+    public void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(videoIdentifier);
+        User user = this.userService.getUserByEmail(principalEmail);
+        if (video.getUsersLiked().containsKey(user.getId())) {
+            throw new VideoAlreadyLiked("Video has been already liked by this user!");
         }
+
+        video.getUsersLiked().put(user.getId(), user);
+
+        this.videoRepository.save(video);
     }
 
     @Override
-    public void dislikeVideo(String identifier) {
-        Video video = this.videoRepository.getByVideoIdentifierEquals(identifier);
-        if (video.getLiked()) {
-            video.setLikes(video.getLikes() - 1);
-            video.setLiked(false);
-            this.videoRepository.save(video);
+    public void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(videoIdentifier);
+        User user = this.userService.getUserByEmail(principalEmail);
+        if (!video.getUsersLiked().containsKey(user.getId())) {
+            throw new VideoNotLiked("Video has not been liked by this user!");
         }
+
+        video.getUsersLiked().remove(user.getId());
+
+        this.videoRepository.save(video);
+    }
+
+    @Override
+    public Integer getVideoLikes(String videoIdentifier) {
+        Video video = this.videoRepository.getByVideoIdentifierEquals(videoIdentifier);
+        return video.getUsersLiked().size();
     }
 
     @Override

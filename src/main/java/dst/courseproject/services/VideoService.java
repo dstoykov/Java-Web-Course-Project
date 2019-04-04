@@ -1,8 +1,9 @@
 package dst.courseproject.services;
 
 import com.dropbox.core.DbxException;
-import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
+import dst.courseproject.exceptions.VideoAlreadyLiked;
+import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
@@ -24,9 +25,11 @@ public interface VideoService {
 
     VideoViewModel getVideoViewModelForDetailsByIdentifier(String identifier);
 
-    void likeVideo(String identifier);
+    void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked;
 
-    void dislikeVideo(String identifier);
+    void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked;
+
+    Integer getVideoLikes(String videoIdentifier);
 
     Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier);
 

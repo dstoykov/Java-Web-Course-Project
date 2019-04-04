@@ -6,6 +6,7 @@ import dst.courseproject.entities.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 public class VideoServiceModel {
@@ -23,13 +24,11 @@ public class VideoServiceModel {
 
     private Set<Comment> comments;
 
-    private Long likes;
-
-    private Boolean isLiked;
-
     private Long views;
 
     private LocalDateTime uploadedOn;
+
+    private Map<String, User> usersLiked;
 
     public VideoServiceModel() {
     }
@@ -90,22 +89,6 @@ public class VideoServiceModel {
         this.comments = comments;
     }
 
-    public Long getLikes() {
-        return this.likes;
-    }
-
-    public void setLikes(Long likes) {
-        this.likes = likes;
-    }
-
-    public Boolean getLiked() {
-        return this.isLiked;
-    }
-
-    public void setLiked(Boolean isLiked) {
-        this.isLiked = isLiked;
-    }
-
     public Long getViews() {
         return this.views;
     }
@@ -120,5 +103,13 @@ public class VideoServiceModel {
 
     public void setUploadedOn(LocalDateTime uploadedOn) {
         this.uploadedOn = uploadedOn;
+    }
+
+    public Map<String, User> getUsersLiked() {
+        return this.usersLiked;
+    }
+
+    public void setUsersLiked(Map<String, User> usersLiked) {
+        this.usersLiked = usersLiked;
     }
 }

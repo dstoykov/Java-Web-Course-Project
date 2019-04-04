@@ -93,8 +93,14 @@ public class VideoController {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
         String principalName = UserUtils.getUserFullName(userServiceModel);
         Boolean isModerator = UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities());
+        Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
+        String videoFileUrl = "";
 
-//        this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
+//        try {
+//            videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
+//        } catch (DbxException e) {
+//            e.printStackTrace();
+//        }
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);
@@ -102,17 +108,9 @@ public class VideoController {
         modelAndView.addObject("comments", comments);
         modelAndView.addObject("principalName", principalName);
         modelAndView.addObject("isModerator", isModerator);
+        modelAndView.addObject("videoFileUrl", videoFileUrl);
+        modelAndView.addObject("isLiked", isLiked);
 
         return modelAndView;
-    }
-
-    @PostMapping("/{identifier}/like")
-    public void likeVideo(@PathVariable String identifier) {
-        this.videoService.likeVideo(identifier);
-    }
-
-    @PostMapping("/{identifier}/dislike")
-    public void dislikeVideo(@PathVariable String identifier) {
-        this.videoService.dislikeVideo(identifier);
     }
 }

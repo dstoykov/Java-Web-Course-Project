@@ -1,12 +1,12 @@
 package dst.courseproject.entities;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -40,23 +40,21 @@ public class Video {
     private Set<Comment> comments;
 
     @Column(nullable = false, columnDefinition = "BIGINT default 0")
-    private Long likes;
-
-    @Column(nullable = false)
-    private Boolean isLiked;
-
-    @Column(nullable = false, columnDefinition = "BIGINT default 0")
     private Long views;
 
     @Column(nullable = false)
     private LocalDateTime uploadedOn;
 
+    @ManyToMany
+    @JoinTable(name = "liked_videos_users", joinColumns = @JoinColumn(name = "video_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @MapKey(name = "id")
+    private Map<String, User> usersLiked;
+
     public Video() {
         this.comments = new HashSet<>();
-        this.likes = 0L;
-        this.isLiked = false;
         this.views = 0L;
         this.uploadedOn = LocalDateTime.now();
+        this.usersLiked = new HashMap<>();
     }
 
     public String getId() {
@@ -115,22 +113,6 @@ public class Video {
         this.comments = comments;
     }
 
-    public Long getLikes() {
-        return this.likes;
-    }
-
-    public void setLikes(Long likes) {
-        this.likes = likes;
-    }
-
-    public Boolean getLiked() {
-        return this.isLiked;
-    }
-
-    public void setLiked(Boolean liked) {
-        isLiked = liked;
-    }
-
     public Long getViews() {
         return this.views;
     }
@@ -145,5 +127,13 @@ public class Video {
 
     public void setUploadedOn(LocalDateTime uploadedOn) {
         this.uploadedOn = uploadedOn;
+    }
+
+    public Map<String, User> getUsersLiked() {
+        return this.usersLiked;
+    }
+
+    public void setUsersLiked(Map<String, User> usersLiked) {
+        this.usersLiked = usersLiked;
     }
 }

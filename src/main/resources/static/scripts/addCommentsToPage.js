@@ -1,6 +1,5 @@
 function addCommentsToPage(comments, principal, isModerator) {
     let commentsDiv = $('<div>');
-    console.log(comments);
     for (comment of comments) {
         commentsDiv.append($('<hr/>'));
         let removeDiv = $('<div class="row">');

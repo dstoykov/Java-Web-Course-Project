@@ -9,5 +9,5 @@ import java.io.IOException;
 public interface DropboxService {
     void uploadFile(File localFile, String dropBoxPath) throws IOException, DbxException;
 
-    String getFileLink(String fileName) throws DbxException, FileNotFoundException;
+    String getFileLink(String fileName) throws DbxException;
 }

@@ -6,6 +6,7 @@
     <script th:src="@{/scripts/httpRequest.js}"></script>
     <script th:src="@{/scripts/escapeSpecialSymbols.js}"></script>
     <script th:src="@{/scripts/addCommentsToPage.js}"></script>
+    <script th:src="@{/scripts/addLikesToPage.js}"></script>
     <script th:src="@{/scripts/links.js}"></script>
     <title th:text="${video.getTitle()}"></title>
 </head>
@@ -17,7 +18,7 @@
     const loadComments = () => {
         const principal = [[${principalName}]];
         const isModerator = [[${isModerator}]];
-        http.get(getUrl(videoIdentifier), principal, isModerator);
+        http.get(getCommentsUrl(videoIdentifier), principal, isModerator);
     };
 
     const addComment = () => {
@@ -30,16 +31,41 @@
             content: comment
         };
 
-        http.post(postUrl(videoIdentifier), data);
+        http.post(addCommentUrl(videoIdentifier), data);
         commentTextarea.val('');
 
         setTimeout(() => loadComments(), 500);
     };
 
-    $(document).ready(loadComments());
+    const like = () => {
+        http.post(likeUrl(videoIdentifier));
+        setTimeout(() => {
+            http.get(getLikesUrl(videoIdentifier));
+            $('#like').hide();
+            $('#unlike').show();
+        }, 500);
+    };
+
+    const unlike = () => {
+        http.post(unlikeUrl(videoIdentifier));
+        setTimeout(() => {
+            http.get(getLikesUrl(videoIdentifier));
+            $('#like').show();
+            $('#unlike').hide();
+        }, 500);
+    };
+
+    $(document).ready(() => {
+        if ([[${isLiked}]]) {
+            $('#like').hide();
+            $('#unlike').show();
+        }
+        loadComments()
+
+    });
 
     $(document.body).on('click', '#removeBtn', (btn) => {
-        http.post(removeUrl + btn.target['name']);
+        http.post(removeCommentUrl + btn.target['name']);
         setTimeout(() => loadComments(), 500);
     });
     /*]]>*/
@@ -53,7 +79,7 @@
             <div class="col-lg-10">
                 <h2 th:text="${video.title}"></h2>
                 <video width="840" height="472" controls>
-                    <source src="https://www.dropbox.com/scl/fi/25ivlcp9tza3dxeuawz2q/Zrb5S1prSZZ.mp4?dl=0"
+                    <source th:src="${videoFileUrl}"
                             type="video/mp4"/>
                 </video>
                 <div class="col">
@@ -62,7 +88,7 @@
                             <p>
                                 <strong><a class="font-weight-bold" href="/"
                                            th:text="${video.author.firstName + ' ' + video.author.lastName}"></a></strong>
-                                <small th:text="${'Uploaded on ' + video.uploadedOn}"></small>
+                                <small th:text="${'Uploaded on ' + #temporals.format(video.uploadedOn, 'dd.MM.yyyy')}"></small>
                             </p>
                             <p>Category: <a th:href="@{/category/{name}(name=${video.category.name})}"
                                             th:text="${video.category.name}"></a>
@@ -75,19 +101,20 @@
                                 </div>
                             </div>
                             <div class="row justify-content-end">
-                                <div class="col-sm-2">
-                                    <a><img class="hidden-md hidden-xs"
-                                            th:src="@{http://localhost:8000/images/like.png}"
-                                            width="20"
-                                            height="20"/></a>
-                                    <span th:text="${video.likes}"></span>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="image" id="like" class="align-left"
+                                               width="25" th:src="@{/images/unliked.png}"
+                                               th:onclick="'javascript:like()'" alt=""/>
+                                        <input type="image" id="unlike" class="align-left"
+                                               width="25" th:src="@{/images/liked.png}"
+                                               th:onclick="'javascript:unlike()'" alt="" style="display: none"/>
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="align-right" id="likesCount"
+                                            th:text="${video.usersLiked.size()}"></h6>
+                                    </div>
                                 </div>
-                                <!--<div class="col-sm-2">-->
-                                <!--<a><img class="hidden-md hidden-xs" th:src="@{http://localhost:8000/images/dislike.png}"-->
-                                <!--width="20"-->
-                                <!--height="20"/></a>-->
-                                <!--<span th:text="${isLiked}"></span>-->
-                                <!--</div>-->
                             </div>
                         </div>
                     </div>
@@ -98,37 +125,17 @@
                         <p class="lead" th:text="${video.description}"></p>
                         <br/>
                         <h3 class="text-primary">Comments:</h3>
-                        <div class="form-group">
+                        <h5 th:if="${principalName == null}"><a href="/users/login">Log in</a> to add comment!</h5>
+                        <div class="form-group" th:if="${principalName != null}">
                             <label for="addComment">Add new comment</label>
                             <textarea class="form-control" id="addComment" name="addComment" rows="2"></textarea>
                         </div>
-                        <div class="align-right">
+                        <div class="align-right" th:if="${principalName != null}">
                             <button type="button" class="btn btn-outline-secondary btn-sm" id="addBtn"
                                     th:onclick="'javascript:addComment()'">Add
                             </button>
                         </div>
                         <div id="commentSection">
-<!--                        <th:block th:each="comment : ${comments}">-->
-<!--                            <div id="commentSection">-->
-<!--                                <hr/>-->
-<!--                                <div id="getCommentsDiv" class="row">-->
-<!--                                    <div class="col-sm-1">-->
-<!--                                        <button type="button" class="close" data-dismiss="alert">&times;</button>-->
-<!--                                    </div>-->
-<!--                                    <div class="blockquote col-sm-11 wrap">-->
-<!--                                        <div align="right">-->
-<!--                                            <p class="wrap">-->
-<!--                                                <a>&quot;</a><a th:text="${comment.content}"></a><a>&quot;</a>-->
-<!--                                            </p>-->
-<!--                                            <small>-->
-<!--                                                <i th:text="${comment.author}"></i>-->
-<!--                                            </small>-->
-<!--                                            <small th:text="${#temporals.format(comment.dateOfPublishing, 'HH:mm dd.MM.yyyy')}"></small>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </th:block>-->
                         </div>
                     </div>
                 </div>

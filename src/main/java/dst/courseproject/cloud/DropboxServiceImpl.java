@@ -4,7 +4,10 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;
+import com.dropbox.core.v2.sharing.ListSharedLinksResult;
+import com.dropbox.core.v2.sharing.SharedFileMetadata;
 import com.dropbox.core.v2.sharing.SharedLinkMetadata;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,12 +36,16 @@ public class DropboxServiceImpl implements DropboxService {
     }
 
     @Override
-    public String getFileLink(String fileName) throws FileNotFoundException, DbxException {
-        //NOT WORKING PROPERLY
-        String dropboxPath = SLASH + fileName + MP4;
-        SharedLinkMetadata metadata = dbxClientV2.sharing().createSharedLinkWithSettings(dropboxPath);
-
-        return metadata.getUrl();
+    public String getFileLink(String fileName) throws DbxException {
+//        String dropboxPath = SLASH + fileName + MP4;
+//        ListSharedLinksResult listSharedLinksResult = dbxClientV2.sharing()
+//                .listSharedLinksBuilder()
+//                .withPath(dropboxPath).withDirectOnly(true)
+//                .start();
+//        SharedLinkMetadata result = listSharedLinksResult.getLinks().get(0);
+//
+//        return result.getUrl().replace("di=0", "raw=1");
+        return null;
     }
 
     private static void printProgress(long uploaded, long size) {

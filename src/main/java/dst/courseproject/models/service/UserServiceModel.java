@@ -3,6 +3,7 @@ package dst.courseproject.models.service;
 import dst.courseproject.entities.Role;
 import dst.courseproject.entities.Video;
 
+import java.util.Map;
 import java.util.Set;
 
 public class UserServiceModel {
@@ -19,6 +20,8 @@ public class UserServiceModel {
     private Set<Video> videos;
 
     private Set<Role> authorities;
+
+    private Map<String, Video> likedVideos;
 
     public UserServiceModel() {
     }
@@ -77,5 +80,13 @@ public class UserServiceModel {
 
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public Map<String, Video> getLikedVideos() {
+        return this.likedVideos;
+    }
+
+    public void setLikedVideos(Map<String, Video> likedVideos) {
+        this.likedVideos = likedVideos;
     }
 }

@@ -2,7 +2,11 @@ const http = (() => {
     const get = (url, principal, isModerator) => fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(data => {
-            addCommentsToPage(data, principal, isModerator)
+            if (principal) {
+                addCommentsToPage(data, principal, isModerator)
+            } else {
+                addLikesToPage(data);
+            }
         })
         .catch(error => console.log(error));
 
