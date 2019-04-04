@@ -49,3 +49,6 @@ body {
 hr.width {
     width: 92%;
 }
+iframe {
+    border-width: 0;
+}

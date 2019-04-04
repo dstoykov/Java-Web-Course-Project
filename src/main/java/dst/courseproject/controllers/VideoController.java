@@ -96,11 +96,11 @@ public class VideoController {
         Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
         String videoFileUrl = "";
 
-//        try {
-//            videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
-//        } catch (DbxException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
+        } catch (DbxException e) {
+            e.printStackTrace();
+        }
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);

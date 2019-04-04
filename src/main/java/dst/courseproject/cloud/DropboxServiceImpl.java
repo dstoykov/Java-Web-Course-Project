@@ -37,15 +37,14 @@ public class DropboxServiceImpl implements DropboxService {
 
     @Override
     public String getFileLink(String fileName) throws DbxException {
-//        String dropboxPath = SLASH + fileName + MP4;
-//        ListSharedLinksResult listSharedLinksResult = dbxClientV2.sharing()
-//                .listSharedLinksBuilder()
-//                .withPath(dropboxPath).withDirectOnly(true)
-//                .start();
-//        SharedLinkMetadata result = listSharedLinksResult.getLinks().get(0);
-//
-//        return result.getUrl().replace("di=0", "raw=1");
-        return null;
+        String dropboxPath = SLASH + fileName + MP4;
+        ListSharedLinksResult listSharedLinksResult = dbxClientV2.sharing()
+                .listSharedLinksBuilder()
+                .withPath(dropboxPath).withDirectOnly(true)
+                .start();
+        SharedLinkMetadata result = listSharedLinksResult.getLinks().get(0);
+
+        return result.getUrl().replace("dl=0", "raw=1");
     }
 
     private static void printProgress(long uploaded, long size) {

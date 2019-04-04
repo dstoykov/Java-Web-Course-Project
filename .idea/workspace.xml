@@ -2,29 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2de3573-901c-427d-8821-1f13f1921dae" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/VideoAlreadyLiked.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/VideoNotLiked.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/liked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/scripts/addLikesToPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Video.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserServiceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/VideoServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/VideoServiceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/VideoViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/VideoViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/VideoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/VideoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/dislike.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/like.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/unliked.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts/addCommentsToPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/scripts/addCommentsToPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts/httpRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/scripts/httpRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/scripts/links.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/scripts/links.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/video-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/video-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/entities/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/entities/User.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -44,37 +25,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/video-details.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
+            <state relative-caret-position="374">
+              <caret line="80" column="99" selection-start-line="80" selection-start-column="99" selection-end-line="80" selection-end-column="99" />
               <folding>
+                <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="e#708#886#0" />
+                <element signature="e#918#1311#0" />
+                <element signature="e#1337#1549#0" />
+                <element signature="e#1577#1791#0" />
+                <element signature="e#1822#1957#0" />
+                <element signature="e#2017#2129#0" />
                 <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/static/scripts/addCommentsToPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-              <folding>
-                <element signature="e#97#104#1" expanded="true" />
-                <element signature="e#3#9#1" expanded="true" />
-                <element signature="e#40#46#1" expanded="true" />
-                <element signature="e#20#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,11 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="96" column="33" lean-forward="true" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="1547">
+              <caret line="113" selection-start-line="113" selection-end-line="113" />
             </state>
           </provider>
         </entry>
@@ -151,7 +112,6 @@
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/CommentViewModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CommentServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CommentRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/styles/style.css" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/login.html" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserServiceModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/VideoAlreadyLiked.java" />
@@ -168,9 +128,10 @@
         <option value="$PROJECT_DIR$/src/main/resources/static/scripts/httpRequest.js" />
         <option value="$PROJECT_DIR$/src/main/resources/static/scripts/addCommentsToPage.js" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/video-details.html" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/styles/style.css" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/video-details.html" />
       </list>
     </option>
   </component>
@@ -200,6 +161,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -390,13 +352,29 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Java-Web-Course-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Java-Web-Course-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="styles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Java-Web-Course-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Java-Web-Course-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -667,6 +645,7 @@
       <workItem from="1554219459483" duration="12934000" />
       <workItem from="1554297778649" duration="10359000" />
       <workItem from="1554366361593" duration="1237000" />
+      <workItem from="1554369064544" duration="3130000" />
     </task>
     <servers />
   </component>
@@ -703,7 +682,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="458388000" />
+    <option name="totallyTimeSpent" value="461518000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -750,13 +729,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/phrase.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="197" column="16" selection-start-line="197" selection-start-column="16" selection-end-line="197" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CommentAddBindingModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -907,13 +879,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="9" lean-forward="true" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/styles/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1084,13 +1049,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/UserEditBindingModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="96" column="33" lean-forward="true" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1107,20 +1069,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/video-details.html">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/styles/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="463">
+          <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/cloud/DropboxServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+          <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1547">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/video-details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="80" column="99" selection-start-line="80" selection-start-column="99" selection-end-line="80" selection-end-column="99" />
+          <folding>
+            <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="e#708#886#0" />
+            <element signature="e#918#1311#0" />
+            <element signature="e#1337#1549#0" />
+            <element signature="e#1577#1791#0" />
+            <element signature="e#1822#1957#0" />
+            <element signature="e#2017#2129#0" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
