@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -77,5 +79,24 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryViewModel viewModel = this.modelMapper.map(category, CategoryViewModel.class);
 
         return viewModel;
+    }
+
+    @Override
+    public Set<String> getCategoriesNames() {
+        List<Category> categories = this.categoryRepository.findAll();
+        Set<String> names = new HashSet<>();
+        for (Category category : categories) {
+            names.add(category.getName());
+        }
+
+        return names;
+    }
+
+    @Override
+    public CategoryServiceModel getCategoryServiceModelByName(String name) {
+        Category category = this.categoryRepository.findByName(name);
+        CategoryServiceModel categoryServiceModel = this.modelMapper.map(category, CategoryServiceModel.class);
+
+        return categoryServiceModel;
     }
 }

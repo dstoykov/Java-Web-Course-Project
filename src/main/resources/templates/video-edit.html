@@ -11,7 +11,7 @@
 </header>
 <main>
     <div class="container">
-        <form enctype="multipart/form-data" th:action="@{/videos/add}" th:method="POST" th:object="${videoInput}">
+        <form th:action="@{/videos/edit/{identifier}(identifier=${videoInput.identifier})}" th:method="POST" th:object="${videoInput}">
             <div th:if="${#fields.hasAnyErrors()}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
@@ -46,7 +46,6 @@
                 <div class="form-group row" th:classappend="${#fields.hasErrors('category')} ? 'has-danger'">
                     <label for="category">Category</label>
                     <select required class="custom-select" id="category" name="category">
-                        <option disabled selected>Choose Category...</option>
                         <th:block th:each="category : ${categories}">
                             <option th:value="${category}" th:text="${category}"
                                     th:selected="${category.equals(videoInput.category)}"></option>
@@ -56,23 +55,13 @@
                         <small class="text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
-                <div class="form-group row" th:classappend="${#fields.hasErrors('videoFile')} ? 'has-danger'">
-                    <label for="videoFile">Select Video</label>
-                    <p class="text-info">&nbsp;(Max size - 100MB)</p>
-                    <input required class="form-control-file" id="videoFile" name="videoFile"
-                           aria-describedby="videoFile" type="file" accept="video/mp4,video/x-m4v,video/*">
-                    <th:block th:each="error : ${#fields.errors('videoFile')}">
-                        <small class="text-danger" th:text="${error}"></small>
-                    </th:block>
-                </div>
                 <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-primary mr-2">Add Video</button>
+                    <button type="submit" class="btn btn-success mr-2">Edit Video</button>
                     <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Cancel</a>
                 </div>
             </fieldset>
         </form>
     </div>
-    <hr class="hr-hidden"/>
 </main>
 <footer class="footer"><!--class="footer-sticky"-->
     <th:block th:replace="fragments/footer"></th:block>

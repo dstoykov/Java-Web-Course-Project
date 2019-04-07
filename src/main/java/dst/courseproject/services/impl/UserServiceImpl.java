@@ -162,14 +162,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
-
         finishEditing(userEditBindingModel, user);
     }
 
     @Override
     public void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String email) throws PasswordsMismatchException {
         User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
-
         finishEditing(userEditBindingModel, user);
     }
 

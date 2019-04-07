@@ -5,6 +5,7 @@ import dst.courseproject.entities.Video;
 import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -23,7 +24,7 @@ public interface VideoService {
 
     Long getTotalVideosCount();
 
-    VideoViewModel getVideoViewModelForDetailsByIdentifier(String identifier);
+    VideoViewModel getVideoViewModel(String identifier);
 
     void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked;
 
@@ -34,4 +35,10 @@ public interface VideoService {
     Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier);
 
     VideoServiceModel getVideoServiceModelByIdentifier(String identifier);
+
+    void increaseVideoViewsByOne(String identifier);
+
+    void editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier);
+
+    void deleteVideo(String identifier);
 }

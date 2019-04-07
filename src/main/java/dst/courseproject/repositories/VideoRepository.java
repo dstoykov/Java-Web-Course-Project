@@ -10,11 +10,11 @@ import java.util.Set;
 
 @Repository
 public interface VideoRepository extends JpaRepository<Video, String> {
-    Video getByVideoIdentifierEquals(String videoIdentifier);
+    Video getByVideoIdentifierEqualsAndDeletedOnNull(String videoIdentifier);
 
-    Set<Video> getAllByIdNotNull();
+    Set<Video> getAllByIdNotNullAndDeletedOnNull();
 
     Long countAllByIdIsNotNull();
 
-    List<Video> getAllByAuthorOrderByViewsDesc(User author);
+    List<Video> getAllByAuthorAndDeletedOnNullOrderByViewsDesc(User author);
 }

@@ -31,8 +31,9 @@ public class DropboxServiceImpl implements DropboxService {
         String dropboxPath = SLASH + fileName + MP4;
         InputStream inputStream = new FileInputStream(localFile);
         FileMetadata metadata = this.dbxClientV2.files().uploadBuilder(dropboxPath).withMode(WriteMode.ADD).withClientModified(new Date(localFile.lastModified())).uploadAndFinish(inputStream);
-
         inputStream.close();
+
+        dbxClientV2.sharing().createSharedLinkWithSettings(dropboxPath);
     }
 
     @Override

@@ -2,8 +2,8 @@ package dst.courseproject.controllers;
 
 import com.dropbox.core.DbxException;
 import dst.courseproject.cloud.DropboxService;
-import dst.courseproject.entities.Category;
 import dst.courseproject.models.binding.VideoAddBindingModel;
+import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -24,8 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -55,12 +53,8 @@ public class VideoController {
             model.addAttribute("videoInput", new VideoAddBindingModel());
         }
 
+        Set<String> categoriesNames = this.categoryService.getCategoriesNames();
         modelAndView.addObject("title", "Add Video");
-        List<Category> categories = this.categoryService.getAllCategories();
-        List<String> categoriesNames = new ArrayList<>();
-        for (Category category : categories) {
-            categoriesNames.add(category.getName());
-        }
         modelAndView.addObject("categories", categoriesNames);
 
         return modelAndView;
@@ -69,7 +63,6 @@ public class VideoController {
     @PostMapping("/add")
     public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {
-            System.out.println(videoAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
             modelAndView.setViewName("redirect:add");
@@ -78,7 +71,7 @@ public class VideoController {
                 this.videoService.addVideo(videoAddBindingModel, principal);
             } catch (DbxException | IOException e) {
                 e.printStackTrace();
-            } //TODO catch FileUploadBase.SizeLimitExceededException
+            } //TODO handle FileUploadBase.SizeLimitExceededException
             modelAndView.setViewName("redirect:../");
         }
 
@@ -86,8 +79,9 @@ public class VideoController {
     }
 
     @GetMapping("/{identifier}")
-    public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) {
-        VideoViewModel videoViewModel = this.videoService.getVideoViewModelForDetailsByIdentifier(identifier);
+    public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) throws DbxException {
+        VideoViewModel videoViewModel = this.videoService.getVideoViewModel(identifier);
+        this.videoService.increaseVideoViewsByOne(identifier);
         Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
@@ -96,11 +90,7 @@ public class VideoController {
         Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
         String videoFileUrl = "";
 
-        try {
-            videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
-        } catch (DbxException e) {
-            e.printStackTrace();
-        }
+        videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);
@@ -110,6 +100,58 @@ public class VideoController {
         modelAndView.addObject("isModerator", isModerator);
         modelAndView.addObject("videoFileUrl", videoFileUrl);
         modelAndView.addObject("isLiked", isLiked);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{identifier}")
+    public ModelAndView editVideo(@PathVariable String identifier, ModelAndView modelAndView, Model model) {
+        modelAndView.setViewName("video-edit");
+        Set<String> categoriesNames = this.categoryService.getCategoriesNames();
+
+        modelAndView.addObject("title", "Edit Video");
+        if (!model.containsAttribute("videoInput")) {
+            VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
+            VideoEditBindingModel bindingModel = this.modelMapper.map(viewModel, VideoEditBindingModel.class);
+            bindingModel.setCategory(viewModel.getCategory().getName());
+            bindingModel.setIdentifier(viewModel.getVideoIdentifier());
+            model.addAttribute("videoInput", bindingModel);
+        }
+        modelAndView.addObject("categories", categoriesNames);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/edit/{identifier}")
+    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        System.out.println();
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
+            redirectAttributes.addFlashAttribute("videoInput", videoEditBindingModel);
+            modelAndView.setViewName("redirect:" + identifier);
+        } else {
+            this.videoService.editVideoData(videoEditBindingModel, identifier);
+            modelAndView.setViewName("redirect:../" + identifier);
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{identifier}")
+    public ModelAndView deleteVideo(@PathVariable String identifier, ModelAndView modelAndView) {
+        VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
+
+        modelAndView.setViewName("video-delete");
+        modelAndView.addObject("title", "Delete Video");
+        modelAndView.addObject("videoInput", viewModel);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/delete/{identifier}")
+    public ModelAndView deleteVideoConfirm(@PathVariable String identifier, ModelAndView modelAndView) {
+        this.videoService.deleteVideo(identifier);
+        modelAndView.setViewName("redirect:../../");
 
         return modelAndView;
     }

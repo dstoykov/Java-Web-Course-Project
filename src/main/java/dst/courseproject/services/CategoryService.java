@@ -8,6 +8,7 @@ import dst.courseproject.models.view.CategoryViewModel;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 public interface CategoryService {
     List<Category> getAllCategories();
@@ -25,4 +26,8 @@ public interface CategoryService {
     Category findByName(String category);
 
     CategoryViewModel getCategoryViewModel(String name);
+
+    Set<String> getCategoriesNames();
+
+    CategoryServiceModel getCategoryServiceModelByName(String name);
 }

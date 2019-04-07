@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,6 +50,8 @@ public class Video {
     @JoinTable(name = "liked_videos_users", joinColumns = @JoinColumn(name = "video_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     @MapKey(name = "id")
     private Map<String, User> usersLiked;
+
+    private LocalDate deletedOn;
 
     public Video() {
         this.comments = new HashSet<>();
@@ -135,5 +138,13 @@ public class Video {
 
     public void setUsersLiked(Map<String, User> usersLiked) {
         this.usersLiked = usersLiked;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }
