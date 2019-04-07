@@ -5,8 +5,8 @@
     <th:block th:replace="fragments/head"></th:block>
     <script th:src="@{/scripts/httpRequest.js}"></script>
     <script th:src="@{/scripts/escapeSpecialSymbols.js}"></script>
-    <script th:src="@{/scripts/addCommentsToPage.js}"></script>
-    <script th:src="@{/scripts/addLikesToPage.js}"></script>
+    <script th:src="@{/scripts/comments.js}"></script>
+    <script th:src="@{/scripts/likes.js}"></script>
     <script th:src="@{/scripts/links.js}"></script>
     <title th:text="${video.getTitle()}"></title>
 </head>
@@ -21,47 +21,12 @@
         http.get(getCommentsUrl(videoIdentifier), principal, isModerator);
     };
 
-    const addComment = () => {
-        const commentTextarea = $('#addComment');
-        const comment = commentTextarea.val().trim();
-        if (comment === null || comment === '') {
-            return;
-        }
-        const data = {
-            content: comment
-        };
-
-        http.post(addCommentUrl(videoIdentifier), data);
-        commentTextarea.val('');
-
-        setTimeout(() => loadComments(), 500);
-    };
-
-    const like = () => {
-        http.post(likeUrl(videoIdentifier));
-        setTimeout(() => {
-            http.get(getLikesUrl(videoIdentifier));
-            $('#like').hide();
-            $('#unlike').show();
-        }, 500);
-    };
-
-    const unlike = () => {
-        http.post(unlikeUrl(videoIdentifier));
-        setTimeout(() => {
-            http.get(getLikesUrl(videoIdentifier));
-            $('#like').show();
-            $('#unlike').hide();
-        }, 500);
-    };
-
     $(document).ready(() => {
         if ([[${isLiked}]]) {
             $('#like').hide();
             $('#unlike').show();
         }
         loadComments()
-
     });
 
     $(document.body).on('click', '#removeBtn', (btn) => {

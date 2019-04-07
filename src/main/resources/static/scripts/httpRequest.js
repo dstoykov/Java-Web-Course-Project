@@ -3,9 +3,9 @@ const http = (() => {
         .then(response => response.json())
         .then(data => {
             if (principal) {
-                addCommentsToPage(data, principal, isModerator)
+                commentsToPage(data, principal, isModerator)
             } else {
-                addLikesToPage(data);
+                loadLikes(data);
             }
         })
         .catch(error => console.log(error));

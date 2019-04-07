@@ -1,4 +1,20 @@
-function addCommentsToPage(comments, principal, isModerator) {
+const addComment = () => {
+    const commentTextarea = $('#addComment');
+    const comment = commentTextarea.val().trim();
+    if (comment === null || comment === '') {
+        return;
+    }
+    const data = {
+        content: comment
+    };
+
+    http.post(addCommentUrl(videoIdentifier), data);
+    commentTextarea.val('');
+
+    setTimeout(() => loadComments(), 500);
+};
+
+function commentsToPage(comments, principal, isModerator) {
     let commentsDiv = $('<div>');
     for (comment of comments) {
         commentsDiv.append($('<hr/>'));
