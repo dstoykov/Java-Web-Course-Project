@@ -19,7 +19,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    private ModelAndView index(ModelAndView modelAndView) {
+    public ModelAndView index(ModelAndView modelAndView) {
         Set<VideoViewModel> videos = this.videoService.getAllVideosAsViewModels();
 
         modelAndView.setViewName("index");

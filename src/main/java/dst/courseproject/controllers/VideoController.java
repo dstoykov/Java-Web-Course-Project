@@ -61,17 +61,14 @@ public class VideoController {
     }
 
     @PostMapping("/add")
-    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
+    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) throws IOException, DbxException {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
             modelAndView.setViewName("redirect:add");
         } else {
-            try {
-                this.videoService.addVideo(videoAddBindingModel, principal);
-            } catch (DbxException | IOException e) {
-                e.printStackTrace();
-            } //TODO handle FileUploadBase.SizeLimitExceededException
+            //TODO handle FileUploadBase.SizeLimitExceededException
+            this.videoService.addVideo(videoAddBindingModel, principal);
             modelAndView.setViewName("redirect:../");
         }
 
