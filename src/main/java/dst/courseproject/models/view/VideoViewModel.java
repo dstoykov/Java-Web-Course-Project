@@ -30,6 +30,8 @@ public class VideoViewModel {
 
     private Map<String, UserViewModel> usersLiked;
 
+    private String thumbnailUrl;
+
     public VideoViewModel() {
     }
 
@@ -111,5 +113,13 @@ public class VideoViewModel {
 
     public void setUsersLiked(Map<String, UserViewModel> usersLiked) {
         this.usersLiked = usersLiked;
+    }
+
+    public String getThumbnailUrl() {
+        return this.thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

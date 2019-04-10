@@ -12,6 +12,7 @@ import dst.courseproject.services.CommentService;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
 import dst.courseproject.util.UserUtils;
+import org.bytedeco.javacv.FrameGrabber;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ import java.util.Set;
 @Controller
 @RequestMapping("/videos")
 public class VideoController {
+    private static final String MP4 = ".mp4";
+
     private final VideoService videoService;
     private final CategoryService categoryService;
     private final CommentService commentService;
@@ -61,7 +64,7 @@ public class VideoController {
     }
 
     @PostMapping("/add")
-    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) throws IOException, DbxException {
+    public ModelAndView add(@Valid @ModelAttribute(name = "videoInput") VideoAddBindingModel videoAddBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) throws IOException, DbxException, FrameGrabber.Exception {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
@@ -87,7 +90,7 @@ public class VideoController {
         Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
         String videoFileUrl = "";
 
-        videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier());
+        videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier() + MP4);
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);

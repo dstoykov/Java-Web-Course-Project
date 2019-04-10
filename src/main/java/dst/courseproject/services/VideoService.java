@@ -9,6 +9,7 @@ import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
+import org.bytedeco.javacv.FrameGrabber;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public interface VideoService {
 
     Set<VideoViewModel> mapVideoToModel(Set<Video> videoList);
 
-    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException;
+    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception;
 
     Long getTotalVideosCount();
 

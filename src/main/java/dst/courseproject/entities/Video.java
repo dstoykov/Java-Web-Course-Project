@@ -51,7 +51,11 @@ public class Video {
     @MapKey(name = "id")
     private Map<String, User> usersLiked;
 
+    @Column(name = "deleted_on")
     private LocalDate deletedOn;
+
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
 
     public Video() {
         this.comments = new HashSet<>();
@@ -146,5 +150,13 @@ public class Video {
 
     public void setDeletedOn(LocalDate deletedOn) {
         this.deletedOn = deletedOn;
+    }
+
+    public String getThumbnailUrl() {
+        return this.thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

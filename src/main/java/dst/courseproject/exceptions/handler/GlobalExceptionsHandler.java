@@ -12,7 +12,8 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionsHandler {
     @ExceptionHandler({DbxException.class, IOException.class, VideoAlreadyLiked.class, VideoNotLiked.class})
-    public ModelAndView handleUploadingVideoExceptions() {
+    public ModelAndView handleUploadingVideoExceptions(Exception e) {
+        e.printStackTrace();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:../errors/error");
 

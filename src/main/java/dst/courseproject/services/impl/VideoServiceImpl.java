@@ -17,7 +17,9 @@ import dst.courseproject.repositories.VideoRepository;
 import dst.courseproject.services.CategoryService;
 import dst.courseproject.services.UserService;
 import dst.courseproject.services.VideoService;
+import dst.courseproject.thumbnail.ThumbnailExtractor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bytedeco.javacv.FrameGrabber;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,19 +40,24 @@ import java.util.Set;
 @Service
 @Transactional
 public class VideoServiceImpl implements VideoService {
+    private static final String MP4 = ".mp4";
+    private static final String JPG = ".jpg";
+
     private final VideoRepository videoRepository;
     private final CategoryService categoryService;
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final DropboxService dropboxService;
+    private final ThumbnailExtractor thumbnailExtractor;
 
     @Autowired
-    public VideoServiceImpl(VideoRepository videoRepository, CategoryService categoryService, UserService userService, ModelMapper modelMapper, DropboxService dropboxService) {
+    public VideoServiceImpl(VideoRepository videoRepository, CategoryService categoryService, UserService userService, ModelMapper modelMapper, DropboxService dropboxService, ThumbnailExtractor thumbnailExtractor) {
         this.videoRepository = videoRepository;
         this.categoryService = categoryService;
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.dropboxService = dropboxService;
+        this.thumbnailExtractor = thumbnailExtractor;
     }
 
     private File convert(MultipartFile multipartFile, String potentialFileName) throws IOException {
@@ -90,7 +97,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException {
+    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception {
         String identifier = RandomStringUtils.randomAlphanumeric(11);
 
         Video video = new Video();
@@ -105,8 +112,14 @@ public class VideoServiceImpl implements VideoService {
 
         System.out.println(videoAddBindingModel.getVideoFile().getSize());
 
-        File file = this.convert(videoAddBindingModel.getVideoFile(), identifier);
-        this.dropboxService.uploadFile(file, file.getName());
+        File videoFile = this.convert(videoAddBindingModel.getVideoFile(), identifier);
+        this.dropboxService.uploadVideo(videoFile, videoFile.getName());
+
+        File imgFile = this.thumbnailExtractor.grab(identifier + MP4);
+        this.dropboxService.uploadImage(imgFile, imgFile.getName());
+        String imageUrl = this.dropboxService.getFileLink(imgFile.getName());
+
+        video.setThumbnailUrl(imageUrl);
 
         this.videoRepository.save(video);
     }

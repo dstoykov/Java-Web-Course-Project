@@ -16,7 +16,7 @@
                 <div class="col-md-6">
                     <p>
                         <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
-                            <img class="img-responsive" th:src="@{http://localhost:8000/images/video-player.png}"
+                            <img class="img-responsive" th:src="${video.thumbnailUrl}"
                                  width="400"/>
                         </a>
                     </p>
