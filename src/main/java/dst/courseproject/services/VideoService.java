@@ -47,4 +47,6 @@ public interface VideoService {
     void editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier);
 
     void deleteVideo(String identifier);
+
+    Set<VideoViewModel> getViewModelsForSearch(String query);
 }

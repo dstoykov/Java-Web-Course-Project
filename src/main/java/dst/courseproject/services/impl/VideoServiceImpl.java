@@ -236,4 +236,17 @@ public class VideoServiceImpl implements VideoService {
 
         this.videoRepository.save(video);
     }
+
+    @Override
+    public Set<VideoViewModel> getViewModelsForSearch(String query) {
+        Set<Video> videos = this.videoRepository.getAllByDeletedOnNullOrderByViewsDesc();
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        for (Video video : videos) {
+            if (video.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
+            }
+        }
+
+        return videoViewModels;
+    }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <h2 class="align-center" th:text="${'Results for &quot;' + query + '&quot;'}"></h2>
+        <hr/>
+        <div class="row">
+            <th:block th:each="video : ${videos}">
+                <div class="col-md-3">
+                    <p class="align-center">
+                        <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                            <img class="img-responsive" th:src="${video.thumbnailUrl}"
+                                 width="200" height="113"/>
+                        </a>
+                    </p>
+                    <footer>
+                        <h5 class="align-center" th:text="${video.title}"></h5>
+                    </footer>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <hr class="hr-hidden"/>
+</main>
+<footer class="footer">
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

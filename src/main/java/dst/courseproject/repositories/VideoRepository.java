@@ -15,6 +15,8 @@ public interface VideoRepository extends JpaRepository<Video, String> {
 
     Set<Video> getAllByIdNotNullAndDeletedOnNull();
 
+    Set<Video> getAllByDeletedOnNullOrderByViewsDesc();
+
     Long countAllByIdIsNotNull();
 
     List<Video> getAllByAuthorAndDeletedOnNullOrderByViewsDesc(User author);
