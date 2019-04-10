@@ -13,15 +13,15 @@
     <div class="container">
         <div class="row">
             <th:block th:each="video : ${videos}">
-                <div class="col-md-6">
-                    <p>
+                <div class="col-md-3">
+                    <p class="align-center">
                         <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
                             <img class="img-responsive" th:src="${video.thumbnailUrl}"
-                                 width="400"/>
+                                 width="200" height="113"/>
                         </a>
                     </p>
                     <footer>
-                        <h3 th:text="${video.title}"></h3>
+                        <h5 class="align-center" th:text="${video.title}"></h5>
                     </footer>
                 </div>
             </th:block>

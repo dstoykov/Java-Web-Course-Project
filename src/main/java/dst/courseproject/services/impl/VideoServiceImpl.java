@@ -163,6 +163,28 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public Set<VideoViewModel> getVideosByUserAsViewModels(UserServiceModel userServiceModel) {
+        List<Video> videos = this.videoRepository.getAllByAuthorAndDeletedOnNullOrderByUploadedOnDesc(this.modelMapper.map(userServiceModel, User.class));
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        for (Video video : videos) {
+            videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
+        }
+
+        return videoViewModels;
+    }
+
+    @Override
+    public Set<VideoViewModel> getVideosByCategoryAsViewModel(CategoryServiceModel categoryServiceModel) {
+        List<Video> videos = this.videoRepository.getAllByCategoryAndDeletedOnNullOrderByUploadedOnDesc(this.modelMapper.map(categoryServiceModel, Category.class));
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        for (Video video : videos) {
+            videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
+        }
+
+        return videoViewModels;
+    }
+
+    @Override
     public Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier) {
         List<Video> videos = this.videoRepository.getAllByAuthorAndDeletedOnNullOrderByViewsDesc(this.modelMapper.map(author, User.class));
         Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();

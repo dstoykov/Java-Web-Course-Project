@@ -1,5 +1,6 @@
 package dst.courseproject.repositories;
 
+import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,8 @@ public interface VideoRepository extends JpaRepository<Video, String> {
     Long countAllByIdIsNotNull();
 
     List<Video> getAllByAuthorAndDeletedOnNullOrderByViewsDesc(User author);
+
+    List<Video> getAllByAuthorAndDeletedOnNullOrderByUploadedOnDesc(User author);
+
+    List<Video> getAllByCategoryAndDeletedOnNullOrderByUploadedOnDesc(Category category);
 }

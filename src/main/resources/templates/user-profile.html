@@ -29,22 +29,33 @@
                 <h4 class="text-center font-weight-bold">No videos to show.</h4>
             </div>
             <div class="row" th:if="${not #lists.isEmpty(videos)}">
-                <th:block th:each="video : ${videos}">
-                    <div class="col-md-6">
+                <th:block th:each="video, iter : ${videos}">
+                    <div class="col-md-3 align-center">
                         <header>
-                            <h2 th:text="${video.getTitle()}"></h2>
+                            <h5 th:text="${video.getTitle()}"></h5>
                         </header>
                         <p>
-                            <a th:href="@{/videos/{id}(id=${video.getId()})}">
-                                <img th:src="@{http://localhost:8080/images/video-player.png}"
-                                     width="400"/>
+                            <a class="thumbnail"
+                               th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                                <img class="img-responsive" th:src="${video.thumbnailUrl}"
+                                     width="200" height="113"/>
                             </a>
+                        </p>
+                        <p>
+                                <a th:href="@{/videos/edit/{identifier}(identifier=${video.videoIdentifier})}"
+                                   class="mr-2">
+                                    &#128393;
+                                </a>
+                                <a th:href="@{/videos/delete/{identifier}(identifier=${video.videoIdentifier})}">
+                                    &#x2613;
+                                </a>
                         </p>
                     </div>
                 </th:block>
             </div>
         </div>
     </div>
+    <hr class="hr-hidden"/>
 </main>
 <footer class="footer mt-5"><!--class="footer-sticky"-->
     <th:block th:replace="fragments/footer"></th:block>

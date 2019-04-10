@@ -6,6 +6,7 @@ import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
+import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -32,6 +33,10 @@ public interface VideoService {
     void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked;
 
     Integer getVideoLikes(String videoIdentifier);
+
+    Set<VideoViewModel> getVideosByUserAsViewModels(UserServiceModel userServiceModel);
+
+    Set<VideoViewModel> getVideosByCategoryAsViewModel(CategoryServiceModel categoryServiceModel);
 
     Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier);
 

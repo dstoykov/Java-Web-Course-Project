@@ -34,12 +34,14 @@ public class UserController {
     private final UserService userService;
     private final VideoService videoService;
     private final ReCaptchaService reCaptchaService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserService userService, VideoService videoService, ReCaptchaService reCaptchaService) {
+    public UserController(UserService userService, VideoService videoService, ReCaptchaService reCaptchaService, ModelMapper modelMapper) {
         this.userService = userService;
         this.videoService = videoService;
         this.reCaptchaService = reCaptchaService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/register")
@@ -116,13 +118,13 @@ public class UserController {
         Boolean isAdmin = UserUtils.hasRole("ADMIN", userViewModel.getAuthorities());
         Boolean isModerator = UserUtils.hasRole("MODERATOR", userViewModel.getAuthorities());
 
-//        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(userViewModel.getVideos());
+        Set<VideoViewModel> videoViewModels = this.videoService.getVideosByUserAsViewModels(this.modelMapper.map(userViewModel, UserServiceModel.class));
 
         modelAndView.setViewName("user-profile");
         modelAndView.addObject("user", userViewModel);
         modelAndView.addObject("isAdmin", isAdmin);
         modelAndView.addObject("isModerator", isModerator);
-        modelAndView.addObject("videos", userViewModel.getVideos());
+        modelAndView.addObject("videos", videoViewModels);
 
         return modelAndView;
     }
