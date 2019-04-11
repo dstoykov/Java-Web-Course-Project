@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${title}"></title>
 </head>
 <body>
@@ -15,26 +16,14 @@
             <div th:if="${moderatorAlreadyError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: This user is moderator already!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: This user is moderator already!');
                     /*]]>*/
                 </script>
             </div>
             <div th:if="${notModeratorError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: This user is not moderator!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: This user is not moderator!');
                     /*]]>*/
                 </script>
             </div>

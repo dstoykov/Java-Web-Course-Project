@@ -21,6 +21,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private static final String ERROR = "/errors/**";
     private static final String CATEGORY = "/category/**";
     private static final String VIDEO_DETAILS = "/videos/{identifier}";
+    private static final String USER = "/users/{email}";
     private static final String COMMENTS_GET = "/comments/get";
     private static final String LOGIN = "/users/login";
     private static final String REGISTER = "/users/register";
@@ -54,7 +55,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(ROOT, LOGIN, REGISTER, ERROR, SEARCH, CATEGORY, VIDEO_DETAILS, COMMENTS_GET).permitAll()
+                .antMatchers(ROOT, LOGIN, REGISTER, ERROR, SEARCH, CATEGORY, VIDEO_DETAILS, COMMENTS_GET, USER).permitAll()
                 .antMatchers(ADMIN_ALL_USERS, ADMIN_USER_PROFILE, ADMIN_EDIT_USER, ADMIN_ALL_CATEGORIES, ADMIN_ADD_CATEGORY, ADMIN_EDIT_CATEGORY)
                             .access(MODERATOR_AUTHORITY)
                 .antMatchers(ADMIN_DELETE_USER, ADMIN_RESTORE_USER, ADMIN_CREATE_MODERATOR, ADMIN_REVOKE_AUTHORITY, ADMIN_DELETE_CATEGORY)

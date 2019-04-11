@@ -167,15 +167,44 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/{email}")
+    public ModelAndView viewOtherProfile(@PathVariable("email") String email, ModelAndView modelAndView, Principal principal) {
+        if (principal != null) {
+            if (principal.getName().equals(email)) {
+                modelAndView.setViewName("redirect:profile");
+            } else {
+                this.processDataForOthersProfile(email, modelAndView);
+            }
+        } else {
+            this.processDataForOthersProfile(email, modelAndView);
+        }
+
+        return modelAndView;
+    }
+
     @PostMapping("/logout")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView logout(@RequestParam(required = false, name = "logout") String logout, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         modelAndView.setViewName("redirect:/login");
 
-        if(logout != null) {
+        if (logout != null) {
             redirectAttributes.addFlashAttribute("logout", logout);
         }
 
         return modelAndView;
+    }
+
+    private void processDataForOthersProfile(String email, ModelAndView modelAndView) {
+        UserViewModel userViewModel = this.userService.getUserViewModelByEmail(email);
+        Set<VideoViewModel> videoViewModels = this.videoService.getVideosByUserAsViewModels(this.modelMapper.map(userViewModel, UserServiceModel.class));
+        Boolean isAdmin = UserUtils.hasRole("ADMIN", userViewModel.getAuthorities());
+        Boolean isModerator = UserUtils.hasRole("MODERATOR", userViewModel.getAuthorities());
+
+        modelAndView.setViewName("user-other-user-profile");
+        modelAndView.addObject("user", userViewModel);
+        modelAndView.addObject("videos", videoViewModels);
+        modelAndView.addObject("isAdminUser", isAdmin);
+        modelAndView.addObject("isModeratorUser", isModerator);
+        modelAndView.addObject("title", UserUtils.getUserFullName(this.modelMapper.map(userViewModel, UserServiceModel.class)));
     }
 }

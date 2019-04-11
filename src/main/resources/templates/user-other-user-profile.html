@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <div>
+            <h1 class="text-center font-weight-bold"
+                th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h1>
+            <h5 class="text-center text-info font-weight-bold" th:if="${isAdminUser}">
+                ADMIN</h5>
+            <h5 class="text-center text-info" th:if="${isModeratorUser && !isAdminUser}">
+                MODERATOR</h5>
+            <hr/>
+            <div>
+                <h3 class="text-center" th:text="${user.getFirstName()} + '\'s videos:'"></h3>
+                <hr class="hr-hidden"/>
+                <div th:if="${#lists.isEmpty(videos)}">
+                    <h4 class="text-center font-weight-bold">No videos to show.</h4>
+                </div>
+                <div class="row" th:if="${not #lists.isEmpty(videos)}">
+                    <th:block th:each="video : ${videos}">
+                        <div class="col-md-3 align-center">
+                            <header>
+                                <h5 th:text="${video.getTitle()}"></h5>
+                            </header>
+                            <p>
+                                <a class="thumbnail"
+                                   th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                                    <img class="img-responsive" th:src="${video.thumbnailUrl}"
+                                         width="200" height="113"/>
+                                </a>
+                            </p>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer mt-5"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

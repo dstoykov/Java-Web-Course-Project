@@ -19,4 +19,12 @@ public class GlobalExceptionsHandler {
 
         return modelAndView;
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ModelAndView handleIllegalArgumentException() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:../");
+
+        return modelAndView;
+    }
 }

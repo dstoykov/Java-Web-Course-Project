@@ -33,11 +33,12 @@
                             <h6 th:text="${video.views + ' views, ' + video.usersLiked.size() + ' likes'}"></h6>
                         </div>
                         <div class="row">
-                            <a th:href="@{/}" th:text="${video.author.firstName + ' ' + video.author.lastName}"></a>
+                            <a th:href="@{/users/{email}(email=${video.author.email})}"
+                               th:text="${video.author.firstName + ' ' + video.author.lastName}"></a>
                         </div>
                         <div class="row">
                             Category:&nbsp; <a th:text="${video.category.name}"
-                                            th:href="@{/category/{name}(name=${video.category.name})}"></a>
+                                               th:href="@{/category/{name}(name=${video.category.name})}"></a>
                         </div>
                     </div>
                 </div>
