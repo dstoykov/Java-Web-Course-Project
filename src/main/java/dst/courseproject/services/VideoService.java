@@ -24,7 +24,7 @@ public interface VideoService {
 
     void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception;
 
-    Long getTotalVideosCount();
+    Long getTotalActiveVideosCount();
 
     VideoViewModel getVideoViewModel(String identifier);
 

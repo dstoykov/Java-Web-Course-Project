@@ -21,6 +21,6 @@ public class DailyUsersAndVideosCountInformationTask {
 //    @Scheduled(cron = "22 22 22 * * *")
     public void write() {
         System.out.printf("Total users - %d, active users - %d.%n", this.userService.getTotalUsersCount(), this.userService.getTotalActiveUsersCount());
-        System.out.printf("Total videos - %d.%n", this.videoService.getTotalVideosCount());
+        System.out.printf("Total videos - %d.%n", this.videoService.getTotalActiveVideosCount());
     }
 }

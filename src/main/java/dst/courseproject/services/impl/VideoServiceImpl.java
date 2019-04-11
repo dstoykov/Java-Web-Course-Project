@@ -70,8 +70,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Long getTotalVideosCount() {
-        return this.videoRepository.countAllByIdIsNotNull();
+    public Long getTotalActiveVideosCount() {
+        return this.videoRepository.countAllByIdIsNotNullAndDeletedOnNull();
     }
 
     @Override
