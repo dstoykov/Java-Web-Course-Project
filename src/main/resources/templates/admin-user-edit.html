@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${title}"></title>
 </head>
 <body>
@@ -15,26 +16,14 @@
             <div th:if="${#fields.hasAnyErrors()}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Invalid credentials!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Invalid credentials!');
                     /*]]>*/
                 </script>
             </div>
             <div th:if="${passwordError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Passwords mismatch!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Passwords mismatch!');
                     /*]]>*/
                 </script>
             </div>
@@ -42,7 +31,8 @@
                 <legend>Edit Profile</legend>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
                     <label for="firstName">First name</label>
-                    <input class="form-control" th:field="*{firstName}" th:value="${userInput.getFirstName()}" id="firstName"
+                    <input class="form-control" th:field="*{firstName}" th:value="${userInput.getFirstName()}"
+                           id="firstName"
                            placeholder="First name" type="text" name="firstName">
                     <th:block th:each="error : ${#fields.errors('firstName')}">
                         <small class="text-danger" th:text="${error}"></small>
@@ -50,7 +40,8 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('lastName')} ? 'has-danger'">
                     <label for="lastName">Last name</label>
-                    <input class="form-control" th:field="*{lastName}" th:value="${userInput.getFirstName()}" id="lastName"
+                    <input class="form-control" th:field="*{lastName}" th:value="${userInput.getFirstName()}"
+                           id="lastName"
                            placeholder="Last name" type="text" name="lastName">
                     <th:block th:each="error : ${#fields.errors('lastName')}">
                         <small class="text-danger" th:text="${error}"></small>
@@ -58,14 +49,16 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('password')} ? 'has-danger'">
                     <label for="password">Password</label>
-                    <input class="form-control" th:field="*{password}" id="password" placeholder="Password" type="password" name="password">
+                    <input class="form-control" th:field="*{password}" id="password" placeholder="Password"
+                           type="password" name="password">
                     <th:block th:each="error : ${#fields.errors('password')}">
                         <small class="text-danger" th:text="${error}"></small>
                     </th:block>
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-danger'">
                     <label for="confirmPassword">Confirm password</label>
-                    <input class="form-control" th:field="*{confirmPassword}" id="confirmPassword" placeholder="Confirm password" type="password"
+                    <input class="form-control" th:field="*{confirmPassword}" id="confirmPassword"
+                           placeholder="Confirm password" type="password"
                            name="confirmPassword">
                     <th:block th:each="error : ${#fields.errors('confirmPassword')}">
                         <small class="text-danger" th:text="${error}"></small>

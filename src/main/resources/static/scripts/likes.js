@@ -1,19 +1,25 @@
 const like = () => {
-    http.post(likeUrl(videoIdentifier));
-    setTimeout(() => {
-        http.get(getLikesUrl(videoIdentifier));
-        $('#like').hide();
-        $('#unlike').show();
-    }, 500);
+    if (!principal) {
+        showNoty('info', 'You must login to like video.');
+    } else {
+        http.post(likeUrl(videoIdentifier));
+        setTimeout(() => {
+            http.getLikes(getLikesUrl(videoIdentifier));
+            $('#like').hide();
+            $('#unlike').show();
+        }, 500);
+    }
 };
 
 const unlike = () => {
-    http.post(unlikeUrl(videoIdentifier));
-    setTimeout(() => {
-        http.get(getLikesUrl(videoIdentifier));
-        $('#like').show();
-        $('#unlike').hide();
-    }, 500);
+    if (principal) {
+        http.post(unlikeUrl(videoIdentifier));
+        setTimeout(() => {
+            http.getLikes(getLikesUrl(videoIdentifier));
+            $('#like').show();
+            $('#unlike').hide();
+        }, 500);
+    }
 };
 
 function loadLikes(likes) {

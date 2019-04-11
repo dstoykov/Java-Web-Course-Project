@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${title}"></title>
 </head>
 <body>
@@ -16,13 +17,7 @@
                 <div th:if="${success}">
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        new Noty({
-                            text: 'You have registered successfully.',
-                            type: 'success',
-                            theme: 'mint',
-                            timeout: 4000,
-                            layout: 'topRight'
-                        }).show();
+                        showNoty('success', 'You have registered successfully.');
                         /*]]>*/
                     </script>
                 </div>
@@ -35,7 +30,8 @@
                 </div>
                 <div class="form-group row">
                     <label for="password">Password</label>
-                    <input required class="form-control" id="password" placeholder="Password" type="password" name="password">
+                    <input required class="form-control" id="password" placeholder="Password" type="password"
+                           name="password">
                 </div>
                 <div class="form-group custom-checkbox">
                     <label for="remember">Remember me</label>

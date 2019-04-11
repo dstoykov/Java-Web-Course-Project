@@ -4,6 +4,10 @@ const addComment = () => {
     if (comment === null || comment === '') {
         return;
     }
+    if (comment.length > 255) {
+        showNoty('error', 'Comment length must be less than 255 symbols.');
+        return;
+    }
     const data = {
         content: comment
     };

@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${title}"></title>
 </head>
 <body>
@@ -11,17 +12,12 @@
 </header>
 <main>
     <div class="container body-content span=8 offset=2">
-        <form class="form-horizontal justify-content-center" th:action="@{'/admin/categories/add'}" th:method="POST" th:object="${addCategoryInput}">
+        <form class="form-horizontal justify-content-center" th:action="@{'/admin/categories/add'}" th:method="POST"
+              th:object="${addCategoryInput}">
             <div th:if="${#fields.hasAnyErrors()}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Invalid credentials!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Invalid credentials');
                     /*]]>*/
                 </script>
             </div>
@@ -29,7 +25,8 @@
                 <legend>Add New Category</legend>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
                     <label for="name">Category name</label>
-                    <input required class="form-control" th:field="*{name}" th:value="${addCategoryInput.getName()}" id="name" aria-describedby="name" type="text" name="name">
+                    <input required class="form-control" th:field="*{name}" th:value="${addCategoryInput.getName()}"
+                           id="name" aria-describedby="name" type="text" name="name">
                     <th:block th:each="error : ${#fields.errors('name')}">
                         <small class="text-danger" th:text="${error}"></small>
                     </th:block>

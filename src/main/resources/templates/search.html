@@ -13,18 +13,33 @@
     <div class="container">
         <h2 class="align-center" th:text="${'Results for &quot;' + query + '&quot;'}"></h2>
         <hr/>
-        <div class="row">
+        <div class="col">
             <th:block th:each="video : ${videos}">
-                <div class="col-md-3">
-                    <p class="align-center">
-                        <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
-                            <img class="img-responsive" th:src="${video.thumbnailUrl}"
-                                 width="200" height="113"/>
-                        </a>
-                    </p>
-                    <footer>
-                        <h5 class="align-center" th:text="${video.title}"></h5>
-                    </footer>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <p class="align-center">
+                            <a class="thumbnail"
+                               th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                                <img class="img-responsive" th:src="${video.thumbnailUrl}"
+                                     width="246" height="138"/>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <h5 class="align-center" th:text="${video.title}"></h5>
+                        </div>
+                        <div class="row">
+                            <h6 th:text="${video.views + ' views, ' + video.usersLiked.size() + ' likes'}"></h6>
+                        </div>
+                        <div class="row">
+                            <a th:href="@{/}" th:text="${video.author.firstName + ' ' + video.author.lastName}"></a>
+                        </div>
+                        <div class="row">
+                            Category:&nbsp; <a th:text="${video.category.name}"
+                                            th:href="@{/category/{name}(name=${video.category.name})}"></a>
+                        </div>
+                    </div>
                 </div>
             </th:block>
         </div>

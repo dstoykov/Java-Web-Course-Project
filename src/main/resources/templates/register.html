@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${title}"></title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -16,52 +17,28 @@
             <div th:if="${#fields.hasAnyErrors()}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Invalid credentials!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Invalid credentials!');
                     /*]]>*/
                 </script>
             </div>
             <div th:if="${passwordError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Passwords mismatch!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Passwords mismatch!');
                     /*]]>*/
                 </script>
             </div>
             <div th:if="${userExistsError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: User with the same email already exists!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: User with the same email already exists!');
                     /*]]>*/
                 </script>
             </div>
             <div th:if="${invalidCaptchaError}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    new Noty({
-                        text: 'ERROR: Invalid reCaptcha!',
-                        type: 'error',
-                        theme: 'mint',
-                        timeout: 4000,
-                        layout: 'topRight'
-                    }).show();
+                    showNoty('error', 'ERROR: Invalid reCaptcha!');
                     /*]]>*/
                 </script>
             </div>
@@ -118,7 +95,9 @@
                 <div class="form-group row">
                     <div class="form-group col">
                         <div class="g-recaptcha" data-sitekey="6LfRCJUUAAAAAL8QzTszejimqqh5jNydPPpA8FUZ"></div>
-                        <small th:if="${invalidCaptchaError}" class="text-danger">Please verify that you are not a robot.</small>
+                        <small th:if="${invalidCaptchaError}" class="text-danger">Please verify that you are not a
+                            robot.
+                        </small>
                     </div>
                 </div>
                 <div class="form-group mt-4">

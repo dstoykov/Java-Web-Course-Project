@@ -8,17 +8,18 @@
     <script th:src="@{/scripts/comments.js}"></script>
     <script th:src="@{/scripts/likes.js}"></script>
     <script th:src="@{/scripts/links.js}"></script>
+    <script th:src="@{/scripts/showNoty.js}"></script>
     <title th:text="${video.getTitle()}"></title>
 </head>
 <body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     const videoIdentifier = [[${video.getVideoIdentifier()}]];
+    const principal = [[${principalName}]];
 
     const loadComments = () => {
-        const principal = [[${principalName}]];
         const isModerator = [[${isModerator}]];
-        http.get(getCommentsUrl(videoIdentifier), principal, isModerator);
+        http.getComments(getCommentsUrl(videoIdentifier), principal, isModerator);
     };
 
     $(document).ready(() => {

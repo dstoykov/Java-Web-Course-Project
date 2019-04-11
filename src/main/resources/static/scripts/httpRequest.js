@@ -1,12 +1,15 @@
 const http = (() => {
-    const get = (url, principal, isModerator) => fetch(url, {method: 'GET'})
+    const getComments = (url, principal, isModerator) => fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(data => {
-            if (principal) {
-                commentsToPage(data, principal, isModerator)
-            } else {
-                loadLikes(data);
-            }
+            commentsToPage(data, principal, isModerator)
+        })
+        .catch(error => console.log(error));
+
+    const getLikes = (url) => fetch(url, {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            loadLikes(data);
         })
         .catch(error => console.log(error));
 
@@ -18,5 +21,5 @@ const http = (() => {
         },
         body: JSON.stringify(data)
     });
-    return {get, post};
+    return {getComments, getLikes, post};
 })();

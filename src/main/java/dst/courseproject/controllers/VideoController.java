@@ -84,22 +84,25 @@ public class VideoController {
         this.videoService.increaseVideoViewsByOne(identifier);
         Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
-        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
-        String principalName = UserUtils.getUserFullName(userServiceModel);
-        Boolean isModerator = UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities());
-        Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
-        String videoFileUrl = "";
 
-        videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier() + MP4);
+        String videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier() + MP4);
 
         modelAndView.setViewName("video-details");
         modelAndView.addObject("video", videoViewModel);
         modelAndView.addObject("videosFromSameUser", videosFromSameUser);
         modelAndView.addObject("comments", comments);
-        modelAndView.addObject("principalName", principalName);
-        modelAndView.addObject("isModerator", isModerator);
         modelAndView.addObject("videoFileUrl", videoFileUrl);
-        modelAndView.addObject("isLiked", isLiked);
+
+        if (principal != null) {
+            UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
+            String principalName = UserUtils.getUserFullName(userServiceModel);
+            Boolean isModerator = UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities());
+            Boolean isLiked = videoViewModel.getUsersLiked().containsKey(userServiceModel.getId());
+
+            modelAndView.addObject("principalName", principalName);
+            modelAndView.addObject("isModerator", isModerator);
+            modelAndView.addObject("isLiked", isLiked);
+        }
 
         return modelAndView;
     }
