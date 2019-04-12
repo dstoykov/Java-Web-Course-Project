@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <h2 class="text-center">All Logs</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Log</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="log : ${logs}">
+                <tr class="table-active">
+                    <td th:text="${#temporals.format(log.date, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td><a th:text="${log.content.substring(0, 56)}" th:href="@{/admin/logs/{id}(id=${log.id})}"></a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <hr class="hr-hidden"/>
+</main>
+<footer class="footer mt-5"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

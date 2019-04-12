@@ -18,6 +18,9 @@
                         <a class="nav-link" th:href="@{/admin/categories/all}">*| Categories</a>
                     </li>
                     <li sec:authorize="hasAuthority('MODERATOR')" class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/logs/all}">Logs</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('MODERATOR')" class="nav-item">
                         <a class="nav-link" th:href="@{/admin/users/all}">Users |*</a>
                     </li>
                     <li class="nav-item active">

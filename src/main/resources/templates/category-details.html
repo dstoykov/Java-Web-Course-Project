@@ -15,9 +15,7 @@
             <h1 class="text-center font-weight-bold"
                 th:text="${category.getName()}">
             </h1>
-        </div>
-        </div>
-        <hr/>
+        </div><hr/>
         <div>
             <div th:if="${#lists.isEmpty(category.getVideos())}">
                 <h4 class="text-center font-weight-bold">No videos to show.</h4>
@@ -39,6 +37,7 @@
                 </th:block>
             </div>
         </div>
+    </div>
     </div>
     <hr class="hr-hidden"/>
 </main>

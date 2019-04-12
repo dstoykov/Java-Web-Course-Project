@@ -37,6 +37,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private static final String ADMIN_CREATE_MODERATOR = "/admin/users/moderator/**";
     private static final String ADMIN_REVOKE_AUTHORITY = "/admin/users/moderator-revoke/**";
     private static final String ADMIN_DELETE_CATEGORY = "/admin/categories/delete/**";
+    private static final String ADMIN_ALL_LOGS = "/admin/logs/**";
     private static final String ADMIN_AUTHORITY = "hasAuthority('ADMIN')";
     private static final String MODERATOR_AUTHORITY = "hasAuthority('MODERATOR')";
     private static final String EMAIL = "email";
@@ -56,7 +57,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .authorizeRequests()
                 .antMatchers(ROOT, LOGIN, REGISTER, ERROR, SEARCH, CATEGORY, VIDEO_DETAILS, COMMENTS_GET, USER).permitAll()
-                .antMatchers(ADMIN_ALL_USERS, ADMIN_USER_PROFILE, ADMIN_EDIT_USER, ADMIN_ALL_CATEGORIES, ADMIN_ADD_CATEGORY, ADMIN_EDIT_CATEGORY)
+                .antMatchers(ADMIN_ALL_USERS, ADMIN_USER_PROFILE, ADMIN_EDIT_USER, ADMIN_ALL_CATEGORIES, ADMIN_ADD_CATEGORY, ADMIN_EDIT_CATEGORY, ADMIN_ALL_LOGS)
                             .access(MODERATOR_AUTHORITY)
                 .antMatchers(ADMIN_DELETE_USER, ADMIN_RESTORE_USER, ADMIN_CREATE_MODERATOR, ADMIN_REVOKE_AUTHORITY, ADMIN_DELETE_CATEGORY)
                             .access(ADMIN_AUTHORITY)
