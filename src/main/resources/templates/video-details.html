@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <p>
-                                <strong><a class="font-weight-bold" th:href="@{/users/{email}(email=${video.author.email})}"
+                                <strong><a class="font-weight-bold" th:href="@{/users/{email}(email=${encoder.encodeToString(video.author.email.getBytes())})}"
                                            th:text="${video.author.firstName + ' ' + video.author.lastName}"></a></strong>
                                 <small th:text="${'Uploaded on ' + #temporals.format(video.uploadedOn, 'dd.MM.yyyy')}"></small>
                             </p>

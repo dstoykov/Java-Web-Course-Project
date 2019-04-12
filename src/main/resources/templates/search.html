@@ -33,7 +33,7 @@
                             <h6 th:text="${video.views + ' views, ' + video.usersLiked.size() + ' likes'}"></h6>
                         </div>
                         <div class="row">
-                            <a th:href="@{/users/{email}(email=${video.author.email})}"
+                            <a th:href="@{/users/{email}(email=${encoder.encodeToString(video.author.email.getBytes())})}"
                                th:text="${video.author.firstName + ' ' + video.author.lastName}"></a>
                         </div>
                         <div class="row">

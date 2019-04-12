@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.Set;
 
 @Controller
@@ -39,6 +40,7 @@ public class HomeController {
         modelAndView.addObject("title", "Results From Search");
         modelAndView.addObject("query", query);
         modelAndView.addObject("videos", videos);
+        modelAndView.addObject("encoder", Base64.getEncoder());
 
         return modelAndView;
     }

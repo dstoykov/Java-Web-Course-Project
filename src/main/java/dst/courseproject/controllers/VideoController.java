@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Set;
 
 @Controller
@@ -92,6 +93,7 @@ public class VideoController {
         modelAndView.addObject("videosFromSameUser", videosFromSameUser);
         modelAndView.addObject("comments", comments);
         modelAndView.addObject("videoFileUrl", videoFileUrl);
+        modelAndView.addObject("encoder", Base64.getEncoder());
 
         if (principal != null) {
             UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());

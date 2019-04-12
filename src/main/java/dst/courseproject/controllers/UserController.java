@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Set;
 
 @Controller
@@ -168,7 +169,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ModelAndView viewOtherProfile(@PathVariable("email") String email, ModelAndView modelAndView, Principal principal) {
+    public ModelAndView viewOtherProfile(@PathVariable("email") String encodedEmail, ModelAndView modelAndView, Principal principal) {
+        String email = new String(Base64.getDecoder().decode(encodedEmail.getBytes()));
         if (principal != null) {
             if (principal.getName().equals(email)) {
                 modelAndView.setViewName("redirect:profile");
