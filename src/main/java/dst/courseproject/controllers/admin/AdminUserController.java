@@ -30,11 +30,13 @@ import java.util.Set;
 public class AdminUserController {
     private final UserService userService;
     private final VideoService videoService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AdminUserController(UserService userService, VideoService videoService) {
+    public AdminUserController(UserService userService, VideoService videoService, ModelMapper modelMapper) {
         this.userService = userService;
         this.videoService = videoService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/all")
@@ -49,19 +51,18 @@ public class AdminUserController {
 
     @GetMapping("/{id}")
     public ModelAndView userProfile(@PathVariable("id") String id, ModelAndView modelAndView, Model model) {
-        UserViewModel viewModel = this.userService.getUserViewModelById(id);
+        UserViewModel userViewModel = this.userService.getUserViewModelById(id);
+        Set<VideoViewModel> videoViewModels = this.videoService.getVideosByUserAsViewModels(this.modelMapper.map(userViewModel, UserServiceModel.class));
 
-        Boolean isModeratorUser = UserUtils.hasRole("MODERATOR", viewModel.getAuthorities());
-        Boolean isAdminUser = UserUtils.hasRole("ADMIN", viewModel.getAuthorities());
-
-//        Set<VideoViewModel> videoViewModels = this.videoService.mapVideoToModel(viewModel.getVideos());
+        Boolean isModeratorUser = UserUtils.hasRole("MODERATOR", userViewModel.getAuthorities());
+        Boolean isAdminUser = UserUtils.hasRole("ADMIN", userViewModel.getAuthorities());
 
         modelAndView.setViewName("admin-user-profile");
-        modelAndView.addObject("title", viewModel.getFirstName() + "'s Profile");
+        modelAndView.addObject("title", userViewModel.getFirstName() + "'s Profile");
         modelAndView.addObject("isAdminUser", isAdminUser);
         modelAndView.addObject("isModeratorUser", isModeratorUser);
-        modelAndView.addObject("user", viewModel);
-        modelAndView.addObject("videos", viewModel.getVideos());
+        modelAndView.addObject("user", userViewModel);
+        modelAndView.addObject("videos", videoViewModels);
 
         if (model.containsAttribute("moderatorAlreadyError")) {
             modelAndView.addObject("moderatorAlreadyError");

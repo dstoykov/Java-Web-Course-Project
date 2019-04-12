@@ -34,7 +34,8 @@
                     <td th:text="${userModel.getEmail()}"></td>
                     <td><a class="btn btn-outline-info"
                            th:href="@{/admin/users/{id}(id=${userModel.getId()})}">Profile</a></td>
-                    <td><a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${userModel.getId()})}">Edit</a>
+                    <td><a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${userModel.getId()})}"
+                           th:if="${!userModel.getEmail().equals('admin@admin.bg')}">Edit</a>
                     </td>
                     <td sec:authorize="hasAuthority('ADMIN')" th:if="${userModel.getDeletedOn()==null}"><a
                             class="btn btn-outline-danger"
