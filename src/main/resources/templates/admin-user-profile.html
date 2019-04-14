@@ -40,12 +40,17 @@
                 <a class="btn btn-outline-success" th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">Edit
                     profile</a>
                 <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() == null}"
-                   class="btn btn-outline-danger ml-3"
+                   class="btn btn-outline-danger ml-3 mr-3"
                    th:href="@{/admin/users/delete/{id}(id=${user.getId()})}">Delete profile</a>
+                <a class="btn btn-outline-primary" sec:authorize="hasAuthority('ADMIN')"
+                   th:if="${user.deletedOn==null && !T(dst.courseproject.util.UserUtils).hasRole('MODERATOR', user.authorities)}"
+                   th:href="@{/admin/users/moderator/{id}(id=${user.getId()})}">Make Moderator</a>
+                <a class="btn btn-outline-primary" sec:authorize="hasAuthority('ADMIN')"
+                   th:if="${user.deletedOn==null && T(dst.courseproject.util.UserUtils).hasRole('MODERATOR', user.authorities)}"
+                   th:href="@{/admin/users/moderator-revoke/{id}(id=${user.id})}">Revoke Authority</a>
                 <a sec:authorize="hasAuthority('ADMIN')" th:if="${user.getDeletedOn() != null}"
                    class="btn btn-outline-warning ml-3" th:href="@{/admin/users/restore/{id}(id=${user.getId()})}">Restore
                     profile</a>
-                <a class="btn btn-outline-secondary ml-3" th:href="@{/admin/users/all}">Back</a>
             </div>
             <hr/>
             <div>
@@ -67,11 +72,11 @@
                                 </a>
                             </p>
                             <p>
-                                <a th:href="@{/videos/edit/{identifier}(identifier=${video.videoIdentifier})}"
+                                <a th:href="@{/admin/videos/edit/{identifier}(identifier=${video.videoIdentifier})}"
                                    class="mr-2 underline-none">
                                     &#128393;
                                 </a>
-                                <a th:href="@{/videos/delete/{identifier}(identifier=${video.videoIdentifier})}"
+                                <a th:href="@{/admin/videos/delete/{identifier}(identifier=${video.videoIdentifier})}"
                                    class="underline-none">
                                     &#x2613;
                                 </a>

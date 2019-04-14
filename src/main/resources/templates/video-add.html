@@ -20,6 +20,13 @@
                     /*]]>*/
                 </script>
             </div>
+            <div th:if="${largeFile}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    showNoty('error', 'ERROR: File size must be less than 100MB');
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset>
                 <legend>Add New Video</legend>
                 <div class="form-group row mt-3" th:classappend="${#fields.hasErrors('title')} ? 'has-danger'">

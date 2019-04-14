@@ -41,7 +41,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleAccessDenied(AccessDeniedException e) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:../");
+        modelAndView.setViewName("redirect:../users/login");
 
         return modelAndView;
     }

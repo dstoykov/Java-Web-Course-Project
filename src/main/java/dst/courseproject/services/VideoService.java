@@ -2,6 +2,7 @@ package dst.courseproject.services;
 
 import com.dropbox.core.DbxException;
 import dst.courseproject.entities.Video;
+import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
@@ -22,7 +23,7 @@ public interface VideoService {
 
     Set<VideoViewModel> mapVideoToModel(Set<Video> videoList);
 
-    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception;
+    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException;
 
     Long getTotalActiveVideosCount();
 

@@ -5,6 +5,7 @@ import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.entities.Category;
 import dst.courseproject.entities.User;
 import dst.courseproject.entities.Video;
+import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
 import dst.courseproject.models.binding.VideoAddBindingModel;
@@ -97,7 +98,11 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception {
+    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException {
+        if (videoAddBindingModel.getVideoFile().getSize() > 104857600L) {
+            throw new FileTooLargeException("This file is larger than 100MB.");
+        }
+
         String identifier = RandomStringUtils.randomAlphanumeric(11);
 
         Video video = new Video();
@@ -109,8 +114,6 @@ public class VideoServiceImpl implements VideoService {
         video.setVideoIdentifier(identifier);
         video.setAuthor(user);
         video.setCategory(category);
-
-        System.out.println(videoAddBindingModel.getVideoFile().getSize());
 
         File videoFile = this.convert(videoAddBindingModel.getVideoFile(), identifier);
         this.dropboxService.uploadVideo(videoFile, videoFile.getName());

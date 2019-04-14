@@ -2,6 +2,7 @@ package dst.courseproject.controllers;
 
 import com.dropbox.core.DbxException;
 import dst.courseproject.cloud.DropboxService;
+import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -56,6 +57,9 @@ public class VideoController {
         if (!model.containsAttribute("videoInput")) {
             model.addAttribute("videoInput", new VideoAddBindingModel());
         }
+        if (model.containsAttribute("largeFile")) {
+            modelAndView.addObject("largeFile");
+        }
 
         Set<String> categoriesNames = this.categoryService.getCategoriesNames();
         modelAndView.addObject("title", "Add Video");
@@ -72,8 +76,13 @@ public class VideoController {
             modelAndView.setViewName("redirect:add");
         } else {
             //TODO handle FileUploadBase.SizeLimitExceededException
-            this.videoService.addVideo(videoAddBindingModel, principal);
-            modelAndView.setViewName("redirect:../");
+            try {
+                this.videoService.addVideo(videoAddBindingModel, principal);
+                modelAndView.setViewName("redirect:../");
+            } catch (FileTooLargeException e) {
+                redirectAttributes.addFlashAttribute("largeFile", "error");
+                modelAndView.setViewName("redirect:add");
+            }
         }
 
         return modelAndView;
@@ -110,13 +119,18 @@ public class VideoController {
     }
 
     @GetMapping("/edit/{identifier}")
-    public ModelAndView editVideo(@PathVariable String identifier, ModelAndView modelAndView, Model model) {
+    public ModelAndView editVideo(@PathVariable String identifier, ModelAndView modelAndView, Model model, Principal principal) {
+        VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
+        if (!principal.getName().equals(viewModel.getAuthor().getEmail())) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+
         modelAndView.setViewName("video-edit");
         Set<String> categoriesNames = this.categoryService.getCategoriesNames();
 
         modelAndView.addObject("title", "Edit Video");
         if (!model.containsAttribute("videoInput")) {
-            VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
             VideoEditBindingModel bindingModel = this.modelMapper.map(viewModel, VideoEditBindingModel.class);
             bindingModel.setCategory(viewModel.getCategory().getName());
             bindingModel.setIdentifier(viewModel.getVideoIdentifier());
@@ -128,8 +142,7 @@ public class VideoController {
     }
 
     @PostMapping("/edit/{identifier}")
-    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        System.out.println();
+    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoEditBindingModel);
@@ -143,8 +156,12 @@ public class VideoController {
     }
 
     @GetMapping("/delete/{identifier}")
-    public ModelAndView deleteVideo(@PathVariable String identifier, ModelAndView modelAndView) {
+    public ModelAndView deleteVideo(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) {
         VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
+        if (!principal.getName().equals(viewModel.getAuthor().getEmail())) {
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
 
         modelAndView.setViewName("video-delete");
         modelAndView.addObject("title", "Delete Video");
