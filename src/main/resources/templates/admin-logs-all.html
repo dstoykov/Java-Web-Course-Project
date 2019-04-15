@@ -21,7 +21,7 @@
             </thead>
             <tbody>
             <th:block th:each="log : ${logs}">
-                <tr class="table-active">
+                <tr th:classappend="${log.content.contains('Total users - ') ? 'table-info' : 'table-danger'}">
                     <td th:text="${#temporals.format(log.date, 'dd-MM-yyyy HH:mm')}"></td>
                     <td><a th:text="${log.content.substring(0, 56)}" th:href="@{/admin/logs/{id}(id=${log.id})}"></a>
                     </td>

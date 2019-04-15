@@ -11,8 +11,28 @@
 </header>
 <main>
     <div class="container">
+        <h2 class="align-center">Latest Videos</h2>
+        <hr/>
         <div class="row">
-            <th:block th:each="video : ${videos}">
+            <th:block th:each="video : ${latest}">
+                <div class="col-md-3">
+                    <p class="align-center">
+                        <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
+                            <img class="img-responsive" th:src="${video.thumbnailUrl}"
+                                 width="200" height="113"/>
+                        </a>
+                    </p>
+                    <footer>
+                        <h5 class="align-center" th:text="${video.title}"></h5>
+                    </footer>
+                </div>
+            </th:block>
+        </div>
+        <hr class="hr-hidden"/>
+        <h2 class="align-center">Most Popular Videos</h2>
+        <hr/>
+        <div class="row">
+            <th:block th:each="video : ${mostPopular}">
                 <div class="col-md-3">
                     <p class="align-center">
                         <a class="thumbnail" th:href="@{/videos/{identifier}(identifier = ${video.videoIdentifier})}">
@@ -27,6 +47,7 @@
             </th:block>
         </div>
     </div>
+    <hr class="hr-hidden"/>
 </main>
 <footer class="footer">
     <th:block th:replace="fragments/footer"></th:block>

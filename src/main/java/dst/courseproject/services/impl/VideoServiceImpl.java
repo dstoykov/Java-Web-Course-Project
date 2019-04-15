@@ -42,7 +42,10 @@ import java.util.Set;
 @Transactional
 public class VideoServiceImpl implements VideoService {
     private static final String MP4 = ".mp4";
-    private static final String JPG = ".jpg";
+    private static final String FILE_TOO_LARGE_EXCEPTION_MSG = "This file is larger than 100MB.";
+    private static final String VIDEO_ALREADY_LIKED_EXCEPTION_MSG = "Video has been already liked by this user!";
+    private static final String VIDEO_NOT_LIKED_EXCEPTION_MSG = "Video has not been liked by this user!";
+    private static final long MAX_VIDEO_SIZE = 104857600L;
 
     private final VideoRepository videoRepository;
     private final CategoryService categoryService;
@@ -76,10 +79,31 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Set<VideoViewModel> getAllVideosAsViewModels() {
-        Set<Video> videos = this.videoRepository.getAllByIdNotNullAndDeletedOnNull();
-        Set<VideoViewModel> videoViewModels = new HashSet<>();
+    public Set<VideoViewModel> get20LatestVideos() {
+        Set<Video> videos = this.videoRepository.getAllByDeletedOnNullOrderByUploadedOnDesc();
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        int i = 0;
         for (Video video : videos) {
+            if (i == 20) {
+                break;
+            }
+            videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
+            i++;
+        }
+
+        return videoViewModels;
+    }
+
+    @Override
+    public Set<VideoViewModel> get20MostPopularVideos() {
+        Set<Video> videos = this.videoRepository.getAllByDeletedOnNullOrderByViewsDesc();
+        Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
+        int i = 0;
+        for (Video video : videos) {
+            if (i == 20) {
+                break;
+            }
+            i++;
             videoViewModels.add(this.modelMapper.map(video, VideoViewModel.class));
         }
 
@@ -87,33 +111,22 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Set<VideoViewModel> mapVideoToModel(Set<Video> videoList) {
-        Set<VideoViewModel> videoViewModels = new HashSet<>();
-        for (Video video : videoList) {
-            VideoViewModel videoViewModel = this.modelMapper.map(video, VideoViewModel.class);
-            videoViewModels.add(videoViewModel);
-        }
-
-        return videoViewModels;
-    }
-
-    @Override
     public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException {
-        if (videoAddBindingModel.getVideoFile().getSize() > 104857600L) {
-            throw new FileTooLargeException("This file is larger than 100MB.");
+        if (videoAddBindingModel.getVideoFile().getSize() > MAX_VIDEO_SIZE) {
+            throw new FileTooLargeException(FILE_TOO_LARGE_EXCEPTION_MSG);
         }
 
         String identifier = RandomStringUtils.randomAlphanumeric(11);
 
         Video video = new Video();
-        Category category = this.categoryService.findByName(videoAddBindingModel.getCategory());
-        User user = this.userService.getUserByEmail(principal.getName());
+        CategoryServiceModel categoryServiceModel = this.categoryService.getCategoryServiceModelByName(videoAddBindingModel.getCategory());
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
 
         video.setTitle(videoAddBindingModel.getTitle());
         video.setDescription(videoAddBindingModel.getDescription());
         video.setVideoIdentifier(identifier);
-        video.setAuthor(user);
-        video.setCategory(category);
+        video.setAuthor(this.modelMapper.map(userServiceModel, User.class));
+        video.setCategory(this.modelMapper.map(categoryServiceModel, Category.class));
 
         File videoFile = this.convert(videoAddBindingModel.getVideoFile(), identifier);
         this.dropboxService.uploadVideo(videoFile, videoFile.getName());
@@ -136,12 +149,12 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(videoIdentifier);
-        User user = this.userService.getUserByEmail(principalEmail);
-        if (video.getUsersLiked().containsKey(user.getId())) {
-            throw new VideoAlreadyLiked("Video has been already liked by this user!");
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principalEmail);
+        if (video.getUsersLiked().containsKey(userServiceModel.getId())) {
+            throw new VideoAlreadyLiked(VIDEO_ALREADY_LIKED_EXCEPTION_MSG);
         }
 
-        video.getUsersLiked().put(user.getId(), user);
+        video.getUsersLiked().put(userServiceModel.getId(), this.modelMapper.map(userServiceModel, User.class));
 
         this.videoRepository.save(video);
     }
@@ -149,12 +162,12 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(videoIdentifier);
-        User user = this.userService.getUserByEmail(principalEmail);
-        if (!video.getUsersLiked().containsKey(user.getId())) {
-            throw new VideoNotLiked("Video has not been liked by this user!");
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principalEmail);
+        if (!video.getUsersLiked().containsKey(userServiceModel.getId())) {
+            throw new VideoNotLiked(VIDEO_NOT_LIKED_EXCEPTION_MSG);
         }
 
-        video.getUsersLiked().remove(user.getId());
+        video.getUsersLiked().remove(userServiceModel.getId());
 
         this.videoRepository.save(video);
     }

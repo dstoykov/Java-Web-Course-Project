@@ -19,9 +19,9 @@ import java.security.Principal;
 import java.util.Set;
 
 public interface VideoService {
-    Set<VideoViewModel> getAllVideosAsViewModels();
+    Set<VideoViewModel> get20LatestVideos();
 
-    Set<VideoViewModel> mapVideoToModel(Set<Video> videoList);
+    Set<VideoViewModel> get20MostPopularVideos();
 
     void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException;
 

@@ -130,7 +130,7 @@ public class AdminUserController {
 
     @GetMapping("/restore/{id}")
     public ModelAndView restoreUser(@PathVariable("id") String id, ModelAndView modelAndView) {
-        UserRestoreServiceModel userServiceModel = this.userService.getDeletedUserServiceModelById(id);
+        UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
         modelAndView.setViewName("admin-user-restore");
         modelAndView.addObject("title", "Restore Profile");
         modelAndView.addObject("userInput", userServiceModel);

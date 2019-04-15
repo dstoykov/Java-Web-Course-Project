@@ -13,7 +13,7 @@ import java.util.Set;
 public interface VideoRepository extends JpaRepository<Video, String> {
     Video getByVideoIdentifierEqualsAndDeletedOnNull(String videoIdentifier);
 
-    Set<Video> getAllByIdNotNullAndDeletedOnNull();
+    Set<Video> getAllByDeletedOnNullOrderByUploadedOnDesc();
 
     Set<Video> getAllByDeletedOnNullOrderByViewsDesc();
 

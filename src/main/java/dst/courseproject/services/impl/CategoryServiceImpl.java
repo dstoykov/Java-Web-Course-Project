@@ -49,11 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEditBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel) {
-        return this.modelMapper.map(categoryServiceModel, CategoryEditBindingModel.class);
-    }
-
-    @Override
     public void editCategory(@Valid CategoryEditBindingModel categoryEditBindingModel, String id) {
         Category category = this.categoryRepository.getOne(id);
         category.setName(categoryEditBindingModel.getName());
@@ -65,12 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(String id) {
         Category category = this.categoryRepository.getOne(id);
         this.categoryRepository.delete(category);
-    }
-
-    @Override
-    public Category findByName(String categoryName) {
-        Category category = this.categoryRepository.findByName(categoryName);
-        return category;
     }
 
     @Override

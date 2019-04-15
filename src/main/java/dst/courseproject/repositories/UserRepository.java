@@ -21,8 +21,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByIdEqualsAndDeletedOnIsNotNull(String id);
 
-    User findByEmailEqualsAndDeletedOnIsNull(String email);
-
     List<User> getAllByEmailIsNotOrderByDeletedOn(String email);
 
     User findByIdEquals(String id);

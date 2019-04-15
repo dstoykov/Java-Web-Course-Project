@@ -3,7 +3,9 @@ package dst.courseproject.controllers.admin;
 import dst.courseproject.models.binding.CategoryAddBindingModel;
 import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
+import dst.courseproject.models.view.CategoryViewModel;
 import dst.courseproject.services.CategoryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,12 @@ import javax.validation.Valid;
 @RequestMapping("/admin/categories")
 public class AdminCategoryController {
     private final CategoryService categoryService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AdminCategoryController(CategoryService categoryService) {
+    public AdminCategoryController(CategoryService categoryService, ModelMapper modelMapper) {
         this.categoryService = categoryService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/all")
@@ -66,8 +70,8 @@ public class AdminCategoryController {
         modelAndView.addObject("title", "Edit Category");
 
         if (!model.containsAttribute("categoryInput")) {
-            CategoryEditBindingModel categoryEditBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
-            model.addAttribute("categoryInput", categoryEditBindingModel);
+            CategoryViewModel categoryViewModel = this.modelMapper.map(categoryServiceModel, CategoryViewModel.class);
+            model.addAttribute("categoryInput", categoryViewModel);
         }
 
         return modelAndView;
@@ -94,8 +98,8 @@ public class AdminCategoryController {
         modelAndView.addObject("title", "Delete Category");
 
         if (!model.containsAttribute("categoryInput")) {
-            CategoryEditBindingModel categoryEditBindingModel = this.categoryService.getBindingModelFromServiceModel(categoryServiceModel);
-            model.addAttribute("categoryInput", categoryEditBindingModel);
+            CategoryViewModel categoryViewModel = this.modelMapper.map(categoryServiceModel, CategoryViewModel.class);
+            model.addAttribute("categoryInput", categoryViewModel);
         }
 
         return modelAndView;

@@ -16,13 +16,20 @@ import java.util.Date;
 public class DropboxServiceImpl implements DropboxService {
     private static final String SLASH = "/";
     private static final String MP4 = ".mp4";
-    private static final String JPG = ".jpg";
 
     private final DbxClientV2 dbxClientV2;
 
     @Autowired
     public DropboxServiceImpl(DbxClientV2 dbxClientV2) {
         this.dbxClientV2 = dbxClientV2;
+    }
+
+    private void uploadFile(File localFile, String dropboxPath) throws IOException, DbxException {
+        InputStream inputStream = new FileInputStream(localFile);
+        FileMetadata metadata = this.dbxClientV2.files().uploadBuilder(dropboxPath).withMode(WriteMode.ADD).withClientModified(new Date(localFile.lastModified())).uploadAndFinish(inputStream);
+        inputStream.close();
+
+        dbxClientV2.sharing().createSharedLinkWithSettings(dropboxPath);
     }
 
     @Override
@@ -47,17 +54,5 @@ public class DropboxServiceImpl implements DropboxService {
         SharedLinkMetadata result = listSharedLinksResult.getLinks().get(0);
 
         return result.getUrl().replace("dl=0", "raw=1");
-    }
-
-    private void uploadFile(File localFile, String dropboxPath) throws IOException, DbxException {
-        InputStream inputStream = new FileInputStream(localFile);
-        FileMetadata metadata = this.dbxClientV2.files().uploadBuilder(dropboxPath).withMode(WriteMode.ADD).withClientModified(new Date(localFile.lastModified())).uploadAndFinish(inputStream);
-        inputStream.close();
-
-        dbxClientV2.sharing().createSharedLinkWithSettings(dropboxPath);
-    }
-
-    private static void printProgress(long uploaded, long size) {
-        System.out.printf("Uploaded %12d / %12d bytes (%5.2f%%)\n", uploaded, size, 100 * (uploaded / (double) size));
     }
 }

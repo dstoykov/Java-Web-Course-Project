@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Set;
 
@@ -23,10 +22,12 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView) {
-        Set<VideoViewModel> videos = this.videoService.getAllVideosAsViewModels();
+        Set<VideoViewModel> mostPopular = this.videoService.get20MostPopularVideos();
+        Set<VideoViewModel> latest = this.videoService.get20LatestVideos();
 
         modelAndView.setViewName("index");
-        modelAndView.addObject("videos", videos);
+        modelAndView.addObject("latest", latest);
+        modelAndView.addObject("mostPopular", mostPopular);
         modelAndView.addObject("title", "In the Box");
 
         return modelAndView;

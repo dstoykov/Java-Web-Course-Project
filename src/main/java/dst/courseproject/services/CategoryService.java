@@ -17,13 +17,9 @@ public interface CategoryService {
 
     CategoryServiceModel getCategoryServiceModel(String id);
 
-    CategoryEditBindingModel getBindingModelFromServiceModel(CategoryServiceModel categoryServiceModel);
-
     void editCategory(@Valid CategoryEditBindingModel categoryEditBindingModel, String id);
 
     void deleteCategory(String id);
-
-    Category findByName(String category);
 
     CategoryViewModel getCategoryViewModel(String name);
 
