@@ -15,6 +15,10 @@ import java.util.Arrays;
 
 @ControllerAdvice
 public class GlobalExceptionsHandler {
+    private static final String REDIRECT_ERROR = "redirect:../errors/error";
+    private static final String REDIRECT_INDEX = "redirect:../";
+    private static final String REDIRECT_LOGIN = "redirect:../users/login";
+
     private final LogService logService;
 
     @Autowired
@@ -25,7 +29,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler({DbxException.class, IOException.class, VideoAlreadyLiked.class, VideoNotLiked.class})
     public ModelAndView handleUploadingVideoExceptions(Exception e) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:../errors/error");
+        modelAndView.setViewName(REDIRECT_ERROR);
 
         return modelAndView;
     }
@@ -33,7 +37,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ModelAndView handleIllegalArgumentException() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:../");
+        modelAndView.setViewName(REDIRECT_INDEX);
 
         return modelAndView;
     }
@@ -41,7 +45,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleAccessDenied(AccessDeniedException e) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:../users/login");
+        modelAndView.setViewName(REDIRECT_LOGIN);
 
         return modelAndView;
     }
@@ -51,7 +55,7 @@ public class GlobalExceptionsHandler {
         e.printStackTrace();
         this.logService.addLog(Arrays.toString(e.getStackTrace()));
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:../errors/error");
+        modelAndView.setViewName(REDIRECT_ERROR);
 
         return modelAndView;
     }

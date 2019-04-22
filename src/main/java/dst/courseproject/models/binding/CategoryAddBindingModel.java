@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 public class CategoryAddBindingModel {
 
     @NotEmpty(message = "Field cannot be empty.")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Incorrect name format. ")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Incorrect name format. ")
     private String name;
 
     public CategoryAddBindingModel() {

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DailyUsersAndVideosCountInformationTask {
+    private static final String USERS_MESSAGE = "Total users - %d, active users - %d.%n";
+    private static final String VIDEOS_MESSAGE = "Total videos - %d.%n";
+
     private final UserService userService;
     private final VideoService videoService;
     private final LogService logService;
@@ -23,8 +26,8 @@ public class DailyUsersAndVideosCountInformationTask {
 //    @Scheduled(fixedRate = 10000)
     @Scheduled(cron = "22 22 22 * * *")
     public void write() {
-        String logContent = String.format("Total users - %d, active users - %d.%n", this.userService.getTotalUsersCount(),                              this.userService.getTotalActiveUsersCount()) + System.lineSeparator() +
-                            String.format("Total videos - %d.%n", this.videoService.getTotalActiveVideosCount());
+        String logContent = String.format(USERS_MESSAGE, this.userService.getTotalUsersCount(),                              this.userService.getTotalActiveUsersCount()) +
+                            String.format(VIDEOS_MESSAGE, this.videoService.getTotalActiveVideosCount());
 
         this.logService.addLog(logContent);
     }

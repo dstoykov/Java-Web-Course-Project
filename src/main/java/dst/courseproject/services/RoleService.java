@@ -6,5 +6,5 @@ public interface RoleService {
 
     Role getRoleByAuthority(String authority);
 
-    void save(Role role);
+    Role save(Role role);
 }

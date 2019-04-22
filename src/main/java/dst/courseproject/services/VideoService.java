@@ -1,7 +1,6 @@
 package dst.courseproject.services;
 
 import com.dropbox.core.DbxException;
-import dst.courseproject.entities.Video;
 import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
@@ -23,15 +22,15 @@ public interface VideoService {
 
     Set<VideoViewModel> get20MostPopularVideos();
 
-    void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException;
+    VideoServiceModel addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException;
 
     Long getTotalActiveVideosCount();
 
     VideoViewModel getVideoViewModel(String identifier);
 
-    void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked;
+    VideoServiceModel likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked;
 
-    void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked;
+    VideoServiceModel unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked;
 
     Integer getVideoLikes(String videoIdentifier);
 
@@ -39,15 +38,15 @@ public interface VideoService {
 
     Set<VideoViewModel> getVideosByCategoryAsViewModel(CategoryServiceModel categoryServiceModel);
 
-    Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier);
+    Set<VideoViewModel> getLastTenVideosByCategoryAsViewModelsExceptCurrent(CategoryServiceModel categoryServiceModel, String videoIdentifier);
 
     VideoServiceModel getVideoServiceModelByIdentifier(String identifier);
 
-    void increaseVideoViewsByOne(String identifier);
+    VideoServiceModel increaseVideoViewsByOne(String identifier);
 
-    void editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier);
+    VideoServiceModel editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier);
 
-    void deleteVideo(String identifier);
+    VideoServiceModel deleteVideo(String identifier);
 
     Set<VideoViewModel> getViewModelsForSearch(String query);
 }

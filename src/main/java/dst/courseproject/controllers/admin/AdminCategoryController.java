@@ -32,7 +32,7 @@ public class AdminCategoryController {
     public ModelAndView allCategories(ModelAndView modelAndView) {
         modelAndView.setViewName("admin-categories-all");
         modelAndView.addObject("title", "All Categories");
-        modelAndView.addObject("categories", this.categoryService.getAllCategories());
+        modelAndView.addObject("categories", this.categoryService.getAllCategoriesAsViewModels());
 
         return modelAndView;
     }
@@ -50,11 +50,10 @@ public class AdminCategoryController {
 
     @PostMapping("/add")
     public ModelAndView addCategory(@Valid @ModelAttribute(name = "addCategoryInput") CategoryAddBindingModel addCategoryInput, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        System.out.println();
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryInput", bindingResult);
             redirectAttributes.addFlashAttribute("addCategoryInput", addCategoryInput);
-            modelAndView.addObject("redirect:add");
+            modelAndView.setViewName("redirect:add");
         } else {
             this.categoryService.addCategory(addCategoryInput);
             modelAndView.setViewName("redirect:all");

@@ -16,6 +16,7 @@ public class ThumbnailExtractor {
     private static final String VIDEO_PATH = "C:\\Users\\Димитър\\Dropbox\\";
     private static final String MP4 = ".mp4";
     private static final String JPG = ".jpg";
+    private static final String FORMAT_NAME = "jpg";
 
     public File grab(String videoName) throws FrameGrabber.Exception, IOException {
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -26,7 +27,7 @@ public class ThumbnailExtractor {
         BufferedImage bufferedImage = converter.convert(frame);
 
         File file = new File(videoName.replace(MP4, JPG));
-        ImageIO.write(bufferedImage, "jpg", file);
+        ImageIO.write(bufferedImage, FORMAT_NAME, file);
 
         frameGrabber.stop();
 

@@ -28,7 +28,7 @@ public class HomeController {
         modelAndView.setViewName("index");
         modelAndView.addObject("latest", latest);
         modelAndView.addObject("mostPopular", mostPopular);
-        modelAndView.addObject("title", "In the Box");
+        modelAndView.addObject("title", "Home");
 
         return modelAndView;
     }
@@ -38,7 +38,7 @@ public class HomeController {
         Set<VideoViewModel> videos = this.videoService.getViewModelsForSearch(query);
 
         modelAndView.setViewName("search");
-        modelAndView.addObject("title", "Results From Search");
+        modelAndView.addObject("title", "Results for " + query);
         modelAndView.addObject("query", query);
         modelAndView.addObject("videos", videos);
         modelAndView.addObject("encoder", Base64.getEncoder());

@@ -8,7 +8,7 @@ public class CategoryEditBindingModel {
     private String id;
 
     @NotEmpty(message = "Field cannot be empty.")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Incorrect name format. ")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Incorrect name format. ")
     private String name;
 
     public CategoryEditBindingModel() {

@@ -5,6 +5,7 @@ import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
+import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -75,7 +76,6 @@ public class VideoController {
             redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
             modelAndView.setViewName("redirect:add");
         } else {
-            //TODO handle FileUploadBase.SizeLimitExceededException
             try {
                 this.videoService.addVideo(videoAddBindingModel, principal);
                 modelAndView.setViewName("redirect:../");
@@ -92,7 +92,7 @@ public class VideoController {
     public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) throws DbxException {
         VideoViewModel videoViewModel = this.videoService.getVideoViewModel(identifier);
         this.videoService.increaseVideoViewsByOne(identifier);
-        Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByUserAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getAuthor(), UserServiceModel.class), videoViewModel.getVideoIdentifier());
+        Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByCategoryAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getCategory(), CategoryServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
 
         String videoFileUrl = this.dropboxService.getFileLink(videoViewModel.getVideoIdentifier() + MP4);
@@ -142,7 +142,7 @@ public class VideoController {
     }
 
     @PostMapping("/edit/{identifier}")
-    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
+    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoEditBindingModel);

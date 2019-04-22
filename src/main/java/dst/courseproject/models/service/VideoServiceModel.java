@@ -1,9 +1,5 @@
 package dst.courseproject.models.service;
 
-import dst.courseproject.entities.Category;
-import dst.courseproject.entities.Comment;
-import dst.courseproject.entities.User;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -18,19 +14,21 @@ public class VideoServiceModel {
 
     private String videoIdentifier;
 
-    private User author;
+    private UserServiceModel author;
 
-    private Category category;
+    private CategoryServiceModel category;
 
-    private Set<Comment> comments;
+    private Set<CommentServiceModel> comments;
 
     private Long views;
 
     private LocalDateTime uploadedOn;
 
-    private Map<String, User> usersLiked;
+    private Map<String, UserServiceModel> usersLiked;
 
     private String thumbnailUrl;
+
+    private LocalDate deletedOn;
 
     public VideoServiceModel() {
     }
@@ -67,27 +65,27 @@ public class VideoServiceModel {
         this.videoIdentifier = videoIdentifier;
     }
 
-    public User getAuthor() {
+    public UserServiceModel getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserServiceModel author) {
         this.author = author;
     }
 
-    public Category getCategory() {
+    public CategoryServiceModel getCategory() {
         return this.category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryServiceModel category) {
         this.category = category;
     }
 
-    public Set<Comment> getComments() {
+    public Set<CommentServiceModel> getComments() {
         return this.comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(Set<CommentServiceModel> comments) {
         this.comments = comments;
     }
 
@@ -107,11 +105,11 @@ public class VideoServiceModel {
         this.uploadedOn = uploadedOn;
     }
 
-    public Map<String, User> getUsersLiked() {
+    public Map<String, UserServiceModel> getUsersLiked() {
         return this.usersLiked;
     }
 
-    public void setUsersLiked(Map<String, User> usersLiked) {
+    public void setUsersLiked(Map<String, UserServiceModel> usersLiked) {
         this.usersLiked = usersLiked;
     }
 
@@ -121,5 +119,13 @@ public class VideoServiceModel {
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

@@ -15,12 +15,11 @@ public class UserEditBindingModel {
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Incorrect name format. ")
     private String lastName;
 
-    @NotEmpty(message = "Field name must not be empty. ")
+    @NotEmpty(message = "Field must not be empty. ")
     @Size(min = 8, max = 20, message = "Password length must be between 8 and 20 symbols. ")
     private String password;
 
-    @NotEmpty(message = "Field name must not be empty. ")
-    @Size(min = 8, max = 20, message = "Password confirmation length must be between 8 and 20 symbols. ")
+    @NotEmpty(message = "Field must not be empty. ")
     private String confirmPassword;
 
     public UserEditBindingModel() {

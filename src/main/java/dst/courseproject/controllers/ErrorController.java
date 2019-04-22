@@ -11,10 +11,9 @@ import java.security.Principal;
 @RequestMapping("/errors")
 public class ErrorController {
     @GetMapping("/error")
-    public ModelAndView error(ModelAndView modelAndView, Principal principal) {
+    public ModelAndView error(ModelAndView modelAndView) {
         modelAndView.setViewName("error/default-error-page");
         modelAndView.addObject("title", "Oops...");
-        System.out.println(principal);
 
         return modelAndView;
     }

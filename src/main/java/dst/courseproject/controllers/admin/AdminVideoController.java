@@ -42,7 +42,6 @@ public class AdminVideoController {
         if (!model.containsAttribute("videoInput")) {
             VideoEditBindingModel bindingModel = this.modelMapper.map(viewModel, VideoEditBindingModel.class);
             bindingModel.setCategory(viewModel.getCategory().getName());
-            bindingModel.setIdentifier(viewModel.getVideoIdentifier());
             model.addAttribute("videoInput", bindingModel);
         }
         modelAndView.addObject("categories", categoriesNames);
@@ -51,7 +50,7 @@ public class AdminVideoController {
     }
 
     @PostMapping("/edit/{identifier}")
-    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes, Principal principal) {
+    public ModelAndView editVideo(@PathVariable String identifier, @Valid @ModelAttribute(name = "videoInput") VideoEditBindingModel videoEditBindingModel, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.videoInput", bindingResult);
             redirectAttributes.addFlashAttribute("videoInput", videoEditBindingModel);

@@ -8,7 +8,6 @@ import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
 import dst.courseproject.exceptions.UserIsNotModeratorException;
 import dst.courseproject.models.binding.UserRegisterBindingModel;
 import dst.courseproject.models.binding.UserEditBindingModel;
-import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.repositories.UserRepository;
@@ -100,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel getUserServiceModelById(String id) {
-        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
+        User user = this.userRepository.findByIdEquals(id);
         UserServiceModel userServiceModel = this.mapper.map(user, UserServiceModel.class);
         return userServiceModel;
     }
@@ -124,7 +123,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
+    public UserServiceModel register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
         if (this.userRepository.findByEmailEquals(bindingModel.getEmail()) != null) {
             throw new UserAlreadyExistsException(USER_ALREADY_EXIST_EXCEPTION_MSG);
         }
@@ -143,38 +142,48 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
         role.getUsers().add(user);
         this.roleService.save(role);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
-        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
+    public UserServiceModel editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException {
+        User user = this.userRepository.findByIdEquals(id);
         finishEditing(userEditBindingModel, user);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String email) throws PasswordsMismatchException {
+    public UserServiceModel editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String email) throws PasswordsMismatchException {
         User user = this.userRepository.findByEmailAndDeletedOnIsNull(email);
         finishEditing(userEditBindingModel, user);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void deleteUser(String id) {
+    public UserServiceModel deleteUser(String id) {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
         user.setDeletedOn(LocalDate.now());
 
         this.userRepository.save(user);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void restoreUser(String id) {
-        User user = this.userRepository.findByIdEqualsAndDeletedOnIsNotNull(id);
+    public UserServiceModel restoreUser(String id) {
+        User user = this.userRepository.findByIdAndDeletedOnNotNull(id);
         user.setDeletedOn(null);
 
         this.userRepository.save(user);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void makeModerator(String id) throws UserIsModeratorAlreadyException {
+    public UserServiceModel makeModerator(String id) throws UserIsModeratorAlreadyException {
         User user = this.userRepository.getOne(id);
         Role role = this.roleService.getRoleByAuthority(MODERATOR_ROLE);
 
@@ -186,10 +195,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
         role.getUsers().add(user);
         this.roleService.save(role);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
-    public void revokeModeratorAuthority(String id) throws UserIsNotModeratorException {
+    public UserServiceModel revokeModeratorAuthority(String id) throws UserIsNotModeratorException {
         User user = this.userRepository.getOne(id);
         Role role = this.roleService.getRoleByAuthority(MODERATOR_ROLE);
 
@@ -201,11 +212,22 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
         role.getUsers().remove(user);
         this.roleService.save(role);
+
+        return this.mapper.map(user, UserServiceModel.class);
     }
 
     @Override
     public boolean isUserModerator(String id) {
         User user = this.userRepository.getOne(id);
         return UserUtils.hasRole(MODERATOR_ROLE, user.getAuthorities());
+    }
+
+    @Override
+    public UserServiceModel getDeletedUserServiceModelById(String id) {
+        User user = this.userRepository.findByIdEqualsAndDeletedOnNotNull(id);
+        UserServiceModel userServiceModel = this.mapper.map(user, UserServiceModel.class);
+        userServiceModel.setDeletedOn(user.getDeletedOn());
+
+        return userServiceModel;
     }
 }

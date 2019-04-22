@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class TitlePrependInterceptor extends HandlerInterceptorAdapter {
+    private static final String TITLE = "title";
+    private static final String IN_THE_BOX = " | In The Box";
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         super.postHandle(request, response, handler, modelAndView);
@@ -17,9 +20,9 @@ public class TitlePrependInterceptor extends HandlerInterceptorAdapter {
             return;
         }
         ModelMap map = modelAndView.getModelMap();
-        if (map.containsAttribute("title")) {
-            String title = (String) map.get("title");
-            map.put("title", title + " | In The Box");
+        if (map.containsAttribute(TITLE)) {
+            String title = (String) map.get(TITLE);
+            map.put(TITLE, title + IN_THE_BOX);
         }
     }
 }

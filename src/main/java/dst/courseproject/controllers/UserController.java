@@ -126,6 +126,7 @@ public class UserController {
         modelAndView.addObject("isAdmin", isAdmin);
         modelAndView.addObject("isModerator", isModerator);
         modelAndView.addObject("videos", videoViewModels);
+        modelAndView.addObject("title", "My Profile");
 
         return modelAndView;
     }

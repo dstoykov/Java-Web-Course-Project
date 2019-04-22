@@ -33,7 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -111,7 +110,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException {
+    public VideoServiceModel addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException {
         if (videoAddBindingModel.getVideoFile().getSize() > MAX_VIDEO_SIZE) {
             throw new FileTooLargeException(FILE_TOO_LARGE_EXCEPTION_MSG);
         }
@@ -138,6 +137,7 @@ public class VideoServiceImpl implements VideoService {
         video.setThumbnailUrl(imageUrl);
 
         this.videoRepository.save(video);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked {
+    public VideoServiceModel likeVideo(String videoIdentifier, String principalEmail) throws VideoAlreadyLiked {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(videoIdentifier);
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principalEmail);
         if (video.getUsersLiked().containsKey(userServiceModel.getId())) {
@@ -157,10 +157,11 @@ public class VideoServiceImpl implements VideoService {
         video.getUsersLiked().put(userServiceModel.getId(), this.modelMapper.map(userServiceModel, User.class));
 
         this.videoRepository.save(video);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override
-    public void unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked {
+    public VideoServiceModel unlikeVideo(String videoIdentifier, String principalEmail) throws VideoNotLiked {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(videoIdentifier);
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principalEmail);
         if (!video.getUsersLiked().containsKey(userServiceModel.getId())) {
@@ -170,6 +171,7 @@ public class VideoServiceImpl implements VideoService {
         video.getUsersLiked().remove(userServiceModel.getId());
 
         this.videoRepository.save(video);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override
@@ -201,8 +203,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public Set<VideoViewModel> getLastTenVideosByUserAsViewModelsExceptCurrent(UserServiceModel author, String videoIdentifier) {
-        List<Video> videos = this.videoRepository.getAllByAuthorAndDeletedOnNullOrderByViewsDesc(this.modelMapper.map(author, User.class));
+    public Set<VideoViewModel> getLastTenVideosByCategoryAsViewModelsExceptCurrent(CategoryServiceModel categoryServiceModel, String videoIdentifier) {
+        List<Video> videos = this.videoRepository.getAllByCategoryAndDeletedOnNullOrderByViewsDesc(this.modelMapper.map(categoryServiceModel, Category.class));
         Set<VideoViewModel> videoViewModels = new LinkedHashSet<>();
         int limit = 10;
         for (int i = 0; i < videos.size(); i++) {
@@ -227,14 +229,16 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void increaseVideoViewsByOne(String identifier) {
+    public VideoServiceModel increaseVideoViewsByOne(String identifier) {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(identifier);
         video.setViews(video.getViews() + 1);
         this.videoRepository.save(video);
+
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override
-    public void editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier) {
+    public VideoServiceModel editVideoData(@Valid VideoEditBindingModel videoEditBindingModel, String identifier) {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(identifier);
         CategoryServiceModel categoryServiceModel = this.categoryService.getCategoryServiceModelByName(videoEditBindingModel.getCategory());
 
@@ -243,14 +247,16 @@ public class VideoServiceImpl implements VideoService {
         video.setCategory(this.modelMapper.map(categoryServiceModel, Category.class));
 
         this.videoRepository.save(video);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override
-    public void deleteVideo(String identifier) {
+    public VideoServiceModel deleteVideo(String identifier) {
         Video video = this.videoRepository.getByVideoIdentifierEqualsAndDeletedOnNull(identifier);
         video.setDeletedOn(LocalDate.now());
 
         this.videoRepository.save(video);
+        return this.modelMapper.map(video, VideoServiceModel.class);
     }
 
     @Override

@@ -2,6 +2,7 @@ package dst.courseproject.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Comment {
     @Column(updatable = false, nullable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;
 
     @ManyToOne
@@ -28,8 +29,11 @@ public class Comment {
     @JoinColumn(name="author_id", nullable = false)
     private User author;
 
-    @Column(nullable = false)
+    @Column(name = "date_of_publishing", nullable = false)
     private LocalDateTime dateOfPublishing;
+
+    @Column(name = "deleted_on")
+    private LocalDate deletedOn;
 
     public Comment() {
         this.dateOfPublishing = LocalDateTime.now();
@@ -73,5 +77,13 @@ public class Comment {
 
     public void setDateOfPublishing(LocalDateTime dateOfPublishing) {
         this.dateOfPublishing = dateOfPublishing;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getUserServiceModelByEmail(String email);
 
-    void register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException;
+    UserServiceModel register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException;
 
     UserViewModel getUserViewModelByEmail(String email);
 
@@ -25,23 +25,25 @@ public interface UserService extends UserDetailsService {
 
     UserViewModel getUserViewModelById(String id);
 
-    void editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException;
+    UserServiceModel editUserData(@Valid UserEditBindingModel userEditBindingModel, String id) throws PasswordsMismatchException;
 
-    void editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String name) throws PasswordsMismatchException;
+    UserServiceModel editUserDataByEmail(@Valid UserEditBindingModel userEditBindingModel, String name) throws PasswordsMismatchException;
 
-    void deleteUser(String id);
+    UserServiceModel deleteUser(String id);
 
     List<UserViewModel> getListWithViewModels(String email);
 
-    void restoreUser(String id);
+    UserServiceModel restoreUser(String id);
 
-    void makeModerator(String id) throws UserIsModeratorAlreadyException;
+    UserServiceModel makeModerator(String id) throws UserIsModeratorAlreadyException;
 
-    void revokeModeratorAuthority(String id) throws UserIsNotModeratorException;
+    UserServiceModel revokeModeratorAuthority(String id) throws UserIsNotModeratorException;
 
     Long getTotalUsersCount();
 
     Long getTotalActiveUsersCount();
 
     boolean isUserModerator(String id);
+
+    UserServiceModel getDeletedUserServiceModelById(String id);
 }

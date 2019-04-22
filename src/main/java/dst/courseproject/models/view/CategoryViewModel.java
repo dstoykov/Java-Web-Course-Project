@@ -1,7 +1,5 @@
 package dst.courseproject.models.view;
 
-import dst.courseproject.entities.Video;
-
 import java.util.Set;
 
 public class CategoryViewModel {
@@ -9,7 +7,7 @@ public class CategoryViewModel {
 
     private String name;
 
-    private Set<Video> videos;
+    private Set<VideoViewModel> videos;
 
     public CategoryViewModel() {
     }
@@ -30,11 +28,11 @@ public class CategoryViewModel {
         this.name = name;
     }
 
-    public Set<Video> getVideos() {
+    public Set<VideoViewModel> getVideos() {
         return this.videos;
     }
 
-    public void setVideos(Set<Video> videos) {
+    public void setVideos(Set<VideoViewModel> videos) {
         this.videos = videos;
     }
 }

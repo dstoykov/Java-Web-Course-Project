@@ -25,12 +25,14 @@ public class VideoRestController {
     }
 
     @PostMapping("/{identifier}/like")
-    public void likeVideo(@PathVariable String identifier, Principal principal) throws VideoAlreadyLiked {
+    public boolean likeVideo(@PathVariable String identifier, Principal principal) throws VideoAlreadyLiked {
         this.videoService.likeVideo(identifier, principal.getName());
+        return true;
     }
 
     @PostMapping("/{identifier}/unlike")
-    public void dislikeVideo(@PathVariable String identifier, Principal principal) throws VideoNotLiked {
+    public boolean dislikeVideo(@PathVariable String identifier, Principal principal) throws VideoNotLiked {
         this.videoService.unlikeVideo(identifier, principal.getName());
+        return true;
     }
 }

@@ -1,8 +1,6 @@
 package dst.courseproject.models.view;
 
-import dst.courseproject.entities.Comment;
 import dst.courseproject.entities.Role;
-import dst.courseproject.entities.Video;
 
 import java.time.LocalDate;
 import java.util.Set;

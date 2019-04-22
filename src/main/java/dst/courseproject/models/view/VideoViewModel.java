@@ -20,7 +20,7 @@ public class VideoViewModel {
 
     private UserViewModel author;
 
-    private Category category;
+    private CategoryViewModel category;
 
     private Set<CommentViewModel> comments;
 
@@ -75,11 +75,11 @@ public class VideoViewModel {
         this.author = author;
     }
 
-    public Category getCategory() {
+    public CategoryViewModel getCategory() {
         return this.category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryViewModel category) {
         this.category = category;
     }
 

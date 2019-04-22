@@ -18,8 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void save(CommentAddBindingModel bindingModel, String videoIdentifier, String principalEmail) {
+    public CommentServiceModel save(CommentAddBindingModel bindingModel, String videoIdentifier, String principalEmail) {
         Comment comment = this.modelMapper.map(bindingModel, Comment.class);
         VideoServiceModel videoServiceModel = this.videoService.getVideoServiceModelByIdentifier(videoIdentifier);
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principalEmail);
@@ -50,13 +49,14 @@ public class CommentServiceImpl implements CommentService {
         comment.setAuthor(this.modelMapper.map(userServiceModel, User.class));
 
         this.commentRepository.save(comment);
+        return this.modelMapper.map(comment, CommentServiceModel.class);
     }
 
     @Override
     public Set<CommentViewModel> getCommentViewModelsByVideo(String videoIdentifier) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
         VideoServiceModel videoServiceModel = this.videoService.getVideoServiceModelByIdentifier(videoIdentifier);
-        Set<Comment> comments = this.commentRepository.getAllByVideoEqualsOrderByDateOfPublishingDesc(this.modelMapper.map(videoServiceModel, Video.class));
+        Set<Comment> comments = this.commentRepository.getAllByVideoEqualsAndDeletedOnNullOrderByDateOfPublishingDesc(this.modelMapper.map(videoServiceModel, Video.class));
         Set<CommentViewModel> commentViewModels = new LinkedHashSet<>();
         for (Comment comment : comments) {
             CommentViewModel commentViewModel = this.modelMapper.map(comment, CommentViewModel.class);
@@ -69,8 +69,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void remove(String commentId) {
-        this.commentRepository.deleteById(commentId);
+    public CommentServiceModel remove(String commentId) {
+        Comment comment = this.commentRepository.getOne(commentId);
+        comment.setDeletedOn(LocalDate.now());
+
+        return this.modelMapper.map(comment, CommentServiceModel.class);
     }
 
     @Override

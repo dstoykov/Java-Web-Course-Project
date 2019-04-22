@@ -26,12 +26,13 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public void addLog(String content) {
+    public LogViewModel addLog(String content) {
         Log log = new Log();
         log.setDate(LocalDateTime.now());
         log.setContent(content);
 
         this.logRepository.save(log);
+        return this.modelMapper.map(log, LogViewModel.class);
     }
 
     @Override

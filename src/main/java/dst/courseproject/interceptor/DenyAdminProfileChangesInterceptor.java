@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class DenyAdminProfileChangesInterceptor extends HandlerInterceptorAdapter {
     private static final String ADMIN_EMAIL = "admin@admin.bg";
+    private static final String INDEX = "/";
 
     private final UserService userService;
 
@@ -26,7 +27,7 @@ public class DenyAdminProfileChangesInterceptor extends HandlerInterceptorAdapte
         String userId = uriSplit[uriSplit.length - 1];
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(userId);
         if (userServiceModel.getEmail().equals(ADMIN_EMAIL)) {
-            response.sendRedirect("/");
+            response.sendRedirect(INDEX);
         }
 
         return super.preHandle(request, response, handler);

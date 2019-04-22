@@ -3,6 +3,7 @@ package dst.courseproject.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,9 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private Set<Video> videos;
+
+    @Column(name = "deleted_on")
+    private LocalDate deletedOn;
 
     public Category() {
         this.videos = new HashSet<>();
@@ -48,5 +52,13 @@ public class Category {
 
     public void setVideos(Set<Video> videos) {
         this.videos = videos;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

@@ -10,5 +10,5 @@ import java.util.Set;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, String> {
-    Set<Comment> getAllByVideoEqualsOrderByDateOfPublishingDesc(Video video);
+    Set<Comment> getAllByVideoEqualsAndDeletedOnNullOrderByDateOfPublishingDesc(Video video);
 }

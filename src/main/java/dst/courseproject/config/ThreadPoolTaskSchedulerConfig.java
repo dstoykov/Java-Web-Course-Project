@@ -7,14 +7,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 public class ThreadPoolTaskSchedulerConfig {
+    private static final String THREAD_POOL_TASK_SCHEDULER = "ThreadPoolTaskScheduler_";
 
     @Bean
     public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
         ThreadPoolTaskScheduler threadPoolTaskScheduler
                 = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setPoolSize(5);
-        threadPoolTaskScheduler.setThreadNamePrefix(
-                "ThreadPoolTaskScheduler_");
+        threadPoolTaskScheduler.setThreadNamePrefix(THREAD_POOL_TASK_SCHEDULER);
 
         return threadPoolTaskScheduler;
     }

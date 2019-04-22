@@ -1,8 +1,8 @@
 package dst.courseproject.models.service;
 
 import dst.courseproject.entities.Role;
-import dst.courseproject.entities.Video;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,11 +17,13 @@ public class UserServiceModel {
 
     private String password;
 
-    private Set<Video> videos;
+    private Set<VideoServiceModel> videos;
 
     private Set<Role> authorities;
 
-    private Map<String, Video> likedVideos;
+    private Map<String, VideoServiceModel> likedVideos;
+
+    private LocalDate deletedOn;
 
     public UserServiceModel() {
     }
@@ -66,11 +68,11 @@ public class UserServiceModel {
         this.password = password;
     }
 
-    public Set<Video> getVideos() {
+    public Set<VideoServiceModel> getVideos() {
         return this.videos;
     }
 
-    public void setVideos(Set<Video> videos) {
+    public void setVideos(Set<VideoServiceModel> videos) {
         this.videos = videos;
     }
 
@@ -82,11 +84,19 @@ public class UserServiceModel {
         this.authorities = authorities;
     }
 
-    public Map<String, Video> getLikedVideos() {
+    public Map<String, VideoServiceModel> getLikedVideos() {
         return this.likedVideos;
     }
 
-    public void setLikedVideos(Map<String, Video> likedVideos) {
+    public void setLikedVideos(Map<String, VideoServiceModel> likedVideos) {
         this.likedVideos = likedVideos;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

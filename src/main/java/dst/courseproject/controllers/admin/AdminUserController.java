@@ -4,7 +4,6 @@ import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
 import dst.courseproject.exceptions.UserIsNotModeratorException;
 import dst.courseproject.models.binding.UserEditBindingModel;
-import dst.courseproject.models.service.UserRestoreServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.view.UserViewModel;
 import dst.courseproject.models.view.VideoViewModel;
@@ -43,7 +42,7 @@ public class AdminUserController {
     public ModelAndView allUsers(ModelAndView modelAndView, Principal principal) {
         List<UserViewModel> userViewModels = this.userService.getListWithViewModels(principal.getName());
         modelAndView.setViewName("admin-users-all");
-        modelAndView.addObject("title", "All UserUtils");
+        modelAndView.addObject("title", "All Users");
         modelAndView.addObject("userModels", userViewModels);
 
         return modelAndView;
@@ -113,9 +112,12 @@ public class AdminUserController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
+        if (userServiceModel.getDeletedOn() != null) {
+            return new ModelAndView("redirect:../../../");
+        }
         modelAndView.setViewName("admin-user-delete");
         modelAndView.addObject("title", "Delete Profile");
-        modelAndView.addObject("userInput", userServiceModel);
+        modelAndView.addObject("userInput", this.modelMapper.map(userServiceModel, UserViewModel.class));
 
         return modelAndView;
     }
@@ -131,9 +133,12 @@ public class AdminUserController {
     @GetMapping("/restore/{id}")
     public ModelAndView restoreUser(@PathVariable("id") String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(id);
+        if (userServiceModel.getDeletedOn() == null) {
+            return new ModelAndView("redirect:../../../");
+        }
         modelAndView.setViewName("admin-user-restore");
         modelAndView.addObject("title", "Restore Profile");
-        modelAndView.addObject("userInput", userServiceModel);
+        modelAndView.addObject("userInput", this.modelMapper.map(userServiceModel, UserViewModel.class));
 
         return modelAndView;
     }

@@ -1,6 +1,7 @@
 package dst.courseproject.repositories;
 
 import dst.courseproject.entities.User;
+import dst.courseproject.services.UserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +20,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByIdEqualsAndDeletedOnIsNull(String id);
 
-    User findByIdEqualsAndDeletedOnIsNotNull(String id);
+    User findByIdEqualsAndDeletedOnNotNull(String id);
+
+    User findByIdAndDeletedOnNotNull(String id);
 
     List<User> getAllByEmailIsNotOrderByDeletedOn(String email);
 

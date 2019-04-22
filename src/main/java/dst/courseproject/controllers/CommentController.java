@@ -32,16 +32,22 @@ public class CommentController {
     }
 
     @PostMapping("/add")
-    public void addComment(@RequestBody CommentAddBindingModel bindingModel, @RequestParam("video") String videoIdentifier, Principal principal) {
+    public boolean addComment(@RequestBody CommentAddBindingModel bindingModel, @RequestParam("video") String videoIdentifier, Principal principal) {
         this.commentService.save(bindingModel, videoIdentifier, principal.getName());
+
+        return true;
     }
 
     @PostMapping("/remove")
-    public void removeComment(@RequestParam("comment") String commentId, Principal principal) {
+    public boolean removeComment(@RequestParam("comment") String commentId, Principal principal) {
         CommentServiceModel commentServiceModel = this.commentService.getCommentServiceModelById(commentId);
         UserServiceModel userServiceModel = this.userService.getUserServiceModelByEmail(principal.getName());
-        if (UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities()) || UserUtils.getUserFullName(userServiceModel).equals(UserUtils.getUserFullName(commentServiceModel.getAuthor()))) {
+        if (UserUtils.hasRole("MODERATOR", userServiceModel.getAuthorities()) || userServiceModel.getEmail().equals(commentServiceModel.getAuthor().getEmail())) {
             this.commentService.remove(commentId);
+
+            return true;
         }
+
+        return false;
     }
 }

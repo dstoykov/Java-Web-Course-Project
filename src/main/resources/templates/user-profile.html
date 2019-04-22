@@ -32,7 +32,9 @@
                 <th:block th:each="video, iter : ${videos}">
                     <div class="col-md-3 align-center">
                         <header>
-                            <h5 th:text="${video.getTitle()}"></h5>
+                            <h5 th:if="${video.title.length() > 28}"
+                                th:text="${video.title.substring(0, 25)+'...'}"></h5>
+                            <h5 th:if="${video.title.length() <= 28}" th:text="${video.getTitle()}"></h5>
                         </header>
                         <p>
                             <a class="thumbnail"
@@ -50,7 +52,6 @@
                                class="underline-none">
                                 &#x2613;
                             </a>
-                        </p>
                     </div>
                 </th:block>
             </div>

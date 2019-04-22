@@ -58,3 +58,7 @@ iframe {
 .underline-none {
     text-decoration: none;
 }
+.embed-responsive {
+    max-height: 472px;
+    max-width: 840px;
+}
