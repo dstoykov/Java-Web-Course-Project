@@ -5,6 +5,7 @@ import com.sun.security.auth.UserPrincipal;
 import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.entities.Role;
 import dst.courseproject.exceptions.FileTooLargeException;
+import dst.courseproject.exceptions.WrongFileFormatException;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.UserServiceModel;
@@ -128,7 +129,7 @@ public class VideoControllerTests {
     }
 
     @Test
-    public void videoController_addPostMethodWithLargeFileException_returnCorrectModelAndView() throws FrameGrabber.Exception, IOException, DbxException, FileTooLargeException {
+    public void videoController_addPostMethodWithLargeFileException_returnCorrectModelAndView() throws FrameGrabber.Exception, IOException, DbxException, FileTooLargeException, WrongFileFormatException {
         VideoAddBindingModel bindingModel = new VideoAddBindingModel();
         Principal principal = new UserPrincipal("pesho@pesho.com");
         doThrow(new FileTooLargeException("")).when(this.videoService).addVideo(bindingModel, principal);

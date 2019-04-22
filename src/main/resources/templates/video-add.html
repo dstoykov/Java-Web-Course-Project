@@ -23,7 +23,14 @@
             <div th:if="${largeFile}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
-                    showNoty('error', 'ERROR: File size must be less than 100MB');
+                    showNoty('error', 'ERROR: File size must be less than 100MB!');
+                    /*]]>*/
+                </script>
+            </div>
+            <div th:if="${wrongFormat}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    showNoty('error', 'ERROR: Only .mp4 files are allowed!');
                     /*]]>*/
                 </script>
             </div>
@@ -60,9 +67,9 @@
                 </div>
                 <div class="form-group row" th:classappend="${#fields.hasErrors('videoFile')} ? 'has-danger'">
                     <label for="videoFile">Select Video</label>
-                    <p class="text-info">&nbsp;(Max size - 100MB)</p>
+                    <p class="text-info">&nbsp;(Allowed format - mp4. Max size - 100MB.)</p>
                     <input required class="form-control-file" id="videoFile" name="videoFile"
-                           aria-describedby="videoFile" type="file" accept="video/mp4,video/x-m4v,video/*">
+                           aria-describedby="videoFile" type="file" accept="video/mp4">
                     <th:block th:each="error : ${#fields.errors('videoFile')}">
                         <small class="text-danger" th:text="${error}"></small>
                     </th:block>

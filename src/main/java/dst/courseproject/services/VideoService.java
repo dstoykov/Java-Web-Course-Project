@@ -4,6 +4,7 @@ import com.dropbox.core.DbxException;
 import dst.courseproject.exceptions.FileTooLargeException;
 import dst.courseproject.exceptions.VideoAlreadyLiked;
 import dst.courseproject.exceptions.VideoNotLiked;
+import dst.courseproject.exceptions.WrongFileFormatException;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -22,7 +23,7 @@ public interface VideoService {
 
     Set<VideoViewModel> get20MostPopularVideos();
 
-    VideoServiceModel addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException;
+    VideoServiceModel addVideo(@Valid VideoAddBindingModel videoAddBindingModel, Principal principal) throws IOException, DbxException, FrameGrabber.Exception, FileTooLargeException, WrongFileFormatException;
 
     Long getTotalActiveVideosCount();
 

@@ -3,6 +3,7 @@ package dst.courseproject.controllers;
 import com.dropbox.core.DbxException;
 import dst.courseproject.cloud.DropboxService;
 import dst.courseproject.exceptions.FileTooLargeException;
+import dst.courseproject.exceptions.WrongFileFormatException;
 import dst.courseproject.models.binding.VideoAddBindingModel;
 import dst.courseproject.models.binding.VideoEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -61,6 +62,9 @@ public class VideoController {
         if (model.containsAttribute("largeFile")) {
             modelAndView.addObject("largeFile");
         }
+        if (model.containsAttribute("wrongFormat")) {
+            modelAndView.addObject("wrongFormat");
+        }
 
         Set<String> categoriesNames = this.categoryService.getCategoriesNames();
         modelAndView.addObject("title", "Add Video");
@@ -82,6 +86,9 @@ public class VideoController {
             } catch (FileTooLargeException e) {
                 redirectAttributes.addFlashAttribute("largeFile", "error");
                 modelAndView.setViewName("redirect:add");
+            } catch (WrongFileFormatException e) {
+                redirectAttributes.addFlashAttribute("wrongFormat", "error");
+                modelAndView.setViewName("redirect:add");
             }
         }
 
@@ -90,8 +97,8 @@ public class VideoController {
 
     @GetMapping("/{identifier}")
     public ModelAndView videoDetails(@PathVariable String identifier, ModelAndView modelAndView, Principal principal) throws DbxException {
-        VideoViewModel videoViewModel = this.videoService.getVideoViewModel(identifier);
         this.videoService.increaseVideoViewsByOne(identifier);
+        VideoViewModel videoViewModel = this.videoService.getVideoViewModel(identifier);
         Set<VideoViewModel> videosFromSameUser = this.videoService.getLastTenVideosByCategoryAsViewModelsExceptCurrent(this.modelMapper.map(videoViewModel.getCategory(), CategoryServiceModel.class), videoViewModel.getVideoIdentifier());
         Set<CommentViewModel> comments = this.commentService.getCommentViewModelsByVideo(identifier);
 

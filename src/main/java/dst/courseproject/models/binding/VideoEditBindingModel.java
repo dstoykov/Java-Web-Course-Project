@@ -8,7 +8,7 @@ public class VideoEditBindingModel {
     private String identifier;
 
     @NotEmpty(message = "Title must not be empty. ")
-    @Pattern(regexp = "^[a-zA-Z0-9.,!? ]+$", message = "Title can only have capital and small letters, number and punctuation[ '!', '?', '.', ','].")
+    @Pattern(regexp = "^[a-zA-Z0-9.,!? '-]+$", message = "Title can only have capital and small letters, number and punctuation[ '!', '?', ''', '-', '.', ','].")
     @Size(max = 50, message = "Title must not be longer than 50 symbols.")
     private String title;
 

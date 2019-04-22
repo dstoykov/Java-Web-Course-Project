@@ -2,136 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2de3573-901c-427d-8821-1f13f1921dae" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/config/ApplicationBeanConfigurationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/config/DropboxConfigurationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/config/ThreadPoolTaskSchedulerConfigTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/CategoryControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/CommentControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/ErrorControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/HomeControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/UserControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoRestControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/admin/AdminCategoryControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/admin/AdminLogControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/admin/AdminUserControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/admin/AdminVideoControllerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/CategoryTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/CommentTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/LogTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/RoleTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/UserTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/entities/VideoTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/exceptions/handler/GlobalExceptionsHandlerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/interceptor/DenyAdminProfileChangesInterceptorTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/interceptor/DenyLoggedInUserPagesTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/interceptor/TitlePrependInterceptorTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/CategoryAddBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/CategoryEditBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/CommentAddBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/UserEditBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/UserLoginBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/UserRegisterBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/VideoAddBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/VideoEditBindingModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/CategoryServiceModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/CommentServiceModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/UserServiceModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/VideoServiceModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/CategoryViewModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/CommentViewModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/LogViewModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/UserViewModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/VideoViewModelTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/recaptcha/ReCaptchaResponseTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/recaptcha/ReCaptchaServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/CategoryServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/CommentServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/LogServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/RoleServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/UserServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/services/VideoServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/util/UserUtilsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/courseProject_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/courseProject_war_exploded.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_2_7_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_javax_transaction_api_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_javax_persistence_hibernate_jpa_2_1_api_1_0_0_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_0_5_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_5_0_4_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_0_4_RELEASE.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/WrongFileFormatException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/courseProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/courseProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/DropboxConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/DropboxConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/ThreadPoolTaskSchedulerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/ThreadPoolTaskSchedulerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/WebMvcConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/config/WebMvcConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/ErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/ErrorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminCategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminVideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/admin/AdminVideoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/handler/GlobalExceptionsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/handler/GlobalExceptionsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/DenyAdminProfileChangesInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/DenyAdminProfileChangesInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/DenyLoggedInUserPages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/DenyLoggedInUserPagesInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/TitlePrependInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/interceptor/TitlePrependInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CategoryAddBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CategoryAddBindingModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CategoryEditBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CategoryEditBindingModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/UserEditBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/UserEditBindingModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/UserRegisterBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/UserRegisterBindingModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/CommentServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/CommentServiceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserRestoreServiceModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/UserServiceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/VideoServiceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/VideoServiceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/CategoryViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/CategoryViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/UserViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/UserViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/VideoViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/view/VideoViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/VideoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/VideoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/LogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/LogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoAddBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoAddBindingModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoEditBindingModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoEditBindingModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/VideoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/VideoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/LogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/LogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/tasks/DailyUsersAndVideosCountInformationTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/tasks/DailyUsersAndVideosCountInformationTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/styles/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin-user-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin-user-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/category-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/category-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user-other-user-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user-other-user-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/video-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/video-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dst/courseproject/CourseprojectApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/controllers/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/repositories/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/services/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dst/courseproject/services/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dst/courseproject/services/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/styles/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dst/courseproject/CourseprojectApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/video-add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/video-add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoControllerTests.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -150,7 +29,35 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="99" column="62" selection-start-line="99" selection-start-column="62" selection-end-line="99" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="136" column="47" selection-start-line="136" selection-start-column="47" selection-end-line="136" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -190,11 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/dst/courseproject/services/LogServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/RoleServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/test/java/dst/courseproject/services/RoleServiceTests.java" />
-        <option value="$PROJECT_DIR$/src/test/java/dst/courseproject/recaptcha/ReCaptchaServiceTests.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/service/VideoServiceModel.java" />
         <option value="$PROJECT_DIR$/src/test/java/dst/courseproject/services/VideoServiceTests.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Comment.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/CommentRepository.java" />
@@ -213,8 +115,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/user-other-user-profile.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/user-profile.html" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/CourseprojectApplication.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/VideoService.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/entities/Category.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/CategoryAddBindingModel.java" />
@@ -241,6 +141,13 @@
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/tasks/DailyUsersAndVideosCountInformationTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/repositories/VideoRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/WrongFileFormatException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/video-add.html" />
+        <option value="$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoControllerTests.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoEditBindingModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoAddBindingModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java" />
       </list>
     </option>
   </component>
@@ -269,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -363,12 +271,26 @@
               <item name="services" type="462c0819:PsiDirectoryNode" />
               <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Java-Web-Course-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Java-Web-Course-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Java-Web-Course-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Java-Web-Course-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -554,12 +476,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Spring Boot.CourseprojectApplication" />
       <item itemvalue="JUnit.UserServiceTests" />
       <item itemvalue="JUnit.CategoryServiceTests.categoryService_getServiceModelById_returnCorrect" />
       <item itemvalue="JUnit.CategoryServiceTests" />
       <item itemvalue="JUnit.UserServiceTests.userService_getDeletedUserServiceModelById_returnServiceModel" />
       <item itemvalue="JUnit.UserUtilsTest" />
+      <item itemvalue="Spring Boot.CourseprojectApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -680,6 +602,7 @@
       <workItem from="1555749713089" duration="39146000" />
       <workItem from="1555847044346" duration="29872000" />
       <workItem from="1555919022594" duration="14462000" />
+      <workItem from="1555946003995" duration="2585000" />
     </task>
     <servers />
   </component>
@@ -716,7 +639,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="725832000" />
+    <option name="totallyTimeSpent" value="728417000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -731,7 +654,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.328594" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40916273" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.46919432" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.46445498" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -792,55 +715,6 @@
     </SUITE>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/binding/UserRegisterBindingModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/CategoryServiceModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/CommentServiceModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/UserServiceModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/service/VideoServiceModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/CommentViewModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/LogViewModelTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/models/view/UserViewModelTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1072,20 +946,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/util/UserUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1146,6 +1006,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="104">
           <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/WrongFileFormatException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="51" selection-start-line="3" selection-start-column="51" selection-end-line="3" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/exceptions/UserAlreadyExistsException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/video-add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="25" column="80" selection-start-line="25" selection-start-column="80" selection-end-line="25" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/dst/courseproject/controllers/VideoControllerTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="134" column="74" selection-start-line="134" selection-start-column="74" selection-end-line="134" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoAddBindingModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="148" selection-start-line="12" selection-start-column="148" selection-end-line="12" selection-end-column="148" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/models/binding/VideoEditBindingModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="10" column="147" selection-start-line="10" selection-start-column="147" selection-end-line="10" selection-end-column="147" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/services/impl/VideoServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="136" column="47" selection-start-line="136" selection-start-column="47" selection-end-line="136" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/thumbnail/ThumbnailExtractor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dst/courseproject/controllers/VideoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="99" column="62" selection-start-line="99" selection-start-column="62" selection-end-line="99" selection-end-column="62" />
         </state>
       </provider>
     </entry>
