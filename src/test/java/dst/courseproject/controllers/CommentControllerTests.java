@@ -1,7 +1,6 @@
 package dst.courseproject.controllers;
 
 import com.sun.security.auth.UserPrincipal;
-import dst.courseproject.controllers.CommentController;
 import dst.courseproject.entities.Role;
 import dst.courseproject.models.binding.CommentAddBindingModel;
 import dst.courseproject.models.service.CommentServiceModel;

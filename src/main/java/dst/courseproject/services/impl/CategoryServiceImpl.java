@@ -8,7 +8,6 @@ import dst.courseproject.models.service.CategoryServiceModel;
 import dst.courseproject.models.view.CategoryViewModel;
 import dst.courseproject.repositories.CategoryRepository;
 import dst.courseproject.services.CategoryService;
-import dst.courseproject.services.VideoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

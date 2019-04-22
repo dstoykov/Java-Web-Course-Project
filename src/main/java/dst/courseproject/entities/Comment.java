@@ -1,8 +1,6 @@
 package dst.courseproject.entities;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.LocalDate;

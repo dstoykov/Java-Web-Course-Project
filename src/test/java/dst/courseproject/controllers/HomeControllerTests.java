@@ -1,6 +1,5 @@
 package dst.courseproject.controllers;
 
-import dst.courseproject.entities.Video;
 import dst.courseproject.models.view.VideoViewModel;
 import dst.courseproject.services.VideoService;
 import org.junit.Assert;

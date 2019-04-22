@@ -7,7 +7,6 @@ import dst.courseproject.models.binding.CommentAddBindingModel;
 import dst.courseproject.models.service.CommentServiceModel;
 import dst.courseproject.models.service.UserServiceModel;
 import dst.courseproject.models.service.VideoServiceModel;
-import dst.courseproject.models.view.CommentViewModel;
 import dst.courseproject.repositories.CommentRepository;
 import dst.courseproject.services.impl.CommentServiceImpl;
 import org.junit.Assert;
