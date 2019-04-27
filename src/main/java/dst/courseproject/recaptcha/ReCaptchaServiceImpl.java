@@ -11,6 +11,7 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
     private static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
     private static final String CAPTCHA_PARAMS = "?secret=%s&response=%s";
     private static final String PRIVATE_KEY = "6LfRCJUUAAAAAEflhbMC3ltHG4gCszOi09XksHST";
+    private static final String CAPTCHA_EXCEPTION_MSG = "Invalid ReCaptcha!";
 
     private final RestTemplate restTemplate;
 
@@ -30,7 +31,7 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
                 .getBody();
 
         if (!reCaptchaResponse.isSuccess()) {
-            throw new InvalidReCaptchaException("Invalid ReCaptcha!");
+            throw new InvalidReCaptchaException(CAPTCHA_EXCEPTION_MSG);
         }
     }
 }

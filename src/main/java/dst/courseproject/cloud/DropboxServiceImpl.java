@@ -16,6 +16,9 @@ import java.util.Date;
 public class DropboxServiceImpl implements DropboxService {
     private static final String SLASH = "/";
     private static final String MP4 = ".mp4";
+    private static final String REPLACE_TARGET = "dl=0";
+    private static final String REPLACEMENT = "raw=1";
+    private static final Integer FIRST_LINK_METADATA_RESULT = 0;
 
     private final DbxClientV2 dbxClientV2;
 
@@ -51,8 +54,8 @@ public class DropboxServiceImpl implements DropboxService {
                 .listSharedLinksBuilder()
                 .withPath(dropboxPath).withDirectOnly(true)
                 .start();
-        SharedLinkMetadata result = listSharedLinksResult.getLinks().get(0);
+        SharedLinkMetadata result = listSharedLinksResult.getLinks().get(FIRST_LINK_METADATA_RESULT);
 
-        return result.getUrl().replace("dl=0", "raw=1");
+        return result.getUrl().replace(REPLACE_TARGET, REPLACEMENT);
     }
 }

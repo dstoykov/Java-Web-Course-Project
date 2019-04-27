@@ -25,6 +25,12 @@ public class LogServiceImpl implements LogService {
         this.modelMapper = modelMapper;
     }
 
+    private void mapLogsToViewModels(Set<Log> logs, Set<LogViewModel> logViewModels) {
+        for (Log log : logs) {
+            logViewModels.add(this.modelMapper.map(log, LogViewModel.class));
+        }
+    }
+
     @Override
     public LogViewModel addLog(String content) {
         Log log = new Log();
@@ -39,9 +45,7 @@ public class LogServiceImpl implements LogService {
     public Set<LogViewModel> getLogViewModels() {
         Set<Log> logs = this.logRepository.getAllByIdNotNullOrderByDateDesc();
         Set<LogViewModel> logViewModels = new LinkedHashSet<>();
-        for (Log log : logs) {
-            logViewModels.add(this.modelMapper.map(log, LogViewModel.class));
-        }
+        this.mapLogsToViewModels(logs, logViewModels);
 
         return logViewModels;
     }

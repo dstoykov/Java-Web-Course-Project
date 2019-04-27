@@ -32,6 +32,24 @@ public class CategoryServiceImpl implements CategoryService {
         this.modelMapper = modelMapper;
     }
 
+    private void mapCategoriesToViewModels(List<Category> categories, Set<CategoryViewModel> viewModels) {
+        for (Category category : categories) {
+            viewModels.add(this.modelMapper.map(category, CategoryViewModel.class));
+        }
+    }
+
+    private void removeCategoryVideos(Category category) {
+        for (Video video : category.getVideos()) {
+            video.setDeletedOn(LocalDate.now());
+        }
+    }
+
+    private void extractNames(List<Category> categories, Set<String> names) {
+        for (Category category : categories) {
+            names.add(category.getName());
+        }
+    }
+
     @Override
     public CategoryServiceModel addCategory(@Valid CategoryAddBindingModel categoryBindingModel) {
         Category category = this.modelMapper.map(categoryBindingModel, Category.class);
@@ -44,9 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
     public Set<CategoryViewModel> getAllCategoriesAsViewModels() {
         List<Category> categories = this.categoryRepository.findAllByDeletedOnNull();
         Set<CategoryViewModel> viewModels = new LinkedHashSet<>();
-        for (Category category : categories) {
-            viewModels.add(this.modelMapper.map(category, CategoryViewModel.class));
-        }
+        this.mapCategoriesToViewModels(categories, viewModels);
+
         return viewModels;
     }
 
@@ -71,9 +88,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceModel deleteCategory(String id) {
         Category category = this.categoryRepository.findByIdAndDeletedOnNull(id);
         category.setDeletedOn(LocalDate.now());
-        for (Video video : category.getVideos()) {
-            video.setDeletedOn(LocalDate.now());
-        }
+        this.removeCategoryVideos(category);
 
         return this.modelMapper.map(category, CategoryServiceModel.class);
     }
@@ -90,9 +105,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Set<String> getCategoriesNames() {
         List<Category> categories = this.categoryRepository.findAllByDeletedOnNull();
         Set<String> names = new HashSet<>();
-        for (Category category : categories) {
-            names.add(category.getName());
-        }
+        this.extractNames(categories, names);
 
         return names;
     }

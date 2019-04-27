@@ -17,12 +17,13 @@ public class ThumbnailExtractor {
     private static final String MP4 = ".mp4";
     private static final String JPG = ".jpg";
     private static final String FORMAT_NAME = "jpg";
+    private static final Integer FRAME_NUMBER = 20;
 
     public File grab(String videoName) throws FrameGrabber.Exception, IOException {
         Java2DFrameConverter converter = new Java2DFrameConverter();
         FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(VIDEO_PATH + videoName);
         frameGrabber.start();
-        frameGrabber.setFrameNumber(20);
+        frameGrabber.setFrameNumber(FRAME_NUMBER);
         Frame frame = frameGrabber.grab();
         BufferedImage bufferedImage = converter.convert(frame);
 

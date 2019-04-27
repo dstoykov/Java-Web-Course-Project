@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DenyAdminProfileChangesInterceptor extends HandlerInterceptorAdapter {
     private static final String ADMIN_EMAIL = "admin@admin.bg";
     private static final String INDEX = "/";
+    private static final String SLASH = "/";
 
     private final UserService userService;
 
@@ -23,7 +24,7 @@ public class DenyAdminProfileChangesInterceptor extends HandlerInterceptorAdapte
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String[] uriSplit = request.getRequestURI().split("/");
+        String[] uriSplit = request.getRequestURI().split(SLASH);
         String userId = uriSplit[uriSplit.length - 1];
         UserServiceModel userServiceModel = this.userService.getUserServiceModelById(userId);
         if (userServiceModel.getEmail().equals(ADMIN_EMAIL)) {

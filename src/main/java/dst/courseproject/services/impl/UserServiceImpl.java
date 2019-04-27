@@ -68,6 +68,47 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
     }
 
+    private void mapUsersToViewModels(List<User> users, List<UserViewModel> userViewModels) {
+        for (User user : users) {
+            UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
+            userViewModels.add(userViewModel);
+        }
+    }
+
+    private void addUserToRole(User user, Role role) {
+        role.getUsers().add(user);
+        this.roleService.save(role);
+    }
+
+    private void checkEmail(UserRegisterBindingModel bindingModel) throws UserAlreadyExistsException {
+        if (this.userRepository.findByEmailEquals(bindingModel.getEmail()) != null) {
+            throw new UserAlreadyExistsException(USER_ALREADY_EXIST_EXCEPTION_MSG);
+        }
+    }
+
+    private void checkPasswords(UserRegisterBindingModel bindingModel, User user) throws PasswordsMismatchException {
+        if (comparePasswords(bindingModel.getPassword(), bindingModel.getConfirmPassword())) {
+            user.setPassword(this.encoder.encode(bindingModel.getPassword()));
+        }
+    }
+
+    private void checkRoleIsPresent(User user, Role role) throws UserIsModeratorAlreadyException {
+        if (user.getAuthorities().contains(role)) {
+            throw new UserIsModeratorAlreadyException(USER_MODERATOR_ALREADY_EXCEPTION_MSG);
+        }
+    }
+
+    private void checkRoleNotPresent(User user, Role role) throws UserIsNotModeratorException {
+        if (!user.getAuthorities().contains(role)) {
+            throw new UserIsNotModeratorException(USER_NOT_MODERATOR_EXCEPTION_MSG);
+        }
+    }
+
+    private void removeUserFromRole(User user, Role role) {
+        role.getUsers().remove(user);
+        this.roleService.save(role);
+    }
+
     @Override
     public Long getTotalUsersCount() {
         return this.userRepository.countUsersByEmailIsNotNull();
@@ -114,23 +155,16 @@ public class UserServiceImpl implements UserService {
     public List<UserViewModel> getListWithViewModels(String exceptEmail) {
         List<User> users = this.userRepository.getAllByEmailIsNotOrderByDeletedOn(exceptEmail);
         List<UserViewModel> userViewModels = new ArrayList<>();
-        for (User user : users) {
-            UserViewModel userViewModel = this.mapper.map(user, UserViewModel.class);
-            userViewModels.add(userViewModel);
-        }
+        this.mapUsersToViewModels(users, userViewModels);
 
         return userViewModels;
     }
 
     @Override
     public UserServiceModel register(UserRegisterBindingModel bindingModel) throws PasswordsMismatchException, UserAlreadyExistsException {
-        if (this.userRepository.findByEmailEquals(bindingModel.getEmail()) != null) {
-            throw new UserAlreadyExistsException(USER_ALREADY_EXIST_EXCEPTION_MSG);
-        }
+        this.checkEmail(bindingModel);
         User user = this.mapper.map(bindingModel, User.class);
-        if (comparePasswords(bindingModel.getPassword(), bindingModel.getConfirmPassword())) {
-            user.setPassword(this.encoder.encode(bindingModel.getPassword()));
-        }
+        this.checkPasswords(bindingModel, user);
 
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
@@ -140,8 +174,7 @@ public class UserServiceImpl implements UserService {
         Role role = this.roleService.getRoleByAuthority(USER_ROLE);
         user.addRole(role);
         this.userRepository.save(user);
-        role.getUsers().add(user);
-        this.roleService.save(role);
+        this.addUserToRole(user, role);
 
         return this.mapper.map(user, UserServiceModel.class);
     }
@@ -187,14 +220,11 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.getOne(id);
         Role role = this.roleService.getRoleByAuthority(MODERATOR_ROLE);
 
-        if (user.getAuthorities().contains(role)) {
-            throw new UserIsModeratorAlreadyException(USER_MODERATOR_ALREADY_EXCEPTION_MSG);
-        }
+        this.checkRoleIsPresent(user, role);
 
         user.addRole(role);
         this.userRepository.save(user);
-        role.getUsers().add(user);
-        this.roleService.save(role);
+        this.addUserToRole(user, role);
 
         return this.mapper.map(user, UserServiceModel.class);
     }
@@ -204,14 +234,11 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.getOne(id);
         Role role = this.roleService.getRoleByAuthority(MODERATOR_ROLE);
 
-        if (!user.getAuthorities().contains(role)) {
-            throw new UserIsNotModeratorException(USER_NOT_MODERATOR_EXCEPTION_MSG);
-        }
+        this.checkRoleNotPresent(user, role);
 
         user.removeRole(role);
         this.userRepository.save(user);
-        role.getUsers().remove(user);
-        this.roleService.save(role);
+        this.removeUserFromRole(user, role);
 
         return this.mapper.map(user, UserServiceModel.class);
     }

@@ -39,6 +39,15 @@ public class CommentServiceImpl implements CommentService {
         this.modelMapper = modelMapper;
     }
 
+    private void mapCommentsToViewModels(DateTimeFormatter formatter, Set<Comment> comments, Set<CommentViewModel> commentViewModels) {
+        for (Comment comment : comments) {
+            CommentViewModel commentViewModel = this.modelMapper.map(comment, CommentViewModel.class);
+            commentViewModel.setAuthor(UserUtils.getUserFullName(this.modelMapper.map(comment.getAuthor(), UserServiceModel.class)));
+            commentViewModel.setDateOfPublishing(comment.getDateOfPublishing().format(formatter));
+            commentViewModels.add(commentViewModel);
+        }
+    }
+
     @Override
     public CommentServiceModel save(CommentAddBindingModel bindingModel, String videoIdentifier, String principalEmail) {
         Comment comment = this.modelMapper.map(bindingModel, Comment.class);
@@ -58,12 +67,7 @@ public class CommentServiceImpl implements CommentService {
         VideoServiceModel videoServiceModel = this.videoService.getVideoServiceModelByIdentifier(videoIdentifier);
         Set<Comment> comments = this.commentRepository.getAllByVideoEqualsAndDeletedOnNullOrderByDateOfPublishingDesc(this.modelMapper.map(videoServiceModel, Video.class));
         Set<CommentViewModel> commentViewModels = new LinkedHashSet<>();
-        for (Comment comment : comments) {
-            CommentViewModel commentViewModel = this.modelMapper.map(comment, CommentViewModel.class);
-            commentViewModel.setAuthor(UserUtils.getUserFullName(this.modelMapper.map(comment.getAuthor(), UserServiceModel.class)));
-            commentViewModel.setDateOfPublishing(comment.getDateOfPublishing().format(formatter));
-            commentViewModels.add(commentViewModel);
-        }
+        this.mapCommentsToViewModels(formatter, comments, commentViewModels);
 
         return commentViewModels;
     }

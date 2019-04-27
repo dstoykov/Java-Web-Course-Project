@@ -8,19 +8,27 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class VideoAddBindingModel {
+    private static final String TITLE_NOT_EMPTY_MSG = "Title must not be empty. ";
+    private static final String TITLE_PATTERN_REGEXP = "^[a-zA-Z0-9.,!? '-]+$";
+    private static final String TITLE_PATTERN_MSG = "Title can only have capital and small letters, number and punctuation[ '!', '?', ''', '-', '.', ','].";
+    private static final int TITLE_SIZE_MAX = 50;
+    private static final String TITLE_SIZE_MSG = "Title must not be longer than 50 symbols.";
+    private static final String DESCRIPTION_NOT_EMPTY_MSG = "Description must not be empty.";
+    private static final String CATEGORY_NOT_EMPTY_MSG = "You must choose a category.";
+    private final static String VIDEO_FILE_NOT_NULL_MSG = "You must select video file for uploading.";
 
-    @NotEmpty(message = "Title must not be empty. ")
-    @Pattern(regexp = "^[a-zA-Z0-9.,!? '-]+$", message = "Title can only have capital and small letters, number and punctuation[ '!', '?', ''', '-', '.', ','].")
-    @Size(max = 50, message = "Title must not be longer than 50 symbols.")
+    @NotEmpty(message = TITLE_NOT_EMPTY_MSG)
+    @Pattern(regexp = TITLE_PATTERN_REGEXP, message = TITLE_PATTERN_MSG)
+    @Size(max = TITLE_SIZE_MAX, message = TITLE_SIZE_MSG)
     private String title;
 
-    @NotEmpty(message = "Description must not be empty.")
+    @NotEmpty(message = DESCRIPTION_NOT_EMPTY_MSG)
     private String description;
 
-    @NotEmpty(message = "You must choose a category.")
+    @NotEmpty(message = CATEGORY_NOT_EMPTY_MSG)
     private String category;
 
-    @NotNull(message = "You must select video file for uploading.")
+    @NotNull(message = VIDEO_FILE_NOT_NULL_MSG)
     private MultipartFile videoFile;
 
     public VideoAddBindingModel() {

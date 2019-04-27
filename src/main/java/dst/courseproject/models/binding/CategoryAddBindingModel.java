@@ -4,9 +4,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class CategoryAddBindingModel {
+    private static final String NAME_NOT_EMPTY_MSG = "Field cannot be empty.";
+    private static final String NAME_PATTERN_REGEXP = "^[a-zA-Z ]+$";
+    private static final String NAME_PATTERN_MGS = "Incorrect name format. ";
 
-    @NotEmpty(message = "Field cannot be empty.")
-    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Incorrect name format. ")
+    @NotEmpty(message = NAME_NOT_EMPTY_MSG)
+    @Pattern(regexp = NAME_PATTERN_REGEXP, message = NAME_PATTERN_MGS)
     private String name;
 
     public CategoryAddBindingModel() {
