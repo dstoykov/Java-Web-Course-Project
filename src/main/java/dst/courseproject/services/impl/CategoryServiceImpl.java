@@ -2,6 +2,7 @@ package dst.courseproject.services.impl;
 
 import dst.courseproject.entities.Category;
 import dst.courseproject.entities.Video;
+import dst.courseproject.exceptions.CategoryAlreadyExistsException;
 import dst.courseproject.models.binding.CategoryAddBindingModel;
 import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -32,6 +33,13 @@ public class CategoryServiceImpl implements CategoryService {
         this.modelMapper = modelMapper;
     }
 
+    private void checkIfCategoryExist(String name) throws CategoryAlreadyExistsException {
+        Category category = this.categoryRepository.findByName(name);
+        if (category != null) {
+            throw new CategoryAlreadyExistsException("Category already exists!");
+        }
+    }
+
     private void mapCategoriesToViewModels(List<Category> categories, Set<CategoryViewModel> viewModels) {
         for (Category category : categories) {
             viewModels.add(this.modelMapper.map(category, CategoryViewModel.class));
@@ -51,7 +59,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryServiceModel addCategory(@Valid CategoryAddBindingModel categoryBindingModel) {
+    public CategoryServiceModel addCategory(@Valid CategoryAddBindingModel categoryBindingModel) throws CategoryAlreadyExistsException {
+        this.checkIfCategoryExist(categoryBindingModel.getName());
         Category category = this.modelMapper.map(categoryBindingModel, Category.class);
         this.categoryRepository.save(category);
 

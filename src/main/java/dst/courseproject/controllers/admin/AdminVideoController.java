@@ -34,7 +34,7 @@ public class AdminVideoController {
     public ModelAndView editVideo(@PathVariable String identifier, ModelAndView modelAndView, Model model) {
         VideoViewModel viewModel = this.videoService.getVideoViewModel(identifier);
 
-        modelAndView.setViewName("video-edit");
+        modelAndView.setViewName("admin-video-edit");
         Set<String> categoriesNames = this.categoryService.getCategoriesNames();
 
         modelAndView.addObject("title", "Edit Video");

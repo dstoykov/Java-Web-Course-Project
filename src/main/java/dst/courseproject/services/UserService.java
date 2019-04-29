@@ -43,7 +43,9 @@ public interface UserService extends UserDetailsService {
 
     Long getTotalActiveUsersCount();
 
-    boolean isUserModerator(String id);
+    boolean isUserModeratorById(String id);
+
+    boolean isUserModeratorByEmail(String email);
 
     UserServiceModel getDeletedUserServiceModelById(String id);
 }

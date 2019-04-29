@@ -13,4 +13,6 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     List<Category> findAllByDeletedOnNull();
 
     Category findByIdAndDeletedOnNull(String id);
+
+    Category findByName(String name);
 }

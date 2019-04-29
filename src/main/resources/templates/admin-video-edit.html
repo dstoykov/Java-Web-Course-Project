@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+    <script th:src="@{/scripts/showNoty.js}"></script>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header>
+    <th:block th:replace="fragments/navbar"></th:block>
+</header>
+<main>
+    <div class="container">
+        <form th:action="@{/admin/videos/edit/{identifier}(identifier=${videoInput.identifier})}" th:method="POST"
+              th:object="${videoInput}">
+            <div th:if="${#fields.hasAnyErrors()}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    showNoty('error', 'ERROR: Invalid credentials!');
+                    /*]]>*/
+                </script>
+            </div>
+            <fieldset>
+                <legend>Add New Video</legend>
+                <div class="form-group row mt-3" th:classappend="${#fields.hasErrors('title')} ? 'has-danger'">
+                    <label for="title">Title</label>
+                    <input required class="form-control" id="title" aria-describedby="title" type="text" name="title"
+                           th:value="*{title}">
+                    <th:block th:each="error : ${#fields.errors('title')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+                <div class="form-group row" th:classappend="${#fields.hasErrors('description')} ? 'has-danger'">
+                    <label for="description">Description</label>
+                    <textarea required class="form-control" id="description" name="description" rows="3"
+                              th:text="*{description}"></textarea>
+                    <th:block th:each="error : ${#fields.errors('description')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+                <div class="form-group row" th:classappend="${#fields.hasErrors('category')} ? 'has-danger'">
+                    <label for="category">Category</label>
+                    <select required class="custom-select" id="category" name="category">
+                        <th:block th:each="category : ${categories}">
+                            <option th:value="${category}" th:text="${category}"
+                                    th:selected="${category.equals(videoInput.category)}"></option>
+                        </th:block>
+                    </select>
+                    <th:block th:each="error : ${#fields.errors('category')}">
+                        <small class="text-danger" th:text="${error}"></small>
+                    </th:block>
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success mr-2">Edit Video</button>
+                    <a class="btn btn-outline-secondary ml-3" th:href="@{/}">Cancel</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+<footer class="footer"><!--class="footer-sticky"-->
+    <th:block th:replace="fragments/footer"></th:block>
+</footer>
+</body>
+</html>

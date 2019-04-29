@@ -292,7 +292,7 @@ public class AdminUserControllerTests {
 
     @Test
     public void adminUserController_makeModeratorGetRequestWithModeratorAlready_returnCorrectModelAndView() {
-        when(this.userService.isUserModerator("1")).thenReturn(true);
+        when(this.userService.isUserModeratorById("1")).thenReturn(true);
         ModelAndView modelAndView = new ModelAndView();
         RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
         this.controller.makeModerator("1", modelAndView, redirectAttributes);
@@ -303,7 +303,7 @@ public class AdminUserControllerTests {
 
     @Test
     public void adminUserController_makeModeratorGetRequestWithCorrectData_returnCorrectModelAndView() {
-        when(this.userService.isUserModerator("1")).thenReturn(false);
+        when(this.userService.isUserModeratorById("1")).thenReturn(false);
         ModelAndView modelAndView = new ModelAndView();
         RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
         this.controller.makeModerator("1", modelAndView, redirectAttributes);
@@ -343,7 +343,7 @@ public class AdminUserControllerTests {
 
     @Test
     public void adminUserController_revokeAuthorityGetRequestWithModeratorAlready_returnCorrectModelAndView() {
-        when(this.userService.isUserModerator("1")).thenReturn(false);
+        when(this.userService.isUserModeratorById("1")).thenReturn(false);
         ModelAndView modelAndView = new ModelAndView();
         RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
         this.controller.revokeAuthority("1", modelAndView, redirectAttributes);
@@ -354,7 +354,7 @@ public class AdminUserControllerTests {
 
     @Test
     public void adminUserController_revokeAuthorityGetRequestWithCorrectData_returnCorrectModelAndView() {
-        when(this.userService.isUserModerator("1")).thenReturn(true);
+        when(this.userService.isUserModeratorById("1")).thenReturn(true);
         ModelAndView modelAndView = new ModelAndView();
         RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
         this.controller.revokeAuthority("1", modelAndView, redirectAttributes);

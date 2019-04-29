@@ -2,6 +2,7 @@ package dst.courseproject.services.impl;
 
 import dst.courseproject.entities.Role;
 import dst.courseproject.entities.User;
+import dst.courseproject.entities.Video;
 import dst.courseproject.exceptions.PasswordsMismatchException;
 import dst.courseproject.exceptions.UserAlreadyExistsException;
 import dst.courseproject.exceptions.UserIsModeratorAlreadyException;
@@ -108,6 +109,22 @@ public class UserServiceImpl implements UserService {
         role.getUsers().remove(user);
         this.roleService.save(role);
     }
+    //todo check if works tomorrow -->>
+    private void deleteUserVideos(User user) {
+        for (Video video : user.getVideos()) {
+            if (video.getDeletedOn() == null) {
+                video.setDeletedOn(LocalDate.now());
+            }
+        }
+    }
+
+    private void restoreUserVideos(User user) {
+        for (Video video : user.getVideos()) {
+            if (user.getDeletedOn().isEqual(video.getDeletedOn())) {
+                video.setDeletedOn(null);
+            }
+        }
+    }
 
     @Override
     public Long getTotalUsersCount() {
@@ -199,6 +216,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceModel deleteUser(String id) {
         User user = this.userRepository.findByIdEqualsAndDeletedOnIsNull(id);
         user.setDeletedOn(LocalDate.now());
+        this.deleteUserVideos(user);
 
         this.userRepository.save(user);
 
@@ -208,6 +226,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel restoreUser(String id) {
         User user = this.userRepository.findByIdAndDeletedOnNotNull(id);
+        this.restoreUserVideos(user);
         user.setDeletedOn(null);
 
         this.userRepository.save(user);
@@ -244,8 +263,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserModerator(String id) {
+    public boolean isUserModeratorById(String id) {
         User user = this.userRepository.getOne(id);
+        return UserUtils.hasRole(MODERATOR_ROLE, user.getAuthorities());
+    }
+
+    @Override
+    public boolean isUserModeratorByEmail(String email) {
+        User user = this.userRepository.findByEmailEquals(email);
         return UserUtils.hasRole(MODERATOR_ROLE, user.getAuthorities());
     }
 

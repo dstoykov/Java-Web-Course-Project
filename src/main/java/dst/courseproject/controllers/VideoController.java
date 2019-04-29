@@ -84,9 +84,11 @@ public class VideoController {
                 this.videoService.addVideo(videoAddBindingModel, principal);
                 modelAndView.setViewName("redirect:../");
             } catch (FileTooLargeException e) {
+                redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
                 redirectAttributes.addFlashAttribute("largeFile", "error");
                 modelAndView.setViewName("redirect:add");
             } catch (WrongFileFormatException e) {
+                redirectAttributes.addFlashAttribute("videoInput", videoAddBindingModel);
                 redirectAttributes.addFlashAttribute("wrongFormat", "error");
                 modelAndView.setViewName("redirect:add");
             }

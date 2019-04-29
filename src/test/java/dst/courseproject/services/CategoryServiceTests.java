@@ -1,6 +1,7 @@
 package dst.courseproject.services;
 
 import dst.courseproject.entities.Category;
+import dst.courseproject.exceptions.CategoryAlreadyExistsException;
 import dst.courseproject.models.binding.CategoryAddBindingModel;
 import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -53,7 +54,7 @@ public class CategoryServiceTests {
     }
 
     @Test
-    public void categoryService_addCategory_returnServiceModel() {
+    public void categoryService_addCategory_returnServiceModel() throws CategoryAlreadyExistsException {
         //Assert
         CategoryAddBindingModel model = new CategoryAddBindingModel(){{
             setName("Music");

@@ -101,6 +101,7 @@ public class AdminUserController {
                 this.userService.editUserData(userEditBindingModel, id);
                 modelAndView.setViewName("redirect:../" + id);
             } catch (PasswordsMismatchException e) {
+                redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
                 redirectAttributes.addFlashAttribute("passwordError", "error");
                 modelAndView.setViewName("redirect:" + id);
             }
@@ -153,7 +154,7 @@ public class AdminUserController {
 
     @GetMapping("/moderator/{id}")
     public ModelAndView makeModerator(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        if (this.userService.isUserModerator(id)) {
+        if (this.userService.isUserModeratorById(id)) {
             redirectAttributes.addFlashAttribute("moderatorAlreadyError", "error");
             modelAndView.setViewName("redirect:../" + id);
         } else {
@@ -180,7 +181,7 @@ public class AdminUserController {
 
     @GetMapping("/moderator-revoke/{id}")
     public ModelAndView revokeAuthority(@PathVariable("id") String id, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        if (!this.userService.isUserModerator(id)) {
+        if (!this.userService.isUserModeratorById(id)) {
             redirectAttributes.addFlashAttribute("notModeratorError", "error");
             modelAndView.setViewName("redirect:../" + id);
         } else {

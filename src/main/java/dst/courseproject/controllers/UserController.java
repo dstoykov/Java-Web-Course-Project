@@ -161,6 +161,7 @@ public class UserController {
                 this.userService.editUserDataByEmail(userEditBindingModel, principal.getName());
                 modelAndView.setViewName("redirect:../profile");
             } catch (PasswordsMismatchException e) {
+                redirectAttributes.addFlashAttribute("userInput", userEditBindingModel);
                 redirectAttributes.addFlashAttribute("passwordError", "error");
                 modelAndView.setViewName("redirect:/users/profile/edit");
             }
@@ -173,7 +174,10 @@ public class UserController {
     public ModelAndView viewOtherProfile(@PathVariable("email") String encodedEmail, ModelAndView modelAndView, Principal principal) {
         String email = new String(Base64.getDecoder().decode(encodedEmail.getBytes()));
         if (principal != null) {
-            if (principal.getName().equals(email)) {
+            UserServiceModel target = this.userService.getUserServiceModelByEmail(email);
+            if (this.userService.isUserModeratorByEmail(principal.getName())) {
+                modelAndView.setViewName("redirect:../admin/users/" + target.getId());
+            } else if (principal.getName().equals(email)) {
                 modelAndView.setViewName("redirect:profile");
             } else {
                 this.processDataForOthersProfile(email, modelAndView);

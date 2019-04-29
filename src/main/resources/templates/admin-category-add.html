@@ -21,6 +21,13 @@
                     /*]]>*/
                 </script>
             </div>
+            <div th:if="${categoryExistError}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    showNoty('error', 'ERROR: Category with same name already exist!');
+                    /*]]>*/
+                </script>
+            </div>
             <fieldset class="mt-4">
                 <legend>Add New Category</legend>
                 <div class="form-group row mt-4" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">

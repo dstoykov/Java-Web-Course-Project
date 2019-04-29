@@ -1,5 +1,6 @@
 package dst.courseproject.services;
 
+import dst.courseproject.exceptions.CategoryAlreadyExistsException;
 import dst.courseproject.models.binding.CategoryAddBindingModel;
 import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -11,7 +12,7 @@ import java.util.Set;
 public interface CategoryService {
     Set<CategoryViewModel> getAllCategoriesAsViewModels();
 
-    CategoryServiceModel addCategory(@Valid CategoryAddBindingModel categoryBindingModel);
+    CategoryServiceModel addCategory(@Valid CategoryAddBindingModel categoryBindingModel) throws CategoryAlreadyExistsException;
 
     CategoryServiceModel getCategoryServiceModel(String id);
 

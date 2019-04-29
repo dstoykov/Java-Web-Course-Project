@@ -1,5 +1,6 @@
 package dst.courseproject.controllers.admin;
 
+import dst.courseproject.exceptions.CategoryAlreadyExistsException;
 import dst.courseproject.models.binding.CategoryAddBindingModel;
 import dst.courseproject.models.binding.CategoryEditBindingModel;
 import dst.courseproject.models.service.CategoryServiceModel;
@@ -44,6 +45,9 @@ public class AdminCategoryController {
         if (!model.containsAttribute("addCategoryInput")) {
             model.addAttribute("addCategoryInput", new CategoryAddBindingModel());
         }
+        if (model.containsAttribute("categoryExistError")) {
+            modelAndView.addObject("categoryExistError");
+        }
 
         return modelAndView;
     }
@@ -55,8 +59,14 @@ public class AdminCategoryController {
             redirectAttributes.addFlashAttribute("addCategoryInput", addCategoryInput);
             modelAndView.setViewName("redirect:add");
         } else {
-            this.categoryService.addCategory(addCategoryInput);
-            modelAndView.setViewName("redirect:all");
+            try {
+                this.categoryService.addCategory(addCategoryInput);
+                modelAndView.setViewName("redirect:all");
+            } catch (CategoryAlreadyExistsException e) {
+                redirectAttributes.addFlashAttribute("categoryExistError", "error");
+                redirectAttributes.addFlashAttribute("addCategoryInput", addCategoryInput);
+                modelAndView.setViewName("redirect:add");
+            }
         }
 
         return modelAndView;
